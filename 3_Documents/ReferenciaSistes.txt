@@ -1,0 +1,4 @@
+Link utilizado para criar o oAuth do Google.
+	https://console.cloud.google.com/
+Vídeos para auxilio:
+	https://www.youtube.com/watch?v=6Kn6agKDPI8&ab_channel=LuigiCode
