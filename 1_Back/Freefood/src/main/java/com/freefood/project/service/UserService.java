@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.freefood.project.model.User;
+import com.freefood.project.model.UserDto;
 
 public interface UserService {
 	
@@ -44,5 +45,9 @@ public interface UserService {
 	 * @param idUser o ID do objeto que se deseja deletar
 	 * */
 	void deleteUser(Long idUser);
+	
+	User save(UserDto user);
+	
+    User findOne(String username);
 
 }
