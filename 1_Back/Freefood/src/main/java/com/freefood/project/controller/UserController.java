@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +45,7 @@ public class UserController {
 	private TokenProvider jwtTokenUtil;
 	
 	@GetMapping("/all")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<User>> getAll() {
 		try {
 			List<User> result = this.userService.findAll();
@@ -61,6 +61,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/findId")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<User> getFindById(@RequestParam Long idUser) {
 		try {
 			Optional<User> result = this.userService.findById(idUser);
@@ -76,24 +77,13 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping("/createUser")
-	public ResponseEntity<User> createUser(@RequestBody User user) {
-		try {
-			User result = this.userService.saveUser(user);
-			
-			if(result != null) {
-				return new ResponseEntity<>(result, HttpStatus.CREATED);
-			} else {
-				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-			
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
 	@PutMapping("/updateUser")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
+		//TODO
+		/*
+		 * Implementar algo que faça o usuário atualizar apenas ele próprio
+		 * */
 		try {
 			return new ResponseEntity<>(this.userService.updateUser(user), HttpStatus.OK);
 		} catch (Exception e) {
@@ -102,6 +92,7 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/deleteUser/{idUser}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<User> deleteUser(@PathVariable("idUser") long idUser) {
 		try {
 			this.userService.deleteUser(idUser);

@@ -24,14 +24,6 @@ public interface UserService {
 	List<User> findAll();
 	
 	/**
-	 * Função para salvar o objeto.
-	 * 
-	 * @param user é o objeto que se deseja salvar
-	 * @return Com a ação bem sucedida o spring vai retornar o objeto cadastrado
-	 * */
-	User saveUser(User user);
-	
-	/**
 	 * Função para fazer o update do objeto.
 	 * 
 	 * @param user é o objeto que se deseja fazer o update

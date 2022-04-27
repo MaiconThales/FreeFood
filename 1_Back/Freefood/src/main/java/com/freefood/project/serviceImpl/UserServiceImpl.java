@@ -47,11 +47,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	}
 
 	@Override
-	public User saveUser(User user) {
-		return this.userRepository.save(user);
-	}
-
-	@Override
 	public User updateUser(User user) {
 		return this.userRepository.save(user);
 	}
@@ -70,10 +65,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		Set<Role> roleSet = new HashSet<>();
 		roleSet.add(role);
 
-		if (nUser.getEmail().split("@")[1].equals("admin.edu")) {
+		/*if (nUser.getEmail().split("@")[1].equals("admin.edu")) {
 			role = roleService.findByName("ADMIN");
 			roleSet.add(role);
-		}
+		}*/
 
 		nUser.setRoles(roleSet);
 		return userDao.save(nUser);
