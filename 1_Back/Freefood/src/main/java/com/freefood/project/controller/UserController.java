@@ -1,8 +1,9 @@
 package com.freefood.project.controller;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +17,18 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.freefood.project.config.TokenProvider;
+import com.freefood.project.dto.UserDto;
 import com.freefood.project.model.AuthToken;
 import com.freefood.project.model.LoginUser;
 import com.freefood.project.model.User;
-import com.freefood.project.model.UserDto;
 import com.freefood.project.service.UserService;
 
 @RestController
@@ -44,11 +45,15 @@ public class UserController {
 	@Autowired
 	private TokenProvider jwtTokenUtil;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@GetMapping("/all")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<List<User>> getAll() {
+	public ResponseEntity<List<UserDto>> getAll() {
+		List<UserDto> result = null;
 		try {
-			List<User> result = this.userService.findAll();
+			result = this.userService.findAll().stream().map(u -> modelMapper.map(u, UserDto.class)).collect(Collectors.toList());
 			
 			if(result.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -56,44 +61,48 @@ public class UserController {
 			
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@GetMapping("/findId")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<User> getFindById(@RequestParam Long idUser) {
+	public ResponseEntity<UserDto> getFindById(@RequestParam Long idUser) {
+		UserDto resultDto = null;
 		try {
-			Optional<User> result = this.userService.findById(idUser);
+			resultDto = modelMapper.map(this.userService.findById(idUser), UserDto.class);
 			
-			if(result.isPresent()) {
-				return new ResponseEntity<>(result.get(), HttpStatus.OK);
+			if(resultDto != null) {
+				return new ResponseEntity<>(resultDto, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PutMapping("/updateUser")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<User> updateUser(@RequestBody User user) {
+	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user) {
 		//TODO
 		/*
 		 * Implementar algo que faça o usuário atualizar apenas ele próprio
 		 * */
+		UserDto resultDto = null;
 		try {
-			return new ResponseEntity<>(this.userService.updateUser(user), HttpStatus.OK);
+			User userParam = modelMapper.map(user, User.class);
+			resultDto = modelMapper.map(this.userService.updateUser(userParam), UserDto.class);
+			return new ResponseEntity<>(resultDto, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@DeleteMapping("/deleteUser/{idUser}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<User> deleteUser(@PathVariable("idUser") long idUser) {
+	public ResponseEntity<UserDto> deleteUser(@PathVariable("idUser") long idUser) {
 		try {
 			this.userService.deleteUser(idUser);
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -102,8 +111,8 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
+	@PostMapping("/authenticate")
+	public ResponseEntity<AuthToken> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -116,30 +125,31 @@ public class UserController {
         return ResponseEntity.ok(new AuthToken(token));
     }
 	
-	@RequestMapping(value="/register", method = RequestMethod.POST)
+	@PostMapping("/register")
     public ResponseEntity<User> saveUser(@RequestBody UserDto user){
+		User result = null;
 		try {
-			User result = userService.save(user);
+			result = userService.save(user);
 			
 			if(result != null) {
 				return new ResponseEntity<>(result, HttpStatus.CREATED);
 			} else {
-				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     }
 
 	@PreAuthorize("hasRole('ADMIN')")
-    @RequestMapping(value="/adminping", method = RequestMethod.GET)
+	@GetMapping("/adminping")
     public String adminPing(){
         return "Only Admins Can Read This";
     }
 	
 	@PreAuthorize("hasRole('USER')")
-    @RequestMapping(value="/userping", method = RequestMethod.GET)
+	@GetMapping("/userping")
     public String userPing(){
         return "Any User Can Read This";
     }

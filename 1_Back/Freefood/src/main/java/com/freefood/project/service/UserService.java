@@ -1,10 +1,9 @@
 package com.freefood.project.service;
 
 import java.util.List;
-import java.util.Optional;
 
+import com.freefood.project.dto.UserDto;
 import com.freefood.project.model.User;
-import com.freefood.project.model.UserDto;
 
 public interface UserService {
 	
@@ -14,7 +13,7 @@ public interface UserService {
 	 * @param id do User
 	 * @return Retorna o menu de acordo com o ID passado no parametro.
 	 * */
-	Optional<User> findById(Long idUser);
+	User findById(Long idUser);
 	
 	/**
 	 * Retorna todos os registros do banco.

@@ -1,4 +1,4 @@
-package com.freefood.project.serviceImpl;
+package com.freefood.project.service.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,8 +17,12 @@ public class RestaurantServiceImpl implements RestaurantService {
 	private RestaurantRepository restaurantRepository;
 	
 	@Override
-	public Optional<Restaurant> findById(Long idRestaurant) {
-		return this.restaurantRepository.findById(idRestaurant);
+	public Restaurant findById(Long idRestaurant) {
+		Optional<Restaurant> result = this.restaurantRepository.findById(idRestaurant);
+		if(result.isPresent()) {
+			return result.get();
+		}
+		return null;
 	}
 
 	@Override

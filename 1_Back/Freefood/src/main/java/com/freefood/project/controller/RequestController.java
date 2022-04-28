@@ -1,8 +1,9 @@
 package com.freefood.project.controller;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.freefood.project.dto.RequestDto;
 import com.freefood.project.model.Request;
-import com.freefood.project.model.Restaurant;
 import com.freefood.project.service.RequestService;
 
 @RestController
@@ -29,10 +30,14 @@ public class RequestController {
 	@Autowired
 	private RequestService requestService;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@GetMapping("/all")
-	public ResponseEntity<List<Request>> getAll() {
+	public ResponseEntity<List<RequestDto>> getAll() {
+		List<RequestDto> result = null;
 		try {
-			List<Request> result = this.requestService.findAll();
+			result = this.requestService.findAll().stream().map(r -> modelMapper.map(r, RequestDto.class)).collect(Collectors.toList());
 			
 			if(result.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -40,53 +45,60 @@ public class RequestController {
 			
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@GetMapping("/findId")
-	public ResponseEntity<Request> getFindById(@RequestParam Long idRequest) {
+	public ResponseEntity<RequestDto> getFindById(@RequestParam Long idRequest) {
+		RequestDto resultDto = null;
 		try {
-			Optional<Request> result = this.requestService.findById(idRequest);
+			Request result = this.requestService.findById(idRequest);
+			resultDto = modelMapper.map(result, RequestDto.class);
 			
-			if(result.isPresent()) {
-				return new ResponseEntity<>(result.get(), HttpStatus.OK);
+			if(resultDto != null) {
+				return new ResponseEntity<>(resultDto, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PostMapping("/createRequest")
-	public ResponseEntity<Request> createRequest(@RequestBody Request request) {
+	public ResponseEntity<RequestDto> createRequest(@RequestBody RequestDto request) {
+		RequestDto resultDto = null;
 		try {
-			Request result = this.requestService.saveRequest(request);
+			Request requestParam = modelMapper.map(request, Request.class);
+			resultDto = modelMapper.map(this.requestService.saveRequest(requestParam), RequestDto.class);
 			
-			if(result != null) {
-				return new ResponseEntity<>(result, HttpStatus.CREATED);
+			if(resultDto != null) {
+				return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
 			} else {
-				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PutMapping("/updateRequest")
-	public ResponseEntity<Request> updateRequest(@RequestBody Request request) {
+	public ResponseEntity<RequestDto> updateRequest(@RequestBody RequestDto request) {
+		RequestDto resultDto = null;
 		try {
-			return new ResponseEntity<>(this.requestService.updateRequest(request), HttpStatus.OK);
+			Request requestParam = modelMapper.map(request, Request.class);
+			resultDto = modelMapper.map(this.requestService.updateRequest(requestParam), RequestDto.class);
+			return new ResponseEntity<>(resultDto, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@DeleteMapping("/deleteRequest/{idRequest}")
-	public ResponseEntity<Restaurant> deleteRequest(@PathVariable("idRequest") long idRequest) {
+	public ResponseEntity<RequestDto> deleteRequest(@PathVariable("idRequest") long idRequest) {
 		try {
 			this.requestService.deleteRequest(idRequest);
 			return new ResponseEntity<>(HttpStatus.OK);

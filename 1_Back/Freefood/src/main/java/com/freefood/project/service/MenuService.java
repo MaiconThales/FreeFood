@@ -1,7 +1,6 @@
 package com.freefood.project.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.freefood.project.model.Menu;
 
@@ -13,7 +12,7 @@ public interface MenuService {
 	 * @param id do Menu
 	 * @return Retorna o menu de acordo com o ID passado no parametro.
 	 * */
-	Optional<Menu> findById(Long idMenu);
+	Menu findById(Long idMenu);
 	
 	/**
 	 * Retorna todos os registros do banco.

@@ -1,4 +1,4 @@
-package com.freefood.project.serviceImpl;
+package com.freefood.project.service.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,8 +17,12 @@ public class RequestServiceImpl implements RequestService {
 	private RequestRepository requestRepository;
 	
 	@Override
-	public Optional<Request> findById(Long idRequest) {
-		return this.requestRepository.findById(idRequest);
+	public Request findById(Long idRequest) {
+		Optional<Request> result = this.requestRepository.findById(idRequest);
+		if(result.isPresent()) {
+			return result.get();
+		}
+		return null;
 	}
 
 	@Override

@@ -1,44 +1,18 @@
-package com.freefood.project.model;
+package com.freefood.project.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.freefood.project.model.Menu;
+import com.freefood.project.model.Restaurant;
+import com.freefood.project.model.User;
 
-@Entity
-@Table(name = "request")
-public class Request {
+public class RequestDto {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idRequest;
-	
-	@ManyToOne
-    @JoinColumn(name="idRestaurant", nullable=false)
 	private Restaurant restaurant;
-	
-	@ManyToOne
-    @JoinColumn(name="idMenu", nullable=false)
 	private Menu menu;
-
-	@ManyToOne
-    @JoinColumn(name="idUser", nullable=false)
 	private User user;
-	
-	@Column(nullable = false)
 	private String name;
-	
-	@Column(nullable = false)
 	private Long amount;
-	
-	@Column(nullable = false)
 	private String deliveryAddress;
-	
-	@Column(nullable = true)
 	private String observation;
 
 	public Long getIdRequest() {
@@ -104,5 +78,5 @@ public class Request {
 	public void setObservation(String observation) {
 		this.observation = observation;
 	}
-	
+
 }

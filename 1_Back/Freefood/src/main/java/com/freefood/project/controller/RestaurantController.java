@@ -1,8 +1,9 @@
 package com.freefood.project.controller;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.freefood.project.dto.RestaurantDto;
 import com.freefood.project.model.Restaurant;
 import com.freefood.project.service.RestaurantService;
 
@@ -27,11 +29,15 @@ public class RestaurantController {
 	
 	@Autowired
 	private RestaurantService restaurantService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@GetMapping("/all")
-	public ResponseEntity<List<Restaurant>> getAll() {
+	public ResponseEntity<List<RestaurantDto>> getAll() {
+		List<RestaurantDto> result = null;
 		try {
-			List<Restaurant> result = this.restaurantService.findAll();
+			result = this.restaurantService.findAll().stream().map(r -> modelMapper.map(r, RestaurantDto.class)).collect(Collectors.toList());
 			
 			if(result.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -39,53 +45,60 @@ public class RestaurantController {
 			
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@GetMapping("/findId")
-	public ResponseEntity<Restaurant> getFindById(@RequestParam Long idRestaurant) {
+	public ResponseEntity<RestaurantDto> getFindById(@RequestParam Long idRestaurant) {
+		RestaurantDto resultDto = null;
 		try {
-			Optional<Restaurant> result = this.restaurantService.findById(idRestaurant);
+			Restaurant result = this.restaurantService.findById(idRestaurant);
+			resultDto = modelMapper.map(result, RestaurantDto.class);
 			
-			if(result.isPresent()) {
-				return new ResponseEntity<>(result.get(), HttpStatus.OK);
+			if(resultDto != null) {
+				return new ResponseEntity<>(resultDto, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PostMapping("/createRestaurant")
-	public ResponseEntity<Restaurant> createRestaurant(@RequestBody Restaurant restaurant) {
+	public ResponseEntity<RestaurantDto> createRestaurant(@RequestBody RestaurantDto restaurant) {
+		RestaurantDto result = null;
 		try {
-			Restaurant result = this.restaurantService.saveRestaurant(restaurant);
+			Restaurant param = this.restaurantService.saveRestaurant(modelMapper.map(restaurant, Restaurant.class));
+			result = modelMapper.map(param, RestaurantDto.class);
 			
 			if(result != null) {
 				return new ResponseEntity<>(result, HttpStatus.CREATED);
 			} else {
-				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@PutMapping("/updateRestaurant")
-	public ResponseEntity<Restaurant> updateRestaurant(@RequestBody Restaurant restaurant) {
+	public ResponseEntity<RestaurantDto> updateRestaurant(@RequestBody RestaurantDto restaurant) {
+		RestaurantDto resultDto = null;
 		try {
-			return new ResponseEntity<>(this.restaurantService.updateRestaurant(restaurant), HttpStatus.OK);
+			Restaurant paramRestaurant = modelMapper.map(restaurant, Restaurant.class);
+			resultDto = modelMapper.map(this.restaurantService.updateRestaurant(paramRestaurant), RestaurantDto.class);
+			return new ResponseEntity<>(resultDto, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@DeleteMapping("/deleteRestaurant/{idRestaurant}")
-	public ResponseEntity<Restaurant> deleteRestaurant(@PathVariable("idRestaurant") long idRestaurant) {
+	public ResponseEntity<RestaurantDto> deleteRestaurant(@PathVariable("idRestaurant") long idRestaurant) {
 		try {
 			this.restaurantService.deleteRestaurant(idRestaurant);
 			return new ResponseEntity<>(HttpStatus.OK);

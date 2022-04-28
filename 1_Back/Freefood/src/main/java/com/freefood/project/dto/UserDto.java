@@ -1,4 +1,6 @@
-package com.freefood.project.model;
+package com.freefood.project.dto;
+
+import com.freefood.project.model.User;
 
 public class UserDto {
 

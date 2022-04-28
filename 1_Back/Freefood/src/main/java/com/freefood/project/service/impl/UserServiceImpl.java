@@ -1,4 +1,4 @@
-package com.freefood.project.serviceImpl;
+package com.freefood.project.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,9 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.freefood.project.dao.UserDao;
+import com.freefood.project.dto.UserDto;
 import com.freefood.project.model.Role;
 import com.freefood.project.model.User;
-import com.freefood.project.model.UserDto;
 import com.freefood.project.repository.UserRepository;
 import com.freefood.project.service.RoleService;
 import com.freefood.project.service.UserService;
@@ -37,8 +37,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	private BCryptPasswordEncoder bcryptEncoder;
 
 	@Override
-	public Optional<User> findById(Long idUser) {
-		return this.userRepository.findById(idUser);
+	public User findById(Long idUser) {
+		Optional<User> result = this.userRepository.findById(idUser);
+		if(result.isPresent()) {
+			return result.get();
+		}
+		return null;
 	}
 
 	@Override
@@ -65,7 +69,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 		Set<Role> roleSet = new HashSet<>();
 		roleSet.add(role);
 
-		/*if (nUser.getEmail().split("@")[1].equals("admin.edu")) {
+		//TODO
+		/***
+		if (nUser.getEmail().split("@")[1].equals("admin.edu")) {
 			role = roleService.findByName("ADMIN");
 			roleSet.add(role);
 		}*/
@@ -90,9 +96,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
 	private Set<SimpleGrantedAuthority> getAuthority(User user) {
 		Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-		user.getRoles().forEach(role -> {
-			authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-		});
+		user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName())));
 		return authorities;
 	}
 

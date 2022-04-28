@@ -1,4 +1,4 @@
-package com.freefood.project.serviceImpl;
+package com.freefood.project.service.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,8 +17,12 @@ public class MenuServiceImpl implements MenuService {
 	private MenuRepository menuRepository;
 	
 	@Override
-	public Optional<Menu> findById(Long idMenu) {
-		return this.menuRepository.findById(idMenu);
+	public Menu findById(Long idMenu) {
+		Optional<Menu> result = this.menuRepository.findById(idMenu);
+		if(result.isPresent()) {
+			return result.get();
+		}
+		return null;
 	}
 
 	@Override

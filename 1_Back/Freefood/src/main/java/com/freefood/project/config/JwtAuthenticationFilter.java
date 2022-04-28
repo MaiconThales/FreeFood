@@ -23,10 +23,10 @@ import io.jsonwebtoken.SignatureException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	@Value("${jwt.header.string}")
-	public String HEADER_STRING;
+	public String headerString;
 
 	@Value("${jwt.token.prefix}")
-	public String TOKEN_PREFIX;
+	public String tokenPrefix;
 
 	@Resource(name = "userService")
 	private UserDetailsService userDetailsService;
@@ -37,11 +37,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
-		String header = req.getHeader(HEADER_STRING);
+		String header = req.getHeader(headerString);
 		String username = null;
 		String authToken = null;
-		if (header != null && header.startsWith(TOKEN_PREFIX)) {
-			authToken = header.replace((TOKEN_PREFIX + " "), "");
+		if (header != null && header.startsWith(tokenPrefix)) {
+			authToken = header.replace((tokenPrefix + " "), "");
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(authToken);
 			} catch (IllegalArgumentException e) {
@@ -59,8 +59,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
 			if (jwtTokenUtil.validateToken(authToken, userDetails)) {
-				UsernamePasswordAuthenticationToken authentication = jwtTokenUtil.getAuthenticationToken(authToken,
-						SecurityContextHolder.getContext().getAuthentication(), userDetails);
+				UsernamePasswordAuthenticationToken authentication = jwtTokenUtil.getAuthenticationToken(authToken, userDetails);
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
 				logger.info("authenticated user " + username + ", setting security context");
 				SecurityContextHolder.getContext().setAuthentication(authentication);

@@ -1,7 +1,6 @@
 package com.freefood.project.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.freefood.project.model.Restaurant;
 
@@ -13,7 +12,7 @@ public interface RestaurantService {
 	 * @param id do Restaurante
 	 * @return Retorna o restaurante de acordo com o ID passado no parametro.
 	 * */
-	Optional<Restaurant> findById(Long idRestaurant);
+	Restaurant findById(Long idRestaurant);
 	
 	/**
 	 * Retorna todos os registros do banco.
