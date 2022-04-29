@@ -1,0 +1,1 @@
+export * from './menu-cru/menu-cru.component';

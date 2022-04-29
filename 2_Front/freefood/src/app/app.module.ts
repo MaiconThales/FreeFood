@@ -1,16 +1,27 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { TestComponent } from './components';
+import { 
+  DashboardPainelOneComponent,
+  LoginAuthenticationComponent,
+  LoginCreateComponent,
+  RestaurantCrudComponent,
+  RequestCrudComponent,
+  MenuCruComponent
+} from './components';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent
+    DashboardPainelOneComponent,
+    LoginAuthenticationComponent,
+    LoginCreateComponent,
+    RestaurantCrudComponent,
+    RequestCrudComponent,
+    MenuCruComponent
   ],
   imports: [
     BrowserModule,
