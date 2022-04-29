@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.freefood.project.config.TokenProvider;
+import com.freefood.project.dto.UserAuthDto;
 import com.freefood.project.dto.UserDto;
 import com.freefood.project.model.AuthToken;
 import com.freefood.project.model.LoginUser;
@@ -114,6 +115,7 @@ public class UserController {
 	@PostMapping("/authenticate")
 	public ResponseEntity<AuthToken> generateToken(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
+		//Token
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginUser.getUsername(),
@@ -122,14 +124,22 @@ public class UserController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(authentication);
-        return ResponseEntity.ok(new AuthToken(token));
+        
+        //User Info
+        User u = this.userService.findOne(loginUser.getUsername());
+        UserAuthDto uad = new UserAuthDto(	u.getUsername(), 
+        									u.getEmail(), 
+        									authentication.getAuthorities().stream().map(String::valueOf).collect(Collectors.toList()));
+        
+        return ResponseEntity.ok(new AuthToken(token, uad));
     }
 	
 	@PostMapping("/register")
-    public ResponseEntity<User> saveUser(@RequestBody UserDto user){
-		User result = null;
+    public ResponseEntity<UserDto> saveUser(@RequestBody UserDto user){
+		UserDto result = null;
 		try {
-			result = userService.save(user);
+			User userParam = modelMapper.map(user, User.class);
+			result = modelMapper.map(userService.save(userParam), UserDto.class);
 			
 			if(result != null) {
 				return new ResponseEntity<>(result, HttpStatus.CREATED);

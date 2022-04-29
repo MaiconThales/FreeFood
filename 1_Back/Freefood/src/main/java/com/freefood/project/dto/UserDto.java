@@ -1,6 +1,6 @@
 package com.freefood.project.dto;
 
-import com.freefood.project.model.User;
+import com.freefood.project.model.Role;
 
 public class UserDto {
 
@@ -10,7 +10,8 @@ public class UserDto {
 	private String phone;
 	private String name;
 	private String businessTitle;
-
+	private Role roles;
+	
 	public String getUsername() {
 		return username;
 	}
@@ -59,16 +60,12 @@ public class UserDto {
 		this.businessTitle = businessTitle;
 	}
 
-	public User getUserFromDto() {
-		User user = new User();
-		user.setUsername(username);
-		user.setPassword(password);
-		user.setEmail(email);
-		user.setPhone(phone);
-		user.setName(name);
-		user.setBusinessTitle(businessTitle);
+	public Role getRoles() {
+		return roles;
+	}
 
-		return user;
+	public void setRoles(Role roles) {
+		this.roles = roles;
 	}
 
 }

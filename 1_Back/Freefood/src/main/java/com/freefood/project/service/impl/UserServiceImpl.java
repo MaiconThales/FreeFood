@@ -14,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.freefood.project.dao.UserDao;
-import com.freefood.project.dto.UserDto;
 import com.freefood.project.model.Role;
 import com.freefood.project.model.User;
 import com.freefood.project.repository.UserRepository;
@@ -61,9 +60,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 	}
 
 	@Override
-	public User save(UserDto user) {
-		User nUser = user.getUserFromDto();
-		nUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+	public User save(User user) {
+		user.setPassword(bcryptEncoder.encode(user.getPassword()));
 
 		Role role = roleService.findByName("USER");
 		Set<Role> roleSet = new HashSet<>();
@@ -76,8 +74,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 			roleSet.add(role);
 		}*/
 
-		nUser.setRoles(roleSet);
-		return userDao.save(nUser);
+		user.setRoles(roleSet);
+		return userDao.save(user);
 	}
 
 	@Override

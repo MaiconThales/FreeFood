@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 import { LoginUser, User } from '../../../models';
 import { MyErrorStateMatcher } from '../../../errors';
 import { LoginCreateComponent } from '../login-create/login-create.component';
+import { AuthService, TokenStorageService } from '../../../services';
+import { environment as e } from '../../../../environments/environment.prod';
 
 @Component({
   selector: 'app-login-authentication',
@@ -17,14 +20,30 @@ export class LoginAuthenticationComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   loginUser!: LoginUser;
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
+  isLoggedIn = false;
+  isLoginFailed = false;
+  roles: string[] = [];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    private authService: AuthService,
+    private tokenStorage: TokenStorageService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
+
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getUser().roles;
+    }
   }
 
   onSubmit(): void {
@@ -33,7 +52,20 @@ export class LoginAuthenticationComponent implements OnInit {
       password: this.loginForm.controls['password'].value
     }
 
-    console.log("Olha aqui o valor: ", this.loginUser);
+    this.authService.login(this.loginUser).subscribe({
+      next: data => {
+        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveUser(data);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.tokenStorage.getUser().user.roles;
+        this.router.navigate([e.REDIRECT_DASHBOARD]);
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    });
   }
 
   openDialogCreateUser(): void {
@@ -47,14 +79,21 @@ export class LoginAuthenticationComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
         this.createUser(result);
-      } else {
-        console.log("Nada cadastrado");
       }
     });
   }
 
   createUser(u: User): void {
-    console.log("Usuário criado: ", u);
+    this.authService.register(u).subscribe({
+      next: data => {
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
+      }
+    });
   }
 
   resetForm(): void {

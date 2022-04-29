@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import  { TokenStorageService } from '../../../services';
+
 @Component({
   selector: 'app-dashboard-painel-one',
   templateUrl: './dashboard-painel-one.component.html',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardPainelOneComponent implements OnInit {
 
-  constructor() { }
+  currentUser: any;
+
+  constructor(private token: TokenStorageService) { }
 
   ngOnInit(): void {
+    this.currentUser = this.token.getUser();
+    console.log("Opa: ", this.currentUser);
   }
 
 }

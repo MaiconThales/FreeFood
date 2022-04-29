@@ -27,12 +27,17 @@
             </mat-form-field>
         </div>
 
+        <!--MSGs-->
+        <div class="alert alert-warning" *ngIf="isSignUpFailed">
+            Signup failed!<br />{{ errorMessage }}
+        </div>
+
         <!--Btn-->
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
             <button mat-button (click)="openDialogCreateUser()">
                 Create new user
             </button>
-            <button mat-button color="primary" (click)="onSubmit()" type="submit" [disabled]="!loginForm.valid">
+            <button mat-button color="primary" (click)="onSubmit()" [disabled]="!loginForm.valid">
                 Logar
             </button>
         </div>
