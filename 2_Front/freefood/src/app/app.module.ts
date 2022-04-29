@@ -20,7 +20,8 @@ import {
   LoginCreateComponent,
   RestaurantCrudComponent,
   RequestCrudComponent,
-  MenuCruComponent
+  MenuCruComponent,
+  NotFoundComponent
 } from './components';
 
 export function tokenGetter() {
@@ -35,7 +36,8 @@ export function tokenGetter() {
     LoginCreateComponent,
     RestaurantCrudComponent,
     RequestCrudComponent,
-    MenuCruComponent
+    MenuCruComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
