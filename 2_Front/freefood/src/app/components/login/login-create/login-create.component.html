@@ -1,1 +1,88 @@
-<p>login-create works!</p>
+<form [formGroup]="userCreateForm">
+    <!--Username-->
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <mat-form-field appearance="standard">
+            <mat-label>
+                Username
+            </mat-label>
+            <input matInput id="username" type="text" formControlName="username">
+            <mat-error *ngIf="userCreateForm.controls['username'].hasError('required')">
+                Username is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <!--password-->
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <mat-form-field appearance="standard">
+            <mat-label>
+                Password
+            </mat-label>
+            <input matInput id="password" type="password" formControlName="password">
+            <mat-error *ngIf="userCreateForm.controls['password'].hasError('required')">
+                Password is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <!--Email-->
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <mat-form-field appearance="standard">
+            <mat-label>
+                E-mail
+            </mat-label>
+            <input matInput id="email" type="email" formControlName="email">
+            <mat-error *ngIf="userCreateForm.controls['email'].hasError('required')">
+                E-mail is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <!--Phone-->
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <mat-form-field appearance="standard">
+            <mat-label>
+                Phone
+            </mat-label>
+            <input matInput id="phone" type="text" formControlName="phone">
+            <mat-error *ngIf="userCreateForm.controls['phone'].hasError('required')">
+                Phone is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <!--Name-->
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <mat-form-field appearance="standard">
+            <mat-label>
+                Name
+            </mat-label>
+            <input matInput id="name" type="text" formControlName="name">
+            <mat-error *ngIf="userCreateForm.controls['name'].hasError('required')">
+                Name is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <!--BusinessTitle-->
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <mat-form-field appearance="standard">
+            <mat-label>
+                Business Title
+            </mat-label>
+            <input matInput id="businessTitle" type="text" formControlName="businessTitle">
+            <mat-error *ngIf="userCreateForm.controls['businessTitle'].hasError('required')">
+                Business Title is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!--Btns-->
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <div>
+            <button (click)="onNoClick();" class="colorBtnGeneral" mat-icon-button>
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div>
+            <button (click)="onSubmit()" type="submit" [disabled]="!userCreateForm.valid" mat-icon-button>
+                <mat-icon>save</mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

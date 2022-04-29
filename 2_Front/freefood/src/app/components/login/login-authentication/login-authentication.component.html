@@ -1,1 +1,40 @@
-<p>login-authentication works!</p>
+<form [formGroup]="loginForm" novalidate>
+    <div class="container">
+        <!--Username-->
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+            <mat-form-field appearance="standard">
+                <mat-label>
+                    Username
+                </mat-label>
+                <input id="username" matInput type="text" formControlName="username" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
+                    Username is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <!--Password-->
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+            <mat-form-field appearance="standard">
+                <mat-label>
+                    Password
+                </mat-label>
+                <input id="password" autocomplete="current-password" matInput type="password" formControlName="password"
+                    [errorStateMatcher]="matcher">
+                <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+                    Password is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <!--Btn-->
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+            <button mat-button (click)="openDialogCreateUser()">
+                Create new user
+            </button>
+            <button mat-button color="primary" (click)="onSubmit()" type="submit" [disabled]="!loginForm.valid">
+                Logar
+            </button>
+        </div>
+    </div>
+</form>

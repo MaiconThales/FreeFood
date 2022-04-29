@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { 
   DashboardPainelOneComponent,
   LoginAuthenticationComponent,
-  LoginCreateComponent,
   RestaurantCrudComponent,
   MenuCruComponent,
   RequestCrudComponent
@@ -14,7 +13,6 @@ const routes: Routes = [
   { path: '', redirectTo: '/authentication', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardPainelOneComponent },
   { path: 'authentication', component: LoginAuthenticationComponent },
-  { path: 'user-create', component: LoginCreateComponent },
   { path: 'restaurant', component: RestaurantCrudComponent },
   { path: 'menu', component: MenuCruComponent },
   { path: 'request', component: RequestCrudComponent }
