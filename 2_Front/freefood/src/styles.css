@@ -2,3 +2,21 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/*CSS BUTTONS*/
+.button-general {
+    background-color: #dd0000;
+    color: #fdfdfd;
+}
+.button-general:disabled {
+    background-color: #fdfdfd;
+}
+.button-general-cancel {
+    color: #dd0000;
+}
+.button-general-cancel {
+    color: #dd0000;
+}
+.button-general-save {
+    color: #3fe00e;
+}

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { LayoutMenuService } from '../index';
+
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
 
@@ -8,10 +10,13 @@ const USER_KEY = 'auth-user';
 })
 export class TokenStorageService {
 
-  constructor() { }
+  constructor(
+    private layoutMenuService: LayoutMenuService
+  ) { }
 
   signOut(): void {
     window.sessionStorage.clear();
+    this.layoutMenuService.alterValue(false);
   }
 
   public saveToken(token: string): void {
@@ -20,7 +25,11 @@ export class TokenStorageService {
   }
 
   public getToken(): string | null {
-    return window.sessionStorage.getItem(TOKEN_KEY);
+    var token = window.sessionStorage.getItem(TOKEN_KEY);
+    if(token != null) {
+      this.layoutMenuService.alterValue(true);
+    }
+    return token;
   }
 
   public saveUser(user: any): void {

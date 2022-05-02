@@ -1,5 +1,5 @@
 <form [formGroup]="userCreateForm">
-    <!--Username-->
+    <!--Username && password-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <mat-form-field appearance="standard">
             <mat-label>
@@ -10,9 +10,6 @@
                 Username is <strong>required</strong>
             </mat-error>
         </mat-form-field>
-    </div>
-    <!--password-->
-    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <mat-form-field appearance="standard">
             <mat-label>
                 Password
@@ -23,7 +20,7 @@
             </mat-error>
         </mat-form-field>
     </div>
-    <!--Email-->
+    <!--Email && Phone-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <mat-form-field appearance="standard">
             <mat-label>
@@ -34,9 +31,6 @@
                 E-mail is <strong>required</strong>
             </mat-error>
         </mat-form-field>
-    </div>
-    <!--Phone-->
-    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <mat-form-field appearance="standard">
             <mat-label>
                 Phone
@@ -47,7 +41,7 @@
             </mat-error>
         </mat-form-field>
     </div>
-    <!--Name-->
+    <!--Name && BusinessTitle-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <mat-form-field appearance="standard">
             <mat-label>
@@ -58,9 +52,6 @@
                 Name is <strong>required</strong>
             </mat-error>
         </mat-form-field>
-    </div>
-    <!--BusinessTitle-->
-    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <mat-form-field appearance="standard">
             <mat-label>
                 Business Title
@@ -75,12 +66,12 @@
     <!--Btns-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <div>
-            <button (click)="onNoClick();" class="colorBtnGeneral" mat-icon-button>
+            <button class="button-general-cancel" (click)="onNoClick();" mat-icon-button>
                 <mat-icon>close</mat-icon>
             </button>
         </div>
         <div>
-            <button (click)="onSubmit()" type="submit" [disabled]="!userCreateForm.valid" mat-icon-button>
+            <button class="button-general-save" (click)="onSubmit()" type="submit" [disabled]="!userCreateForm.valid" mat-icon-button>
                 <mat-icon>save</mat-icon>
             </button>
         </div>

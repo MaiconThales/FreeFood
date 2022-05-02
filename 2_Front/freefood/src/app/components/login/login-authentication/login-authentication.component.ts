@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+1
 import { LoginUser, User } from '../../../models';
 import { MyErrorStateMatcher } from '../../../errors';
 import { LoginCreateComponent } from '../login-create/login-create.component';
@@ -31,7 +36,8 @@ export class LoginAuthenticationComponent implements OnInit {
     public dialog: MatDialog,
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -62,8 +68,13 @@ export class LoginAuthenticationComponent implements OnInit {
         this.router.navigate([e.REDIRECT_DASHBOARD]);
       },
       error: err => {
-        this.errorMessage = err.error.message;
+        this.errorMessage = err.message;
         this.isLoginFailed = true;
+        this.snackBar.open('Login ou senha inválido', '', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 10000
+        });
       }
     });
   }
@@ -73,7 +84,7 @@ export class LoginAuthenticationComponent implements OnInit {
 
     const dialogRef = this.dialog.open(LoginCreateComponent, {
       width: '500px',
-      height: '500px'
+      height: '350px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
