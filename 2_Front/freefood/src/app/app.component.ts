@@ -4,7 +4,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 import { TokenStorageService, LayoutMenuService } from './services';
 import { environment as e } from '../environments/environment.prod';
-import { UserAuth } from './models';
+import { JwtResponse } from './models';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +17,13 @@ export class AppComponent {
   showMenu: boolean = false;
 
   avatarImage!: string;
-  infoUser: UserAuth = {
+  infoUser: JwtResponse = {
     username: '',
     email: '',
-    roles: []
+    roles: [],
+    token: '',
+    type: '',
+    id: 0
   };
 
   constructor(
@@ -41,8 +44,8 @@ export class AppComponent {
     if (!!this.tokenStorageService.getToken()) {
       const userInfo = this.tokenStorageService.getUser();
       this.avatarImage = "../assets/img/avatar/avatar.jpg";
-      this.infoUser.username = userInfo.user.username;
-      this.infoUser.email = userInfo.user.email;
+      this.infoUser.username = userInfo.username;
+      this.infoUser.email = userInfo.email;
 
       this.layoutMenuService.setValueUser(this.infoUser);
     }

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { environment as e } from '../../../environments/environment.prod';
-import { LoginUser, User } from '../../models';
+import { LoginRequest, User } from '../../models';
 import { TokenStorageService } from '../';
 
 const httpOptions = {
@@ -22,12 +22,12 @@ export class AuthService {
     private tokenStorageService: TokenStorageService
   ) { }
 
-  login(userLogin: LoginUser): Observable<any> {
-    return this.http.post(e.AUTH_API + e.USER_CONTROLLER + '/authenticate', userLogin, httpOptions);
+  login(userLogin: LoginRequest): Observable<any> {
+    return this.http.post(e.AUTH_API + e.USER_CONTROLLER + '/auth/signin', userLogin, httpOptions);
   }
 
   register(userData: User): Observable<any> {
-    return this.http.post(e.AUTH_API + e.USER_CONTROLLER + '/register', userData, httpOptions);
+    return this.http.post(e.AUTH_API + e.USER_CONTROLLER + '/auth/signup', userData, httpOptions);
   }
 
   public isAuthenticated(): boolean {

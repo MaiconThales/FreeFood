@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
-import { UserAuth } from '../../models';
+import { JwtResponse } from '../../models';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +8,11 @@ import { UserAuth } from '../../models';
 export class LayoutMenuService {
 
   showMenu = new EventEmitter<boolean>();
-  user = new EventEmitter<UserAuth>();
+  user = new EventEmitter<JwtResponse>();
 
   constructor() { }
 
-  setValueUser(u: UserAuth): void {
+  setValueUser(u: JwtResponse): void {
     this.user.emit(u);
   }
 

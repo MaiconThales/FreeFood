@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 1
-import { LoginUser, User, UserAuth } from '../../../models';
+import { JwtResponse, LoginRequest, User } from '../../../models';
 import { MyErrorStateMatcher } from '../../../errors';
 import { LoginCreateComponent } from '../login-create/login-create.component';
 import { AuthService, TokenStorageService, LayoutMenuService } from '../../../services';
@@ -20,9 +20,9 @@ export class LoginAuthenticationComponent implements OnInit {
   loginForm!: FormGroup;
   matcher = new MyErrorStateMatcher();
 
-  loginUser!: LoginUser;
+  loginUser!: LoginRequest;
   errorMessage = '';
-  userInfo!: UserAuth;
+  userInfo!: JwtResponse;
 
   constructor(
     public dialog: MatDialog,
@@ -40,7 +40,7 @@ export class LoginAuthenticationComponent implements OnInit {
     });
     if (this.tokenStorage.getToken()) {
       this.layoutMenuService.alterValue(true);
-      this.userInfo = this.tokenStorage.getUser().user;
+      this.userInfo = this.tokenStorage.getUser();
       this.layoutMenuService.setValueUser(this.userInfo);
     }
   }
@@ -55,7 +55,7 @@ export class LoginAuthenticationComponent implements OnInit {
       next: data => {
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
-        this.userInfo = data.user;
+        this.userInfo = data;
         this.layoutMenuService.alterValue(true);
         this.layoutMenuService.setValueUser(this.userInfo);
         this.router.navigate([e.REDIRECT_DASHBOARD]);
@@ -91,7 +91,13 @@ export class LoginAuthenticationComponent implements OnInit {
 
   createUser(u: User): void {
     this.authService.register(u).subscribe({
-      next: data => {},
+      next: data => {
+        this.snackBar.open(data.message, 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 10000
+        });
+      },
       error: err => {
         this.errorMessage = err.error.message;
       }
