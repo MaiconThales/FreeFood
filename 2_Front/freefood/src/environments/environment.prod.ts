@@ -6,5 +6,6 @@ export const environment = {
   REDIRECT_AUTHENTICATION: "/authentication",
   REDIRECT_RESTAURANT: "/restaurant",
   REDIRECT_MENU: "/menu",
-  REDIRECT_RESQUEST: "/request"
+  REDIRECT_RESQUEST: "/request",
+  REDIRECT_USER_EDIT: "/profile-edit"
 };

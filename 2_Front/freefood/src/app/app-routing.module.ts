@@ -9,7 +9,8 @@ import {
   RestaurantCrudComponent,
   MenuCruComponent,
   RequestCrudComponent,
-  NotFoundComponent
+  NotFoundComponent,
+  UserEditComponent
 } from './components';
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'menu', component: MenuCruComponent, canActivate: [AuthGuard] },
   { path: 'request', component: RequestCrudComponent, canActivate: [AuthGuard] },
   { path: 'not-found', component: NotFoundComponent },
+  { path: 'profile-edit', component: UserEditComponent },
   { path: '**', redirectTo: '/not-found', pathMatch: 'full' }
 ];
 

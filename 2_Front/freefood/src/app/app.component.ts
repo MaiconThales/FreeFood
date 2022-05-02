@@ -69,6 +69,10 @@ export class AppComponent {
         this.router.navigate([e.REDIRECT_RESQUEST]);
         this.sidenav.close();
         break;
+      case e.REDIRECT_USER_EDIT:
+          this.router.navigate([e.REDIRECT_USER_EDIT]);
+          this.sidenav.close();
+          break;
     }
   }
 

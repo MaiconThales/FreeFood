@@ -25,7 +25,8 @@ import {
   RestaurantCrudComponent,
   RequestCrudComponent,
   MenuCruComponent,
-  NotFoundComponent
+  NotFoundComponent,
+  UserEditComponent
 } from './components';
 
 export function tokenGetter() {
@@ -41,7 +42,8 @@ export function tokenGetter() {
     RestaurantCrudComponent,
     RequestCrudComponent,
     MenuCruComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +53,8 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["example.com"],
-        disallowedRoutes: ["http://example.com/examplebadroute/"],
+        allowedDomains: ["localhost:8080"],
+        disallowedRoutes: [""],
       },
     }),
     ReactiveFormsModule,

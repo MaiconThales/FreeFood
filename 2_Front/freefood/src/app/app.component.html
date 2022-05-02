@@ -10,8 +10,14 @@
     <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
         <img class="avatar mat-elevation-z8" src={{avatarImage}} />
 
-        <h4 class="name">{{infoUser.username}}</h4>
+        <h4 class="name">
+            {{infoUser.username}}
+        </h4>
         <p class="designation">{{infoUser.email}}</p>
+        <button mat-button class="menu-button" (click)="redirectComponent('/profile-edit')">
+            <mat-icon>edit</mat-icon>
+            <span>Edit profile</span>
+        </button>
 
         <mat-divider></mat-divider>
 
