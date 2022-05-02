@@ -2,16 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 1
-import { LoginUser, User } from '../../../models';
+import { LoginUser, User, UserAuth } from '../../../models';
 import { MyErrorStateMatcher } from '../../../errors';
 import { LoginCreateComponent } from '../login-create/login-create.component';
-import { AuthService, TokenStorageService } from '../../../services';
+import { AuthService, TokenStorageService, LayoutMenuService } from '../../../services';
 import { environment as e } from '../../../../environments/environment.prod';
 
 @Component({
@@ -25,19 +21,16 @@ export class LoginAuthenticationComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   loginUser!: LoginUser;
-  isSuccessful = false;
-  isSignUpFailed = false;
   errorMessage = '';
-  isLoggedIn = false;
-  isLoginFailed = false;
-  roles: string[] = [];
+  userInfo!: UserAuth;
 
   constructor(
     public dialog: MatDialog,
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private layoutMenuService: LayoutMenuService
   ) { }
 
   ngOnInit(): void {
@@ -45,10 +38,10 @@ export class LoginAuthenticationComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
-
     if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-      this.roles = this.tokenStorage.getUser().roles;
+      this.layoutMenuService.alterValue(true);
+      this.userInfo = this.tokenStorage.getUser().user;
+      this.layoutMenuService.setValueUser(this.userInfo);
     }
   }
 
@@ -62,14 +55,16 @@ export class LoginAuthenticationComponent implements OnInit {
       next: data => {
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.roles = this.tokenStorage.getUser().user.roles;
+        this.userInfo = data.user;
+        this.layoutMenuService.alterValue(true);
+        this.layoutMenuService.setValueUser(this.userInfo);
         this.router.navigate([e.REDIRECT_DASHBOARD]);
+
       },
       error: err => {
+        this.resetForm();
         this.errorMessage = err.message;
-        this.isLoginFailed = true;
+        this.layoutMenuService.alterValue(false);
         this.snackBar.open('Login ou senha inválido', '', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -96,13 +91,9 @@ export class LoginAuthenticationComponent implements OnInit {
 
   createUser(u: User): void {
     this.authService.register(u).subscribe({
-      next: data => {
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
-      },
+      next: data => {},
       error: err => {
         this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
       }
     });
   }

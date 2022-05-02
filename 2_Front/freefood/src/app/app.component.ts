@@ -4,6 +4,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 import { TokenStorageService, LayoutMenuService } from './services';
 import { environment as e } from '../environments/environment.prod';
+import { UserAuth } from './models';
 
 @Component({
   selector: 'app-root',
@@ -11,19 +12,16 @@ import { environment as e } from '../environments/environment.prod';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Freefood';
-
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   showMenu: boolean = false;
 
-  private roles: string[] = [];
-  isLoggedIn = false;
-  showAdminBoard = false;
-  showModeratorBoard = false;
-  username?: string;
-  email?: string;
   avatarImage!: string;
+  infoUser: UserAuth = {
+    username: '',
+    email: '',
+    roles: []
+  };
 
   constructor(
     private tokenStorageService: TokenStorageService,
@@ -34,18 +32,19 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
     this.layoutMenuService.showMenu.subscribe(show => {
       this.showMenu = show;
     });
-    if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      this.roles = user.user.roles;
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
-      this.username = user.user.username;
-      this.email = user.user.email;
+    this.layoutMenuService.user.subscribe(u => {
+      this.infoUser = u;
+    });
+    if (!!this.tokenStorageService.getToken()) {
+      const userInfo = this.tokenStorageService.getUser();
       this.avatarImage = "../assets/img/avatar/avatar.jpg";
+      this.infoUser.username = userInfo.user.username;
+      this.infoUser.email = userInfo.user.email;
+
+      this.layoutMenuService.setValueUser(this.infoUser);
     }
   }
 
