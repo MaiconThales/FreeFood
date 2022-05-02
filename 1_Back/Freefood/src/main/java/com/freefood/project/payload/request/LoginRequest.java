@@ -1,20 +1,14 @@
-package com.freefood.project.model;
+package com.freefood.project.payload.request;
 
-public class LoginUser {
-	
+import javax.validation.constraints.NotBlank;
+
+public class LoginRequest {
+
+	@NotBlank
 	private String username;
 	
+	@NotBlank
 	private String password;
-	
-	public LoginUser() {
-		
-	}
-	
-	public LoginUser(String username, String password) {
-		super();
-		this.username = username;
-		this.password = password;
-	}
 
 	public String getUsername() {
 		return username;
@@ -31,5 +25,5 @@ public class LoginUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 }

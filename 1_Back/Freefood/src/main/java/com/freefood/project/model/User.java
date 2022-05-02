@@ -48,6 +48,16 @@ public class User {
 			@JoinColumn(name = "ROLE_ID") })
 	private Set<Role> roles;
 
+	public User() {
+		
+	}
+	
+	public User(String username, String email, String password) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
+
 	public Long getId() {
 		return id;
 	}

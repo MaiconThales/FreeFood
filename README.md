@@ -13,8 +13,10 @@ Projeto de teste para fazer algo semelhante ao IFood. Utilizando Spring Boot par
 - Back: Após baixar o projeto deverá fazer o update do Maven para que os Frameworks sejam puxados.
 - - Abaixo script para executar no banco: 
 ```MySQL 
-	INSERT INTO role (id, description, name) VALUES (4, 'Admin role', 'ADMIN');
-	INSERT INTO role (id, description, name) VALUES (5, 'User role', 'USER');
+	INSERT INTO role (id, description, name) 
+	VALUES 	(1, 'Admin role', 'ROLE_USER'),
+			(2, 'User role', 'ROLE_MODERATOR'),
+			(3, 'Admin role', 'ROLE_ADMIN');
 ```
 
 # Links utilizados para auxilios

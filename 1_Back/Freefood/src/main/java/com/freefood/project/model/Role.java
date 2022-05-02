@@ -2,6 +2,8 @@ package com.freefood.project.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,8 +17,9 @@ public class Role {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
+	@Enumerated(EnumType.STRING)
     @Column
-    private String name;
+    private ERole name;
 
     @Column
     private String description;
@@ -29,11 +32,11 @@ public class Role {
 		this.id = id;
 	}
 
-	public String getName() {
+	public ERole getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(ERole name) {
 		this.name = name;
 	}
 
@@ -44,5 +47,7 @@ public class Role {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	
 	
 }
