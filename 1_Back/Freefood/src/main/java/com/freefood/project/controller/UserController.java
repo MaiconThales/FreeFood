@@ -2,6 +2,7 @@ package com.freefood.project.controller;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,16 +31,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.freefood.project.dto.UserDto;
+import com.freefood.project.exception.TokenRefreshException;
 import com.freefood.project.model.ERole;
+import com.freefood.project.model.RefreshToken;
 import com.freefood.project.model.Role;
 import com.freefood.project.model.User;
+import com.freefood.project.payload.request.LogOutRequest;
 import com.freefood.project.payload.request.LoginRequest;
 import com.freefood.project.payload.request.SignupRequest;
+import com.freefood.project.payload.request.TokenRefreshRequest;
 import com.freefood.project.payload.response.JwtResponse;
 import com.freefood.project.payload.response.MessageResponse;
+import com.freefood.project.payload.response.TokenRefreshResponse;
 import com.freefood.project.repository.RoleRepository;
 import com.freefood.project.repository.UserRepository;
 import com.freefood.project.security.jwt.JwtUtils;
+import com.freefood.project.security.services.RefreshTokenService;
 import com.freefood.project.security.services.UserDetailsImpl;
 import com.freefood.project.service.UserService;
 
@@ -47,7 +54,7 @@ import com.freefood.project.service.UserService;
 @RequestMapping("/user")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
-	
+
 	static final String ROLENOTFOUND = "Error: Role is not found.";
 
 	@Autowired
@@ -71,8 +78,11 @@ public class UserController {
 	@Autowired
 	private JwtUtils jwtUtils;
 
+	@Autowired
+	RefreshTokenService refreshTokenService;
+
 	@GetMapping("/all")
-	@PreAuthorize("hasRole('ADMIN')")
+	// @PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<UserDto>> getAll() {
 		List<UserDto> result = null;
 		try {
@@ -137,19 +147,22 @@ public class UserController {
 
 	@PostMapping("/auth/signin")
 	public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
 
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+		String jwt = jwtUtils.generateJwtToken(userDetails);
+
 		List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.toList());
 
-		return ResponseEntity.ok(
-				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+		RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+
+		return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
+				userDetails.getUsername(), userDetails.getEmail(), roles));
 	}
 
 	@PostMapping("/auth/signup")
@@ -200,6 +213,29 @@ public class UserController {
 		userService.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	}
+
+	@PostMapping("/auth/refreshtoken")
+	public ResponseEntity<TokenRefreshResponse> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
+		/**TODO
+		 * Futuramente tem que colocar uma maneira de atualizar o horário, pois atualmente só faz um reflesh
+		 * */
+		String requestRefreshToken = request.getRefreshToken();
+		
+		Optional<User> resultUser = refreshTokenService.findByToken(requestRefreshToken).map(refreshTokenService::verifyExpiration)
+																						.map(RefreshToken::getUser);
+		if(resultUser.isPresent()) {
+			String token = jwtUtils.generateTokenFromUsername(resultUser.get().getUsername());
+			return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+		}
+		
+		throw new TokenRefreshException(requestRefreshToken, "Refresh token is not in database!");
+	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<MessageResponse> logoutUser(@Valid @RequestBody LogOutRequest logOutRequest) {
+		refreshTokenService.deleteByUserId(logOutRequest.getUserId());
+		return ResponseEntity.ok(new MessageResponse("Log out successful!"));
 	}
 
 }

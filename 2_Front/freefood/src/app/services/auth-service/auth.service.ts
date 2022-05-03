@@ -30,6 +30,12 @@ export class AuthService {
     return this.http.post(e.AUTH_API + e.USER_CONTROLLER + '/auth/signup', userData, httpOptions);
   }
 
+  refreshToken(token: string) {
+    return this.http.post(e.AUTH_API + e.USER_CONTROLLER + '/auth/refreshtoken', {
+      refreshToken: token
+    }, httpOptions);
+  }
+
   public isAuthenticated(): boolean {
     const token = this.tokenStorageService.getToken();
 

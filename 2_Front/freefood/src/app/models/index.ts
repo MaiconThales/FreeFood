@@ -7,3 +7,4 @@ export * from './user/messageResponse';
 export * from './user/signupRequest';
 export * from './menu/menu';
 export * from './request/request';
+export * from './event/eventData';

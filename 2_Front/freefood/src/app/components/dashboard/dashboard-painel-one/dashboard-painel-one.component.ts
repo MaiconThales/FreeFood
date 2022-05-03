@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import  { TokenStorageService } from '../../../services';
+import { UserService } from '../../../services';
+import { EventBusService } from '../../../shared/event-bus.service';
+import { EventData } from 'src/app/models';
 
 @Component({
   selector: 'app-dashboard-painel-one',
@@ -9,13 +11,30 @@ import  { TokenStorageService } from '../../../services';
 })
 export class DashboardPainelOneComponent implements OnInit {
 
-  currentUser: any;
+  content?: string;
 
-  constructor(private token: TokenStorageService) { }
+  constructor(
+    private userService: UserService,
+    private eventBusService: EventBusService
+  ) { }
 
   ngOnInit(): void {
-    this.currentUser = this.token.getUser();
-    console.log("Opa: ", this.currentUser);
+    
+  }
+
+  showTest(): void {
+    this.userService.listAllUser().subscribe({
+      next: data => {
+        console.log("Resultado: ", data);
+      },
+      error: err => {
+        this.content = err.error.message || err.error || err.message;
+
+        if (err.status === 403)
+          this.eventBusService.emit(new EventData('logout', null));
+        console.log("Error");
+      }
+    });
   }
 
 }

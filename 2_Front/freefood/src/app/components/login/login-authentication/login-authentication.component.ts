@@ -53,13 +53,14 @@ export class LoginAuthenticationComponent implements OnInit {
 
     this.authService.login(this.loginUser).subscribe({
       next: data => {
-        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveToken(data.accessToken);
+        this.tokenStorage.saveRefreshToken(data.refreshToken);
         this.tokenStorage.saveUser(data);
+
         this.userInfo = data;
         this.layoutMenuService.alterValue(true);
         this.layoutMenuService.setValueUser(this.userInfo);
         this.router.navigate([e.REDIRECT_DASHBOARD]);
-
       },
       error: err => {
         this.resetForm();

@@ -29,6 +29,10 @@ import {
   UserEditComponent
 } from './components';
 
+import { 
+  authInterceptorProviders 
+} from './helpers/auth.interceptor';
+
 export function tokenGetter() {
   return localStorage.getItem("access_token");
 }
@@ -70,7 +74,9 @@ export function tokenGetter() {
     MatDividerModule,
     MatSnackBarModule
   ],
-  providers: [],
+  providers: [
+    authInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

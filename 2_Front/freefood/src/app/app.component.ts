@@ -1,10 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Subscription } from 'rxjs';
 
 import { TokenStorageService, LayoutMenuService } from './services';
 import { environment as e } from '../environments/environment.prod';
 import { JwtResponse } from './models';
+import { EventBusService } from './shared/event-bus.service';
 
 @Component({
   selector: 'app-root',
@@ -26,12 +28,15 @@ export class AppComponent {
     id: 0
   };
 
+  eventBusSub?: Subscription;
+
   constructor(
     private tokenStorageService: TokenStorageService,
     private router: Router,
-    private layoutMenuService: LayoutMenuService
+    private layoutMenuService: LayoutMenuService,
+    private eventBusService: EventBusService
   ) {
-    
+
   }
 
   ngOnInit(): void {
@@ -48,6 +53,15 @@ export class AppComponent {
       this.infoUser.email = userInfo.email;
 
       this.layoutMenuService.setValueUser(this.infoUser);
+    }
+    this.eventBusSub = this.eventBusService.on('logout', () => {
+      this.logout();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.eventBusSub) {
+      this.eventBusSub.unsubscribe();
     }
   }
 
@@ -70,9 +84,9 @@ export class AppComponent {
         this.sidenav.close();
         break;
       case e.REDIRECT_USER_EDIT:
-          this.router.navigate([e.REDIRECT_USER_EDIT]);
-          this.sidenav.close();
-          break;
+        this.router.navigate([e.REDIRECT_USER_EDIT]);
+        this.sidenav.close();
+        break;
     }
   }
 
