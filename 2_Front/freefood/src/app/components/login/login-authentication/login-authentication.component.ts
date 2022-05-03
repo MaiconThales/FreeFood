@@ -9,6 +9,7 @@ import { MyErrorStateMatcher } from '../../../errors';
 import { LoginCreateComponent } from '../login-create/login-create.component';
 import { AuthService, TokenStorageService, LayoutMenuService } from '../../../services';
 import { environment as e } from '../../../../environments/environment.prod';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login-authentication',
@@ -30,7 +31,8 @@ export class LoginAuthenticationComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private layoutMenuService: LayoutMenuService
+    private layoutMenuService: LayoutMenuService,
+    public translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -61,6 +63,8 @@ export class LoginAuthenticationComponent implements OnInit {
         this.layoutMenuService.alterValue(true);
         this.layoutMenuService.setValueUser(this.userInfo);
         this.router.navigate([e.REDIRECT_DASHBOARD]);
+
+        this.translate.use(data.language);
       },
       error: err => {
         this.resetForm();

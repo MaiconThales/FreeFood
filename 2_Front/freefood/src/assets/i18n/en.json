@@ -1,0 +1,27 @@
+{
+    "GLOBAL_WORD": {
+        "WORD_REQUERID_MASCULINE": "requerid",
+        "WORD_REQUERID_FEMALE": "requerid"
+    },
+    "SLIDE_BAR": {
+        "EDIT_PROFILE": "Edit profile",
+        "RESTAURANT": "Restaurant",
+        "MENU": "Menu",
+        "REQUEST": "Request",
+        "HELP": "Help",
+        "LOGOUT": "Logout"
+    },
+    "LOGIN": {
+        "BTN_CREATE_USER": "Create user",
+        "BTN_LOGIN": "Logar",
+        "LABEL_USERNAME": "Username",
+        "LABEL_PASSWORD": "Password",
+        "LABEL_EMAIL": "E-mail",
+        "LABEL_LANGUAGE": "Language",
+        "MSG_INPUT_USERNAME": "Username is",
+        "MSG_INPUT_PASSWORD": "Password is",
+        "MSG_INPUT_EMAIL": "E-mail é",
+        "MSG_INPUT_LANGUAGE": "Language é",
+        "TITLE_CREATE_USER": "Create user"
+    }
+}

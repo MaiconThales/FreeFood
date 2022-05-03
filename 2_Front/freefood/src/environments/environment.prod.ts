@@ -12,5 +12,5 @@ export const environment = {
   REDIRECT_RESQUEST: "/request",
   REDIRECT_USER_EDIT: "/profile-edit",
 
-  LANGUAGE_OPTIONS: ['English', 'Português']
+  LANGUAGE_OPTIONS: ['en', 'pt-br']
 };

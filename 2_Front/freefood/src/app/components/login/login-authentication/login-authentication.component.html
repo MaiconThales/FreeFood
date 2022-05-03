@@ -4,11 +4,11 @@
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
             <mat-form-field appearance="standard">
                 <mat-label>
-                    Username
+                    {{'LOGIN.LABEL_USERNAME' | translate}}
                 </mat-label>
                 <input id="username" matInput type="text" formControlName="username" [errorStateMatcher]="matcher">
                 <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
-                    Username is <strong>required</strong>
+                    {{'LOGIN.MSG_INPUT_USERNAME' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_MASCULINE' | translate}}</strong>
                 </mat-error>
             </mat-form-field>
         </div>
@@ -17,12 +17,12 @@
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
             <mat-form-field appearance="standard">
                 <mat-label>
-                    Password
+                    {{'LOGIN.LABEL_PASSWORD' | translate}}
                 </mat-label>
                 <input id="password" autocomplete="current-password" matInput type="password" formControlName="password"
                     [errorStateMatcher]="matcher">
                 <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
-                    Password is <strong>required</strong>
+                    {{'LOGIN.MSG_INPUT_PASSWORD' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_FEMALE' | translate}}</strong>
                 </mat-error>
             </mat-form-field>
         </div>
@@ -30,10 +30,10 @@
         <!--Btn-->
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
             <button mat-button (click)="openDialogCreateUser()">
-                Create new user
+                {{'LOGIN.BTN_CREATE_USER' | translate}}
             </button>
             <button mat-button class="button-general" color="basic" (click)="onSubmit()" [disabled]="!loginForm.valid">
-                Logar
+                {{'LOGIN.BTN_LOGIN' | translate}}
             </button>
         </div>
     </div>

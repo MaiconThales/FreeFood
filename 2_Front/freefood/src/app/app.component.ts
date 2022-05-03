@@ -7,6 +7,7 @@ import { TokenStorageService, LayoutMenuService } from './services';
 import { environment as e } from '../environments/environment.prod';
 import { JwtResponse } from './models';
 import { EventBusService } from './shared/event-bus.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -35,9 +36,11 @@ export class AppComponent {
     private tokenStorageService: TokenStorageService,
     private router: Router,
     private layoutMenuService: LayoutMenuService,
+    public translate: TranslateService,
     private eventBusService: EventBusService
   ) {
-
+    //translate.addLangs(['pt-br', 'en']);
+    //translate.setDefaultLang('en');
   }
 
   ngOnInit(): void {
@@ -52,9 +55,18 @@ export class AppComponent {
       this.avatarImage = "../assets/img/avatar/avatar.jpg";
       this.infoUser.username = userInfo.username;
       this.infoUser.email = userInfo.email;
+      this.infoUser.language = userInfo.language;
 
       this.layoutMenuService.setValueUser(this.infoUser);
     }
+
+    const browserLang = this.translate.getBrowserLang();
+    if(this.infoUser.language != undefined && this.infoUser.language != "") {
+      this.translate.use(this.infoUser.language);
+    } else if (browserLang != undefined){
+      this.translate.use(browserLang.match(/pt-br|en/) ? browserLang : 'pt-br');
+    }
+
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
     });

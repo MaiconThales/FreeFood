@@ -1,26 +1,26 @@
 <form [formGroup]="userCreateForm">
     <!--Title-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
-        <h3>Create user</h3>
+        {{'LOGIN.TITLE_CREATE_USER' | translate}}
     </div>
     <!--Username && password-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <mat-form-field appearance="standard">
             <mat-label>
-                Username
+                {{'LOGIN.LABEL_USERNAME' | translate}}
             </mat-label>
             <input matInput id="username" type="text" formControlName="username">
             <mat-error *ngIf="userCreateForm.controls['username'].hasError('required')">
-                Username is <strong>required</strong>
+                {{'LOGIN.MSG_INPUT_USERNAME' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_MASCULINE' | translate}}</strong>
             </mat-error>
         </mat-form-field>
         <mat-form-field appearance="standard">
             <mat-label>
-                Password
+                {{'LOGIN.LABEL_PASSWORD' | translate}}
             </mat-label>
             <input matInput id="password" type="password" formControlName="password">
             <mat-error *ngIf="userCreateForm.controls['password'].hasError('required')">
-                Password is <strong>required</strong>
+                {{'LOGIN.LABEL_PASSWORD' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_FEMALE' | translate}}</strong>
             </mat-error>
         </mat-form-field>
     </div>
@@ -28,16 +28,16 @@
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <mat-form-field appearance="standard">
             <mat-label>
-                E-mail
+                {{'LOGIN.LABEL_EMAIL' | translate}}
             </mat-label>
             <input matInput id="email" type="email" formControlName="email">
             <mat-error *ngIf="userCreateForm.controls['email'].hasError('required')">
-                E-mail is <strong>required</strong>
+                {{'LOGIN.MSG_INPUT_EMAIL' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_MASCULINE' | translate}}</strong>
             </mat-error>
         </mat-form-field>
         <mat-form-field appearance="standard">
             <mat-label>
-                Language
+                {{'LOGIN.LABEL_LANGUAGE' | translate}}
             </mat-label>
             <mat-select formControlName="language" name="language">
                 <mat-option *ngFor="let l of language" [value]="l">
@@ -45,7 +45,7 @@
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="userCreateForm.controls['language'].hasError('required')">
-                language is <strong>required</strong>
+                {{'LOGIN.MSG_INPUT_LANGUAGE' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_FEMALE' | translate}}</strong>
             </mat-error>
         </mat-form-field>
     </div>

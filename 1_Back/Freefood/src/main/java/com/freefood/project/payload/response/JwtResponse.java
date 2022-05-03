@@ -10,7 +10,7 @@ public class JwtResponse {
 	private Long id;
 	private String username;
 	private String email;
-	private String languagem;
+	private String language;
 	private List<String> roles;
 
 	public JwtResponse(String accessToken, String refreshToken, Long id, String username, String email,
@@ -21,7 +21,7 @@ public class JwtResponse {
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
-		this.languagem = language;
+		this.language = language;
 	}
 
 	public String getToken() {
@@ -72,20 +72,20 @@ public class JwtResponse {
 		this.email = email;
 	}
 
-	public String getLanguagem() {
-		return languagem;
-	}
-
-	public void setLanguagem(String languagem) {
-		this.languagem = languagem;
-	}
-
 	public List<String> getRoles() {
 		return roles;
 	}
 
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 
