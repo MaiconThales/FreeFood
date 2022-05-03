@@ -10,6 +10,7 @@ public class UserDto {
 	private String phone;
 	private String name;
 	private String businessTitle;
+	private String language;
 	private Role roles;
 	
 	public String getUsername() {
@@ -66,6 +67,14 @@ public class UserDto {
 
 	public void setRoles(Role roles) {
 		this.roles = roles;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 }

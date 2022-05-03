@@ -42,6 +42,9 @@ public class User {
 
 	@Column
 	private String businessTitle;
+	
+	@Column
+	private String language;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "USER_ROLES", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
@@ -52,10 +55,11 @@ public class User {
 		
 	}
 	
-	public User(String username, String email, String password) {
+	public User(String username, String email, String password, String language) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.language = language;
 	}
 
 	public Long getId() {
@@ -120,6 +124,14 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 }

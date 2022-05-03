@@ -10,32 +10,42 @@ public class JwtResponse {
 	private Long id;
 	private String username;
 	private String email;
+	private String languagem;
 	private List<String> roles;
 
 	public JwtResponse(String accessToken, String refreshToken, Long id, String username, String email,
-			List<String> roles) {
+			List<String> roles, String language) {
 		this.token = accessToken;
 		this.refreshToken = refreshToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
+		this.languagem = language;
 	}
 
-	public String getAccessToken() {
+	public String getToken() {
 		return token;
 	}
 
-	public void setAccessToken(String accessToken) {
-		this.token = accessToken;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
-	public String getTokenType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setTokenType(String tokenType) {
-		this.type = tokenType;
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
 	}
 
 	public Long getId() {
@@ -46,14 +56,6 @@ public class JwtResponse {
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getUsername() {
 		return username;
 	}
@@ -62,16 +64,29 @@ public class JwtResponse {
 		this.username = username;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getLanguagem() {
+		return languagem;
+	}
+
+	public void setLanguagem(String languagem) {
+		this.languagem = languagem;
+	}
+
 	public List<String> getRoles() {
 		return roles;
 	}
 
-	public String getRefreshToken() {
-		return refreshToken;
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
 
-	public void setRefreshToken(String refreshToken) {
-		this.refreshToken = refreshToken;
-	}
 
 }

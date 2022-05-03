@@ -45,4 +45,9 @@ public class UserServiceImpl implements UserService {
 		return this.userRepository.save(user);
 	}
 
+	@Override
+	public String getLanguageUser(Long idUser) {
+		return this.userRepository.getLanguageUser(idUser);
+	}
+
 }

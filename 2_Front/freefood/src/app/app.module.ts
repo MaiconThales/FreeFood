@@ -17,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
 
 import {
   DashboardPainelOneComponent,
@@ -72,7 +73,8 @@ export function tokenGetter() {
     MatToolbarModule,
     MatSidenavModule,
     MatDividerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule
   ],
   providers: [
     authInterceptorProviders

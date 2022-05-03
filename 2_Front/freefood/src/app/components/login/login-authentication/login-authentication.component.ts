@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 1
-import { JwtResponse, LoginRequest, User } from '../../../models';
+import { JwtResponse, LoginRequest, SignupRequest } from '../../../models';
 import { MyErrorStateMatcher } from '../../../errors';
 import { LoginCreateComponent } from '../login-create/login-create.component';
 import { AuthService, TokenStorageService, LayoutMenuService } from '../../../services';
@@ -53,7 +53,7 @@ export class LoginAuthenticationComponent implements OnInit {
 
     this.authService.login(this.loginUser).subscribe({
       next: data => {
-        this.tokenStorage.saveToken(data.accessToken);
+        this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveRefreshToken(data.refreshToken);
         this.tokenStorage.saveUser(data);
 
@@ -80,7 +80,7 @@ export class LoginAuthenticationComponent implements OnInit {
 
     const dialogRef = this.dialog.open(LoginCreateComponent, {
       width: '500px',
-      height: '350px'
+      height: '300px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -90,7 +90,7 @@ export class LoginAuthenticationComponent implements OnInit {
     });
   }
 
-  createUser(u: User): void {
+  createUser(u: SignupRequest): void {
     this.authService.register(u).subscribe({
       next: data => {
         this.snackBar.open(data.message, 'Ok', {

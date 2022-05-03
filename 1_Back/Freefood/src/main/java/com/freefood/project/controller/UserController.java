@@ -153,6 +153,7 @@ public class UserController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+		String languageUser = this.userService.getLanguageUser(userDetails.getId());
 
 		String jwt = jwtUtils.generateJwtToken(userDetails);
 
@@ -162,7 +163,7 @@ public class UserController {
 		RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
 
 		return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
-				userDetails.getUsername(), userDetails.getEmail(), roles));
+				userDetails.getUsername(), userDetails.getEmail(), roles, languageUser));
 	}
 
 	@PostMapping("/auth/signup")
@@ -177,7 +178,7 @@ public class UserController {
 
 		// Create new user's account
 		User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-				encoder.encode(signUpRequest.getPassword()));
+				encoder.encode(signUpRequest.getPassword()), signUpRequest.getLanguage());
 
 		Set<String> strRoles = signUpRequest.getRole();
 		Set<Role> roles = new HashSet<>();
@@ -217,18 +218,19 @@ public class UserController {
 
 	@PostMapping("/auth/refreshtoken")
 	public ResponseEntity<TokenRefreshResponse> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
-		/**TODO
-		 * Futuramente tem que colocar uma maneira de atualizar o horário, pois atualmente só faz um reflesh
-		 * */
+		/**
+		 * TODO Futuramente tem que colocar uma maneira de atualizar o horário, pois
+		 * atualmente só faz um reflesh
+		 */
 		String requestRefreshToken = request.getRefreshToken();
-		
-		Optional<User> resultUser = refreshTokenService.findByToken(requestRefreshToken).map(refreshTokenService::verifyExpiration)
-																						.map(RefreshToken::getUser);
-		if(resultUser.isPresent()) {
+
+		Optional<User> resultUser = refreshTokenService.findByToken(requestRefreshToken)
+				.map(refreshTokenService::verifyExpiration).map(RefreshToken::getUser);
+		if (resultUser.isPresent()) {
 			String token = jwtUtils.generateTokenFromUsername(resultUser.get().getUsername());
 			return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
 		}
-		
+
 		throw new TokenRefreshException(requestRefreshToken, "Refresh token is not in database!");
 	}
 

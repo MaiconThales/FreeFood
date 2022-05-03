@@ -25,7 +25,8 @@ export class AppComponent {
     roles: [],
     token: '',
     type: '',
-    id: 0
+    id: 0,
+    language: ''
   };
 
   eventBusSub?: Subscription;

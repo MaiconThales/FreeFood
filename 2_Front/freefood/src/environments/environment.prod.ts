@@ -10,5 +10,7 @@ export const environment = {
   REDIRECT_RESTAURANT: "/restaurant",
   REDIRECT_MENU: "/menu",
   REDIRECT_RESQUEST: "/request",
-  REDIRECT_USER_EDIT: "/profile-edit"
+  REDIRECT_USER_EDIT: "/profile-edit",
+
+  LANGUAGE_OPTIONS: ['English', 'Português']
 };

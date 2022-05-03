@@ -38,4 +38,6 @@ public interface UserService {
 	
 	User save(User user);
 	
+	String getLanguageUser(Long idUser);
+	
 }

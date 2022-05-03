@@ -16,6 +16,8 @@ public class SignupRequest {
 	private String email;
 
 	private Set<String> role;
+	
+	private String language;
 
 	@NotBlank
 	@Size(min = 6, max = 40)
@@ -51,6 +53,14 @@ public class SignupRequest {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 }

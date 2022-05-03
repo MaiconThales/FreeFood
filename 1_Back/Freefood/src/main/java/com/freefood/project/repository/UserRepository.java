@@ -3,6 +3,8 @@ package com.freefood.project.repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.freefood.project.model.User;
@@ -15,5 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	boolean existsByUsername(String username);
 	
 	boolean existsByEmail(String email);
+	
+	@Query(value = "SELECT language FROM user WHERE id = :idUser", nativeQuery=true)
+	String getLanguageUser(@Param("idUser") Long idUser);
 
 }

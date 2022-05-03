@@ -5,4 +5,5 @@ export interface User {
     phone: string;
     name: string;
     businessTitle: string;
+    language: String;
 }

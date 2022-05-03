@@ -24,7 +24,7 @@
             </mat-error>
         </mat-form-field>
     </div>
-    <!--Email && Phone-->
+    <!--Email && Language-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <mat-form-field appearance="standard">
             <mat-label>
@@ -37,32 +37,15 @@
         </mat-form-field>
         <mat-form-field appearance="standard">
             <mat-label>
-                Phone
+                Language
             </mat-label>
-            <input matInput id="phone" type="text" formControlName="phone">
-            <mat-error *ngIf="userCreateForm.controls['phone'].hasError('required')">
-                Phone is <strong>required</strong>
-            </mat-error>
-        </mat-form-field>
-    </div>
-    <!--Name && BusinessTitle-->
-    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
-        <mat-form-field appearance="standard">
-            <mat-label>
-                Name
-            </mat-label>
-            <input matInput id="name" type="text" formControlName="name">
-            <mat-error *ngIf="userCreateForm.controls['name'].hasError('required')">
-                Name is <strong>required</strong>
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="standard">
-            <mat-label>
-                Business Title
-            </mat-label>
-            <input matInput id="businessTitle" type="text" formControlName="businessTitle">
-            <mat-error *ngIf="userCreateForm.controls['businessTitle'].hasError('required')">
-                Business Title is <strong>required</strong>
+            <mat-select formControlName="language" name="language">
+                <mat-option *ngFor="let l of language" [value]="l">
+                    {{l}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="userCreateForm.controls['language'].hasError('required')">
+                language is <strong>required</strong>
             </mat-error>
         </mat-form-field>
     </div>
@@ -75,7 +58,8 @@
             </button>
         </div>
         <div>
-            <button class="button-general-save" (click)="onSubmit()" type="submit" [disabled]="!userCreateForm.valid" mat-icon-button>
+            <button class="button-general-save" (click)="onSubmit()" type="submit" [disabled]="!userCreateForm.valid"
+                mat-icon-button>
                 <mat-icon>save</mat-icon>
             </button>
         </div>
