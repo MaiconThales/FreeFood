@@ -1,7 +1,12 @@
 {
     "GLOBAL_WORD": {
         "WORD_REQUERID_MASCULINE": "obrigatório",
-        "WORD_REQUERID_FEMALE": "obrigatória"
+        "WORD_REQUERID_FEMALE": "obrigatória",
+        "WORD_MSG_SERVER_ERROR": "Por favor tente mais tarde",
+        "WORD_MSG_ALTER_SUCCESS": "Alteração realizada com sucesso",
+        "MSG_USERNAME_ALREADY": "Username não disponível",
+        "MSG_EMAIL_ALREADY": "E-mail não disponível",
+        "MSG_USER_CREATE_SUCCESS": "Usuário cadastro com sucesso"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Editar perfil",
@@ -23,5 +28,19 @@
         "MSG_INPUT_EMAIL": "E-mail é",
         "MSG_INPUT_LANGUAGE": "Linguagem é",
         "TITLE_CREATE_USER": "Criar usuário"
+    },
+    "PROFILE": {
+        "TITLE_ALTER_USER": "Perfil",
+        "LABEL_USERNAME": "Username",
+        "MSG_INPUT_USERNAME": "Username é",
+        "LABEL_PASSWORD": "Senha",
+        "INPUT_PASSWORD": "Senha é",
+        "LABEL_EMAIL": "E-mail",
+        "MSG_INPUT_EMAIL": "E-mail é",
+        "LABEL_LANGUAGE": "Idioma",
+        "MSG_INPUT_LANGUAGE": "Idioma é",
+        "LABEL_NAME": "Nome",
+        "LABEL_PHONE": "Telefone",
+        "LABEL_BUSINESSTITLE": "Organização"
     }
 }

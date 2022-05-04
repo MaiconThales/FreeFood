@@ -1,7 +1,12 @@
 {
     "GLOBAL_WORD": {
         "WORD_REQUERID_MASCULINE": "requerid",
-        "WORD_REQUERID_FEMALE": "requerid"
+        "WORD_REQUERID_FEMALE": "requerid",
+        "WORD_MSG_SERVER_ERROR": "Please try again later",
+        "WORD_MSG_ALTER_SUCCESS": "Change made successfully",
+        "MSG_USERNAME_ALREADY": "Username is already taken!",
+        "MSG_EMAIL_ALREADY": "Email is already in use!",
+        "MSG_USER_CREATE_SUCCESS": "User registered successfully"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Edit profile",
@@ -23,5 +28,19 @@
         "MSG_INPUT_EMAIL": "E-mail é",
         "MSG_INPUT_LANGUAGE": "Language é",
         "TITLE_CREATE_USER": "Create user"
+    },
+    "PROFILE": {
+        "TITLE_ALTER_USER": "Profile",
+        "LABEL_USERNAME": "Username",
+        "MSG_INPUT_USERNAME": "Username é",
+        "LABEL_PASSWORD": "Password",
+        "INPUT_PASSWORD": "Password is",
+        "LABEL_EMAIL": "E-mail",
+        "MSG_INPUT_EMAIL": "E-mail is",
+        "LABEL_LANGUAGE": "Language",
+        "MSG_INPUT_LANGUAGE": "Language is",
+        "LABEL_NAME": "Name",
+        "LABEL_PHONE": "Phone",
+        "LABEL_BUSINESSTITLE": "Organization"
     }
 }

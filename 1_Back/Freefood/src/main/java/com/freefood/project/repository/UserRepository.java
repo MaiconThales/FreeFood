@@ -20,5 +20,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@Query(value = "SELECT language FROM user WHERE id = :idUser", nativeQuery=true)
 	String getLanguageUser(@Param("idUser") Long idUser);
+	
+	@Query(value = "SELECT password FROM user WHERE id = :idUser", nativeQuery=true)
+	String getPasswordByUserId(@Param("idUser") Long idUser);
 
 }

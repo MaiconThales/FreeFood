@@ -97,14 +97,18 @@ export class LoginAuthenticationComponent implements OnInit {
   createUser(u: SignupRequest): void {
     this.authService.register(u).subscribe({
       next: data => {
-        this.snackBar.open(data.message, 'Ok', {
+        this.snackBar.open(this.translate.instant(data.message), 'Ok', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
           duration: 10000
         });
       },
       error: err => {
-        this.errorMessage = err.error.message;
+        this.snackBar.open(this.translate.instant(err.error.message), 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 10000
+        });
       }
     });
   }

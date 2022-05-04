@@ -5,6 +5,7 @@ export * from './user/jwtResponse';
 export * from './user/loginRequest';
 export * from './user/messageResponse';
 export * from './user/signupRequest';
+export * from './user/logOutRequest';
 export * from './menu/menu';
 export * from './request/request';
 export * from './event/eventData';

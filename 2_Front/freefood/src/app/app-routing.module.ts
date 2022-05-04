@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'menu', component: MenuCruComponent, canActivate: [AuthGuard] },
   { path: 'request', component: RequestCrudComponent, canActivate: [AuthGuard] },
   { path: 'not-found', component: NotFoundComponent },
-  { path: 'profile-edit', component: UserEditComponent },
+  { path: 'profile-edit', component: UserEditComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/not-found', pathMatch: 'full' }
 ];
 

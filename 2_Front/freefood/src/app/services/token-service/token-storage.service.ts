@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { LayoutMenuService } from '../index';
+import { LayoutMenuService, UserService } from '../index';
+import { LogOutRequest } from '../../models';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -12,10 +14,22 @@ const REFRESHTOKEN_KEY = 'auth-refreshtoken';
 export class TokenStorageService {
 
   constructor(
-    private layoutMenuService: LayoutMenuService
+    private layoutMenuService: LayoutMenuService,
+    private userService: UserService,
+    private snackBar: MatSnackBar
   ) { }
 
   signOut(): void {
+    let logOutRequest: LogOutRequest = {userId: this.getUser().id};
+    this.userService.logoutUser(logOutRequest).subscribe({
+      error: err => {
+        this.snackBar.open(err.menssage, 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 10000
+        });
+      }
+    });
     window.sessionStorage.clear();
     this.layoutMenuService.alterValue(false);
   }

@@ -4,6 +4,7 @@ import com.freefood.project.model.Role;
 
 public class UserDto {
 
+	private Long id;
 	private String username;
 	private String password;
 	private String email;
@@ -75,6 +76,14 @@ public class UserDto {
 
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

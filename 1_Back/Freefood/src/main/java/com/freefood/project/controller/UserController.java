@@ -12,7 +12,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,9 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +45,7 @@ import com.freefood.project.repository.UserRepository;
 import com.freefood.project.security.jwt.JwtUtils;
 import com.freefood.project.security.services.RefreshTokenService;
 import com.freefood.project.security.services.UserDetailsImpl;
+import com.freefood.project.security.services.UtilsServiceImpl;
 import com.freefood.project.service.UserService;
 
 @RestController
@@ -81,26 +79,10 @@ public class UserController {
 	@Autowired
 	RefreshTokenService refreshTokenService;
 
-	@GetMapping("/all")
-	// @PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<List<UserDto>> getAll() {
-		List<UserDto> result = null;
-		try {
-			result = this.userService.findAll().stream().map(u -> modelMapper.map(u, UserDto.class))
-					.collect(Collectors.toList());
-
-			if (result.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-
-			return new ResponseEntity<>(result, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
+	@Autowired
+	private UtilsServiceImpl utils;
+	
 	@GetMapping("/findId")
-	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<UserDto> getFindById(@RequestParam Long idUser) {
 		UserDto resultDto = null;
 		try {
@@ -118,32 +100,24 @@ public class UserController {
 	}
 
 	@PutMapping("/updateUser")
-	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user) {
-		// TODO
-		/*
-		 * Implementar algo que faça o usuário atualizar apenas ele próprio
-		 */
 		UserDto resultDto = null;
 		try {
-			User userParam = modelMapper.map(user, User.class);
-			resultDto = modelMapper.map(this.userService.updateUser(userParam), UserDto.class);
-			return new ResponseEntity<>(resultDto, HttpStatus.OK);
+			if(utils.verifyUserLogged(user.getUsername())) {
+				User userParam = modelMapper.map(user, User.class);
+				if(!userParam.getPassword().isBlank()) {
+					userParam.setPassword(encoder.encode(userParam.getPassword()));
+				}
+				resultDto = modelMapper.map(this.userService.updateUser(userParam), UserDto.class);
+				return new ResponseEntity<>(resultDto, HttpStatus.OK);
+			}
+			
+			return new ResponseEntity<>(resultDto, HttpStatus.FORBIDDEN);
 		} catch (Exception e) {
 			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@DeleteMapping("/deleteUser/{idUser}")
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<UserDto> deleteUser(@PathVariable("idUser") long idUser) {
-		try {
-			this.userService.deleteUser(idUser);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
 
 	@PostMapping("/auth/signin")
 	public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -166,14 +140,15 @@ public class UserController {
 				userDetails.getUsername(), userDetails.getEmail(), roles, languageUser));
 	}
 
+	
 	@PostMapping("/auth/signup")
 	public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+			return ResponseEntity.badRequest().body(new MessageResponse("GLOBAL_WORD.MSG_USERNAME_ALREADY"));
 		}
 
 		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+			return ResponseEntity.badRequest().body(new MessageResponse("GLOBAL_WORD.MSG_EMAIL_ALREADY"));
 		}
 
 		// Create new user's account
@@ -213,7 +188,7 @@ public class UserController {
 		user.setRoles(roles);
 		userService.save(user);
 
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		return ResponseEntity.ok(new MessageResponse("GLOBAL_WORD.MSG_USER_CREATE_SUCCESS"));
 	}
 
 	@PostMapping("/auth/refreshtoken")
@@ -234,7 +209,8 @@ public class UserController {
 		throw new TokenRefreshException(requestRefreshToken, "Refresh token is not in database!");
 	}
 
-	@PostMapping("/logout")
+	
+	@PostMapping("/auth/logout")
 	public ResponseEntity<MessageResponse> logoutUser(@Valid @RequestBody LogOutRequest logOutRequest) {
 		refreshTokenService.deleteByUserId(logOutRequest.getUserId());
 		return ResponseEntity.ok(new MessageResponse("Log out successful!"));

@@ -1,6 +1,5 @@
 package com.freefood.project.service.impl;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +19,19 @@ public class UserServiceImpl implements UserService {
 	public User findById(Long idUser) {
 		Optional<User> result = this.userRepository.findById(idUser);
 		if(result.isPresent()) {
+			result.get().setPassword("");
 			return result.get();
 		}
 		return null;
 	}
 
 	@Override
-	public List<User> findAll() {
-		return this.userRepository.findAll();
-	}
-
-	@Override
 	public User updateUser(User user) {
+		if(user.getPassword().isBlank()) {
+			String password = this.userRepository.getPasswordByUserId(user.getId());
+			user.setPassword(password);
+		}
 		return this.userRepository.save(user);
-	}
-
-	@Override
-	public void deleteUser(Long idUser) {
-		this.userRepository.deleteById(idUser);
 	}
 
 	@Override
@@ -49,5 +43,5 @@ public class UserServiceImpl implements UserService {
 	public String getLanguageUser(Long idUser) {
 		return this.userRepository.getLanguageUser(idUser);
 	}
-
+	
 }
