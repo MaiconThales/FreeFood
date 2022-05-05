@@ -4,18 +4,18 @@ import java.util.Set;
 
 import com.freefood.project.model.User;
 
-public class RestaurantDto {
+public class RestaurantDTO {
 	
 	private Long id;
 	private String name;
 	private String address;
 	private Set<User> users;
 	
-	public RestaurantDto() {
+	public RestaurantDTO() {
 		
 	}
 	
-	public RestaurantDto(Long id, String name, String address, Set<User> users) {
+	public RestaurantDTO(Long id, String name, String address, Set<User> users) {
 		super();
 		this.id = id;
 		this.name = name;

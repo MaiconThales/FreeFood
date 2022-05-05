@@ -33,7 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return this.handle401Error(authReq, next);
       }
 
-      return throwError(error);
+      return throwError(() => error);
     }));
   }
 
@@ -58,7 +58,7 @@ export class AuthInterceptor implements HttpInterceptor {
             this.isRefreshing = false;
 
             this.tokenService.signOut();
-            return throwError(err);
+            return throwError(() => err);
           })
         );
     }

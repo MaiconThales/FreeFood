@@ -2,18 +2,18 @@ package com.freefood.project.dto;
 
 import com.freefood.project.model.Restaurant;
 
-public class MenuDto {
+public class MenuDTO {
 	
 	private Long idMenu;
 	private Restaurant restaurant;
 	private String name;
 	private String linkImage;
 	
-	public MenuDto() {
+	public MenuDTO() {
 		
 	}
 	
-	public MenuDto(Long idMenu, Restaurant restaurant, String name, String linkImage) {
+	public MenuDTO(Long idMenu, Restaurant restaurant, String name, String linkImage) {
 		super();
 		this.idMenu = idMenu;
 		this.restaurant = restaurant;

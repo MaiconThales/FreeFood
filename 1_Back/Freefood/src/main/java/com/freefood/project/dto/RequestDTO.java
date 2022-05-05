@@ -4,7 +4,7 @@ import com.freefood.project.model.Menu;
 import com.freefood.project.model.Restaurant;
 import com.freefood.project.model.User;
 
-public class RequestDto {
+public class RequestDTO {
 
 	private Long idRequest;
 	private Restaurant restaurant;

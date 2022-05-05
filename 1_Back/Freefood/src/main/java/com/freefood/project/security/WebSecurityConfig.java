@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.freefood.project.security.jwt.AuthEntryPointJwt;
 import com.freefood.project.security.jwt.AuthTokenFilter;
-import com.freefood.project.security.services.UserDetailsServiceImpl;
+import com.freefood.project.service.impl.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity

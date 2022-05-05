@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.freefood.project.dto.RestaurantDto;
+import com.freefood.project.dto.RestaurantDTO;
 import com.freefood.project.model.Restaurant;
 import com.freefood.project.model.User;
 import com.freefood.project.payload.response.MessageResponse;
@@ -39,11 +39,11 @@ public class RestaurantController {
 	private UserService userService;
 	
 	@GetMapping("/findId")
-	public ResponseEntity<RestaurantDto> getFindById(@RequestParam Long idRestaurant) {
-		RestaurantDto resultDto = null;
+	public ResponseEntity<RestaurantDTO> getFindById(@RequestParam Long idRestaurant) {
+		RestaurantDTO resultDto = null;
 		try {
 			Restaurant result = this.restaurantService.findById(idRestaurant);
-			resultDto = modelMapper.map(result, RestaurantDto.class);
+			resultDto = modelMapper.map(result, RestaurantDTO.class);
 			
 			if(resultDto != null) {
 				return new ResponseEntity<>(resultDto, HttpStatus.OK);
@@ -57,11 +57,11 @@ public class RestaurantController {
 	}
 	
 	@GetMapping("/getRestaurant")
-	public ResponseEntity<List<RestaurantDto>> findRestaurantByUserId(@RequestParam Long idUser) {
-		List<RestaurantDto> resultDto = null;
+	public ResponseEntity<List<RestaurantDTO>> findRestaurantByUserId(@RequestParam Long idUser) {
+		List<RestaurantDTO> resultDto = null;
 		try {
 			List<Restaurant> result = this.restaurantService.findRestaurantByUserId(idUser);
-			resultDto = result.stream().map(r -> modelMapper.map(r, RestaurantDto.class)).collect(Collectors.toList());
+			resultDto = result.stream().map(r -> modelMapper.map(r, RestaurantDTO.class)).collect(Collectors.toList());
 			
 			if(resultDto != null) {
 				return new ResponseEntity<>(resultDto, HttpStatus.OK);
@@ -74,11 +74,11 @@ public class RestaurantController {
 	}
 	
 	@PostMapping("/createRestaurant")
-	public ResponseEntity<RestaurantDto> createRestaurant(@RequestBody RestaurantDto restaurant) {
-		RestaurantDto result = null;
+	public ResponseEntity<RestaurantDTO> createRestaurant(@RequestBody RestaurantDTO restaurant) {
+		RestaurantDTO result = null;
 		try {
 			Restaurant param = this.restaurantService.saveRestaurant(modelMapper.map(restaurant, Restaurant.class));
-			result = modelMapper.map(param, RestaurantDto.class);
+			result = modelMapper.map(param, RestaurantDTO.class);
 			
 			if(result != null) {
 				return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -92,12 +92,12 @@ public class RestaurantController {
 	}
 	
 	@PutMapping("/updateRestaurant")
-	public ResponseEntity<RestaurantDto> updateRestaurant(@RequestBody RestaurantDto restaurant, @RequestParam("idUser") Long idUser) {
-		RestaurantDto resultDto = null;
+	public ResponseEntity<RestaurantDTO> updateRestaurant(@RequestBody RestaurantDTO restaurant, @RequestParam("idUser") Long idUser) {
+		RestaurantDTO resultDto = null;
 		try {
 			if(this.restaurantService.verifyAccessRestaurnt(idUser, restaurant.getId())) {
 				Restaurant paramRestaurant = modelMapper.map(restaurant, Restaurant.class);
-				resultDto = modelMapper.map(this.restaurantService.updateRestaurant(paramRestaurant), RestaurantDto.class);
+				resultDto = modelMapper.map(this.restaurantService.updateRestaurant(paramRestaurant), RestaurantDTO.class);
 				return new ResponseEntity<>(resultDto, HttpStatus.OK);
 			}
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -107,7 +107,7 @@ public class RestaurantController {
 	}
 	
 	@DeleteMapping("/deleteRestaurant")
-	public ResponseEntity<RestaurantDto> deleteRestaurant(@RequestParam("idRestaurant") Long idRestaurant, @RequestParam("idUser") Long idUser) {
+	public ResponseEntity<RestaurantDTO> deleteRestaurant(@RequestParam("idRestaurant") Long idRestaurant, @RequestParam("idUser") Long idUser) {
 		try {
 			if(this.restaurantService.verifyAccessRestaurnt(idUser, idRestaurant)) {
 				this.restaurantService.deleteRestaurant(idRestaurant);
@@ -120,7 +120,7 @@ public class RestaurantController {
 	}
 	
 	@PutMapping("/liberateRestaurant")
-	public ResponseEntity<MessageResponse> liberateRestaurant(@RequestBody RestaurantDto restaurant, @RequestParam("username") String username, @RequestParam("idUser") Long idUser) {
+	public ResponseEntity<MessageResponse> liberateRestaurant(@RequestBody RestaurantDTO restaurant, @RequestParam("username") String username, @RequestParam("idUser") Long idUser) {
 		try {
 			if(this.restaurantService.verifyAccessRestaurnt(idUser, restaurant.getId())) {
 				User u = this.userService.findByUsername(username); 

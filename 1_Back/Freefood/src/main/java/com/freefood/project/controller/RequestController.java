@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.freefood.project.dto.RequestDto;
+import com.freefood.project.dto.RequestDTO;
 import com.freefood.project.model.Request;
 import com.freefood.project.service.RequestService;
 
@@ -34,10 +34,10 @@ public class RequestController {
 	private ModelMapper modelMapper;
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<RequestDto>> getAll() {
-		List<RequestDto> result = null;
+	public ResponseEntity<List<RequestDTO>> getAll() {
+		List<RequestDTO> result = null;
 		try {
-			result = this.requestService.findAll().stream().map(r -> modelMapper.map(r, RequestDto.class)).collect(Collectors.toList());
+			result = this.requestService.findAll().stream().map(r -> modelMapper.map(r, RequestDTO.class)).collect(Collectors.toList());
 			
 			if(result.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -50,11 +50,11 @@ public class RequestController {
 	}
 	
 	@GetMapping("/findId")
-	public ResponseEntity<RequestDto> getFindById(@RequestParam Long idRequest) {
-		RequestDto resultDto = null;
+	public ResponseEntity<RequestDTO> getFindById(@RequestParam Long idRequest) {
+		RequestDTO resultDto = null;
 		try {
 			Request result = this.requestService.findById(idRequest);
-			resultDto = modelMapper.map(result, RequestDto.class);
+			resultDto = modelMapper.map(result, RequestDTO.class);
 			
 			if(resultDto != null) {
 				return new ResponseEntity<>(resultDto, HttpStatus.OK);
@@ -68,11 +68,11 @@ public class RequestController {
 	}
 	
 	@PostMapping("/createRequest")
-	public ResponseEntity<RequestDto> createRequest(@RequestBody RequestDto request) {
-		RequestDto resultDto = null;
+	public ResponseEntity<RequestDTO> createRequest(@RequestBody RequestDTO request) {
+		RequestDTO resultDto = null;
 		try {
 			Request requestParam = modelMapper.map(request, Request.class);
-			resultDto = modelMapper.map(this.requestService.saveRequest(requestParam), RequestDto.class);
+			resultDto = modelMapper.map(this.requestService.saveRequest(requestParam), RequestDTO.class);
 			
 			if(resultDto != null) {
 				return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
@@ -86,11 +86,11 @@ public class RequestController {
 	}
 	
 	@PutMapping("/updateRequest")
-	public ResponseEntity<RequestDto> updateRequest(@RequestBody RequestDto request) {
-		RequestDto resultDto = null;
+	public ResponseEntity<RequestDTO> updateRequest(@RequestBody RequestDTO request) {
+		RequestDTO resultDto = null;
 		try {
 			Request requestParam = modelMapper.map(request, Request.class);
-			resultDto = modelMapper.map(this.requestService.updateRequest(requestParam), RequestDto.class);
+			resultDto = modelMapper.map(this.requestService.updateRequest(requestParam), RequestDTO.class);
 			return new ResponseEntity<>(resultDto, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -98,7 +98,7 @@ public class RequestController {
 	}
 	
 	@DeleteMapping("/deleteRequest/{idRequest}")
-	public ResponseEntity<RequestDto> deleteRequest(@PathVariable("idRequest") long idRequest) {
+	public ResponseEntity<RequestDTO> deleteRequest(@PathVariable("idRequest") long idRequest) {
 		try {
 			this.requestService.deleteRequest(idRequest);
 			return new ResponseEntity<>(HttpStatus.OK);

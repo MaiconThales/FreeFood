@@ -1,6 +1,9 @@
 package com.freefood.project.service;
 
+import org.springframework.http.ResponseEntity;
+
 import com.freefood.project.model.User;
+import com.freefood.project.payload.response.MessageResponse;
 
 public interface UserService {
 	
@@ -19,7 +22,7 @@ public interface UserService {
 	 * @param user é o objeto que se deseja fazer o update
 	 * @return Com a ação bem sucedida o spring vai retornar o objeto que sofreu o update
 	 * */
-	User updateUser(User user);
+	ResponseEntity<MessageResponse> updateUser(User user);
 	
 	User save(User user);
 	

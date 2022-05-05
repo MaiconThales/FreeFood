@@ -12,7 +12,8 @@
         "MSG_EDIT": "Editado com sucesso",
         "WORD_MSG_LIBERATE_SUCCESS": "Restaurante liberado com sucesso",
         "WORD_MSG_NO_USER": "Usuário não existe",
-        "WORD_MSG_FORBIDDEN": "Usuário não tem acesso a este restaurante"
+        "WORD_MSG_FORBIDDEN": "Usuário não tem acesso a este restaurante",
+        "WORD_MSG_SUCCESS": "Sucesso"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Editar perfil",

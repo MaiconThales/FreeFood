@@ -6,7 +6,7 @@ import java.util.Set;
 import com.freefood.project.model.Restaurant;
 import com.freefood.project.model.Role;
 
-public class UserDto {
+public class UserDTO {
 
 	private Long id;
 	private String username;

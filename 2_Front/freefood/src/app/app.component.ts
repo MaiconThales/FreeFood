@@ -38,10 +38,7 @@ export class AppComponent {
     private layoutMenuService: LayoutMenuService,
     public translate: TranslateService,
     private eventBusService: EventBusService
-  ) {
-    //translate.addLangs(['pt-br', 'en']);
-    //translate.setDefaultLang('en');
-  }
+  ) { }
 
   ngOnInit(): void {
     this.layoutMenuService.showMenu.subscribe(show => {

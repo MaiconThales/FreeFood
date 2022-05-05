@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.freefood.project.security.services.UserDetailsImpl;
+import com.freefood.project.service.impl.UserDetailsImpl;
 
 import io.jsonwebtoken.*;
 

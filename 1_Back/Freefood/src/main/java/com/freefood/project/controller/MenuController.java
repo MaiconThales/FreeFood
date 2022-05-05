@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.freefood.project.dto.MenuDto;
+import com.freefood.project.dto.MenuDTO;
 import com.freefood.project.model.Menu;
 import com.freefood.project.service.MenuService;
 
@@ -34,10 +34,10 @@ public class MenuController {
 	private ModelMapper modelMapper;
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<MenuDto>> getAll() {
-		List<MenuDto> result = null;
+	public ResponseEntity<List<MenuDTO>> getAll() {
+		List<MenuDTO> result = null;
 		try {
-			result = this.menuService.findAll().stream().map(m -> modelMapper.map(m, MenuDto.class)).collect(Collectors.toList());
+			result = this.menuService.findAll().stream().map(m -> modelMapper.map(m, MenuDTO.class)).collect(Collectors.toList());
 			
 			if(result.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -50,11 +50,11 @@ public class MenuController {
 	}
 	
 	@GetMapping("/findId")
-	public ResponseEntity<MenuDto> getFindById(@RequestParam Long idMenu) {
-		MenuDto resultDto = null;
+	public ResponseEntity<MenuDTO> getFindById(@RequestParam Long idMenu) {
+		MenuDTO resultDto = null;
 		try {
 			Menu result = this.menuService.findById(idMenu);
-			resultDto = modelMapper.map(result, MenuDto.class);
+			resultDto = modelMapper.map(result, MenuDTO.class);
 			
 			if(resultDto != null) {
 				return new ResponseEntity<>(resultDto, HttpStatus.OK);
@@ -68,11 +68,11 @@ public class MenuController {
 	}
 	
 	@PostMapping("/createMenu")
-	public ResponseEntity<MenuDto> createMenu(@RequestBody MenuDto menu) {
-		MenuDto resultDto = null;
+	public ResponseEntity<MenuDTO> createMenu(@RequestBody MenuDTO menu) {
+		MenuDTO resultDto = null;
 		try {
 			Menu result = this.menuService.saveMenu(modelMapper.map(menu, Menu.class));
-			resultDto = modelMapper.map(result, MenuDto.class);
+			resultDto = modelMapper.map(result, MenuDTO.class);
 			
 			if(result != null) {
 				return new ResponseEntity<>(resultDto, HttpStatus.CREATED);
@@ -86,10 +86,10 @@ public class MenuController {
 	}
 	
 	@PutMapping("/updateMenu")
-	public ResponseEntity<MenuDto> updateMenu(@RequestBody MenuDto menu) {
-		MenuDto resultDto = null;
+	public ResponseEntity<MenuDTO> updateMenu(@RequestBody MenuDTO menu) {
+		MenuDTO resultDto = null;
 		try {
-			resultDto = modelMapper.map(this.menuService.updateMenu(modelMapper.map(menu, Menu.class)), MenuDto.class);
+			resultDto = modelMapper.map(this.menuService.updateMenu(modelMapper.map(menu, Menu.class)), MenuDTO.class);
 			return new ResponseEntity<>(resultDto, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -97,7 +97,7 @@ public class MenuController {
 	}
 	
 	@DeleteMapping("/deleteMenu/{idMenu}")
-	public ResponseEntity<MenuDto> deleteMenu(@PathVariable("idMenu") long idMenu) {
+	public ResponseEntity<MenuDTO> deleteMenu(@PathVariable("idMenu") long idMenu) {
 		try {
 			this.menuService.deleteMenu(idMenu);
 			return new ResponseEntity<>(HttpStatus.OK);

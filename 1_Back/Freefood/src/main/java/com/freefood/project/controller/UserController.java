@@ -1,23 +1,11 @@
 package com.freefood.project.controller;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,11 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.freefood.project.dto.UserDto;
-import com.freefood.project.exception.TokenRefreshException;
-import com.freefood.project.model.ERole;
-import com.freefood.project.model.RefreshToken;
-import com.freefood.project.model.Role;
+import com.freefood.project.dto.UserDTO;
 import com.freefood.project.model.User;
 import com.freefood.project.payload.request.LogOutRequest;
 import com.freefood.project.payload.request.LoginRequest;
@@ -40,12 +24,7 @@ import com.freefood.project.payload.request.TokenRefreshRequest;
 import com.freefood.project.payload.response.JwtResponse;
 import com.freefood.project.payload.response.MessageResponse;
 import com.freefood.project.payload.response.TokenRefreshResponse;
-import com.freefood.project.repository.RoleRepository;
-import com.freefood.project.repository.UserRepository;
-import com.freefood.project.security.jwt.JwtUtils;
-import com.freefood.project.security.services.RefreshTokenService;
-import com.freefood.project.security.services.UserDetailsImpl;
-import com.freefood.project.security.services.UtilsServiceImpl;
+import com.freefood.project.service.LoginService;
 import com.freefood.project.service.UserService;
 
 @RestController
@@ -53,40 +32,22 @@ import com.freefood.project.service.UserService;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
-	static final String ROLENOTFOUND = "Error: Role is not found.";
+	private final UserService userService;
+	private final ModelMapper modelMapper;
+	private final LoginService loginService;
 
 	@Autowired
-	private UserService userService;
+	public UserController(UserService userService, ModelMapper modelMapper, LoginService loginService) {
+		this.userService = userService;
+		this.modelMapper = modelMapper;
+		this.loginService = loginService;
+	}
 
-	@Autowired
-	private ModelMapper modelMapper;
-
-	@Autowired
-	private AuthenticationManager authenticationManager;
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private RoleRepository roleRepository;
-
-	@Autowired
-	private PasswordEncoder encoder;
-
-	@Autowired
-	private JwtUtils jwtUtils;
-
-	@Autowired
-	RefreshTokenService refreshTokenService;
-
-	@Autowired
-	private UtilsServiceImpl utils;
-	
 	@GetMapping("/findId")
-	public ResponseEntity<UserDto> getFindById(@RequestParam Long idUser) {
-		UserDto resultDto = null;
+	public ResponseEntity<UserDTO> getFindById(@RequestParam Long idUser) {
+		UserDTO resultDto = null;
 		try {
-			resultDto = modelMapper.map(this.userService.findById(idUser), UserDto.class);
+			resultDto = modelMapper.map(this.userService.findById(idUser), UserDTO.class);
 
 			if (resultDto != null) {
 				return new ResponseEntity<>(resultDto, HttpStatus.OK);
@@ -100,120 +61,28 @@ public class UserController {
 	}
 
 	@PutMapping("/updateUser")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user) {
-		UserDto resultDto = null;
-		try {
-			if(utils.verifyUserLogged(user.getUsername())) {
-				User userParam = modelMapper.map(user, User.class);
-				if(!userParam.getPassword().isBlank()) {
-					userParam.setPassword(encoder.encode(userParam.getPassword()));
-				}
-				resultDto = modelMapper.map(this.userService.updateUser(userParam), UserDto.class);
-				return new ResponseEntity<>(resultDto, HttpStatus.OK);
-			}
-			
-			return new ResponseEntity<>(resultDto, HttpStatus.FORBIDDEN);
-		} catch (Exception e) {
-			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	public ResponseEntity<MessageResponse> updateUser(@RequestBody UserDTO user) {
+		return this.userService.updateUser(modelMapper.map(user, User.class));
 	}
-
 
 	@PostMapping("/auth/signin")
 	public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-		String languageUser = this.userService.getLanguageUser(userDetails.getId());
-
-		String jwt = jwtUtils.generateJwtToken(userDetails);
-
-		List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-				.collect(Collectors.toList());
-
-		RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
-
-		return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
-				userDetails.getUsername(), userDetails.getEmail(), roles, languageUser));
+		return ResponseEntity.ok(this.loginService.authenticateUser(loginRequest));
 	}
 
-	
 	@PostMapping("/auth/signup")
 	public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("GLOBAL_WORD.MSG_USERNAME_ALREADY"));
-		}
-
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("GLOBAL_WORD.MSG_EMAIL_ALREADY"));
-		}
-
-		// Create new user's account
-		User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-				encoder.encode(signUpRequest.getPassword()), signUpRequest.getLanguage());
-
-		Set<String> strRoles = signUpRequest.getRole();
-		Set<Role> roles = new HashSet<>();
-
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException(ROLENOTFOUND));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException(ROLENOTFOUND));
-					roles.add(adminRole);
-
-					break;
-				case "mod":
-					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-							.orElseThrow(() -> new RuntimeException(ROLENOTFOUND));
-					roles.add(modRole);
-
-					break;
-				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException(ROLENOTFOUND));
-					roles.add(userRole);
-				}
-			});
-		}
-
-		user.setRoles(roles);
-		userService.save(user);
-
-		return ResponseEntity.ok(new MessageResponse("GLOBAL_WORD.MSG_USER_CREATE_SUCCESS"));
+		return this.loginService.registerUser(signUpRequest);
 	}
 
 	@PostMapping("/auth/refreshtoken")
 	public ResponseEntity<TokenRefreshResponse> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
-		/**
-		 * TODO Futuramente tem que colocar uma maneira de atualizar o horário, pois
-		 * atualmente só faz um reflesh
-		 */
-		String requestRefreshToken = request.getRefreshToken();
-
-		Optional<User> resultUser = refreshTokenService.findByToken(requestRefreshToken)
-				.map(refreshTokenService::verifyExpiration).map(RefreshToken::getUser);
-		if (resultUser.isPresent()) {
-			String token = jwtUtils.generateTokenFromUsername(resultUser.get().getUsername());
-			return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
-		}
-
-		throw new TokenRefreshException(requestRefreshToken, "Refresh token is not in database!");
+		return this.loginService.refreshtoken(request);
 	}
 
-	
 	@PostMapping("/auth/logout")
 	public ResponseEntity<MessageResponse> logoutUser(@Valid @RequestBody LogOutRequest logOutRequest) {
-		refreshTokenService.deleteByUserId(logOutRequest.getUserId());
-		return ResponseEntity.ok(new MessageResponse("Log out successful!"));
+		return this.loginService.logoutUser(logOutRequest);
 	}
 
 }

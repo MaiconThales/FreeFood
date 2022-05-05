@@ -1,16 +1,16 @@
 package com.freefood.project.dto;
 
-public class RoleDto {
+public class RoleDTO {
 	
     private long id;
     private String name;
     private String description;
     
-    public RoleDto() {
+    public RoleDTO() {
     	
 	}
     
-    public RoleDto(long id, String name, String description) {
+    public RoleDTO(long id, String name, String description) {
 		super();
 		this.id = id;
 		this.name = name;

@@ -1,13 +1,16 @@
-package com.freefood.project.security.services;
+package com.freefood.project.service.impl;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UtilsServiceImpl {
+import com.freefood.project.service.UtilsService;
+
+@Service(value = "utilsService")
+public class UtilsServiceImpl implements UtilsService {
 	
-	private String getUserLogged() {
+	@Override
+	public String getUserLogged() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (principal instanceof UserDetails) {
@@ -17,6 +20,7 @@ public class UtilsServiceImpl {
 		return principal.toString();
 	}
 	
+	@Override
 	public boolean verifyUserLogged(String username) {
 		return this.getUserLogged().equals(username);
 	}
