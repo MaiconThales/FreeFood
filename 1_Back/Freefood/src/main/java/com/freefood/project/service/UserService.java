@@ -25,4 +25,6 @@ public interface UserService {
 	
 	String getLanguageUser(Long idUser);
 	
+	User findByUsername(String username);
+	
 }

@@ -11,14 +11,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .button-general:disabled {
     background-color: #fdfdfd;
 }
-.button-general-cancel {
-    color: #dd0000;
-}
-.button-general-cancel {
-    color: #dd0000;
-}
 .button-general-save {
-    color: #3fe00e;
+    color: #dd0000;
 }
 
 /*TITLES*/

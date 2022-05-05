@@ -1,5 +1,6 @@
 package com.freefood.project.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -41,16 +42,17 @@ public class User {
 	private String name;
 
 	@Column
-	private String businessTitle;
-	
-	@Column
 	private String language;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "USER_ROLES", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "ROLE_ID") })
 	private Set<Role> roles;
-
+	
+	@ManyToMany(mappedBy = "users")
+	@JsonIgnore
+	private List<Restaurant> restaurants;
+	
 	public User() {
 		
 	}
@@ -110,12 +112,12 @@ public class User {
 		this.name = name;
 	}
 
-	public String getBusinessTitle() {
-		return businessTitle;
+	public String getLanguage() {
+		return language;
 	}
 
-	public void setBusinessTitle(String businessTitle) {
-		this.businessTitle = businessTitle;
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public Set<Role> getRoles() {
@@ -126,12 +128,12 @@ public class User {
 		this.roles = roles;
 	}
 
-	public String getLanguage() {
-		return language;
+	public List<Restaurant> getRestaurants() {
+		return restaurants;
 	}
 
-	public void setLanguage(String language) {
-		this.language = language;
+	public void setRestaurants(List<Restaurant> restaurants) {
+		this.restaurants = restaurants;
 	}
-
+	
 }

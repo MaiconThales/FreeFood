@@ -6,7 +6,13 @@
         "WORD_MSG_ALTER_SUCCESS": "Change made successfully",
         "MSG_USERNAME_ALREADY": "Username is already taken!",
         "MSG_EMAIL_ALREADY": "Email is already in use!",
-        "MSG_USER_CREATE_SUCCESS": "User registered successfully"
+        "MSG_USER_CREATE_SUCCESS": "User registered successfully",
+        "OPTIONS": "Options",
+        "MSG_REMOVE": "Successfully removed",
+        "MSG_EDIT": "Edited successfully",
+        "WORD_MSG_LIBERATE_SUCCESS": "Restaurant successfully released",
+        "WORD_MSG_NO_USER": "User does not exist",
+        "WORD_MSG_FORBIDDEN": "User does not have access to this restaurant"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Edit profile",
@@ -42,5 +48,19 @@
         "LABEL_NAME": "Name",
         "LABEL_PHONE": "Phone",
         "LABEL_BUSINESSTITLE": "Organization"
+    },
+    "RESTAURANT": {
+        "TITLE_PAGE": "Restaurants",
+        "FILTER": "Please enter the desired filter",
+        "BTN_NEW": "Register restaurant",
+        "LABEL_ID": "ID",
+        "LABEL_NAME": "Name",
+        "LABEL_ADDRESS": "Address",
+        "NO_DATA": "No data",
+        "FILTER_NO_DATA": "Nothing found for",
+        "TITLE_CREATE_RESTAURANT": "Create restaurant",
+        "MSG_INPUT_NAME": "Name is",
+        "MSG_INPUT_ADDRESS": "Address is",
+        "TITLE_LIBERATE_RESTAURANT": "Release organization to user"
     }
 }

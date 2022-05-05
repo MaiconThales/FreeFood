@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.freefood.project.dto.RestaurantDto;
 import com.freefood.project.model.Restaurant;
+import com.freefood.project.model.User;
+import com.freefood.project.payload.response.MessageResponse;
 import com.freefood.project.service.RestaurantService;
+import com.freefood.project.service.UserService;
 
 @RestController
 @RequestMapping("/restaurant")
@@ -32,22 +34,9 @@ public class RestaurantController {
 	
 	@Autowired
 	private ModelMapper modelMapper;
-
-	@GetMapping("/all")
-	public ResponseEntity<List<RestaurantDto>> getAll() {
-		List<RestaurantDto> result = null;
-		try {
-			result = this.restaurantService.findAll().stream().map(r -> modelMapper.map(r, RestaurantDto.class)).collect(Collectors.toList());
-			
-			if(result.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-			
-			return new ResponseEntity<>(result, HttpStatus.OK);
-		}catch (Exception e) {
-			return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+	
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/findId")
 	public ResponseEntity<RestaurantDto> getFindById(@RequestParam Long idRestaurant) {
@@ -62,6 +51,23 @@ public class RestaurantController {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			
+		} catch (Exception e) {
+			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/getRestaurant")
+	public ResponseEntity<List<RestaurantDto>> findRestaurantByUserId(@RequestParam Long idUser) {
+		List<RestaurantDto> resultDto = null;
+		try {
+			List<Restaurant> result = this.restaurantService.findRestaurantByUserId(idUser);
+			resultDto = result.stream().map(r -> modelMapper.map(r, RestaurantDto.class)).collect(Collectors.toList());
+			
+			if(resultDto != null) {
+				return new ResponseEntity<>(resultDto, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
 		} catch (Exception e) {
 			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -86,24 +92,49 @@ public class RestaurantController {
 	}
 	
 	@PutMapping("/updateRestaurant")
-	public ResponseEntity<RestaurantDto> updateRestaurant(@RequestBody RestaurantDto restaurant) {
+	public ResponseEntity<RestaurantDto> updateRestaurant(@RequestBody RestaurantDto restaurant, @RequestParam("idUser") Long idUser) {
 		RestaurantDto resultDto = null;
 		try {
-			Restaurant paramRestaurant = modelMapper.map(restaurant, Restaurant.class);
-			resultDto = modelMapper.map(this.restaurantService.updateRestaurant(paramRestaurant), RestaurantDto.class);
-			return new ResponseEntity<>(resultDto, HttpStatus.OK);
+			if(this.restaurantService.verifyAccessRestaurnt(idUser, restaurant.getId())) {
+				Restaurant paramRestaurant = modelMapper.map(restaurant, Restaurant.class);
+				resultDto = modelMapper.map(this.restaurantService.updateRestaurant(paramRestaurant), RestaurantDto.class);
+				return new ResponseEntity<>(resultDto, HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		} catch (Exception e) {
 			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@DeleteMapping("/deleteRestaurant/{idRestaurant}")
-	public ResponseEntity<RestaurantDto> deleteRestaurant(@PathVariable("idRestaurant") long idRestaurant) {
+	@DeleteMapping("/deleteRestaurant")
+	public ResponseEntity<RestaurantDto> deleteRestaurant(@RequestParam("idRestaurant") Long idRestaurant, @RequestParam("idUser") Long idUser) {
 		try {
-			this.restaurantService.deleteRestaurant(idRestaurant);
-			return new ResponseEntity<>(HttpStatus.OK);
+			if(this.restaurantService.verifyAccessRestaurnt(idUser, idRestaurant)) {
+				this.restaurantService.deleteRestaurant(idRestaurant);
+				return new ResponseEntity<>(HttpStatus.OK); 
+			}
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping("/liberateRestaurant")
+	public ResponseEntity<MessageResponse> liberateRestaurant(@RequestBody RestaurantDto restaurant, @RequestParam("username") String username, @RequestParam("idUser") Long idUser) {
+		try {
+			if(this.restaurantService.verifyAccessRestaurnt(idUser, restaurant.getId())) {
+				User u = this.userService.findByUsername(username); 
+				if(u != null) {
+					Restaurant paramRestaurant = modelMapper.map(restaurant, Restaurant.class);
+					paramRestaurant.getUsers().add(u);
+					this.restaurantService.updateRestaurant(paramRestaurant);
+					return new ResponseEntity<>(new MessageResponse("GLOBAL_WORD.WORD_MSG_LIBERATE_SUCCESS"), HttpStatus.OK);
+				}
+				return new ResponseEntity<>(new MessageResponse("GLOBAL_WORD.WORD_MSG_NO_USER"), HttpStatus.FORBIDDEN);
+			}
+			return new ResponseEntity<>(new MessageResponse("GLOBAL_WORD.WORD_MSG_FORBIDDEN"), HttpStatus.FORBIDDEN);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new MessageResponse("GLOBAL_WORD.WORD_MSG_SERVER_ERROR"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

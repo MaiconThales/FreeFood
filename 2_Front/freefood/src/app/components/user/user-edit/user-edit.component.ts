@@ -63,8 +63,7 @@ export class UserEditComponent implements OnInit {
           email: new FormControl('', [Validators.required]),
           language: new FormControl('', [Validators.required]),
           phone: new FormControl(''),
-          name: new FormControl(''),
-          businessTitle: new FormControl('')
+          name: new FormControl('')
         });
         break;
       case 2:
@@ -75,8 +74,7 @@ export class UserEditComponent implements OnInit {
           email: new FormControl(user.email, [Validators.required]),
           language: new FormControl(user.language, [Validators.required]),
           phone: new FormControl(user.phone),
-          name: new FormControl(user.name),
-          businessTitle: new FormControl(user.businessTitle)
+          name: new FormControl(user.name)
         });
         break;
     }
@@ -91,7 +89,7 @@ export class UserEditComponent implements OnInit {
       language: this.userEditForm.get('language')?.value,
       name: this.userEditForm.get('name')?.value,
       phone: this.userEditForm.get('phone')?.value,
-      businessTitle: this.userEditForm.get('businessTitle')?.value,
+      roles: []
     };
     if(this.user != null) {
       this.userService.alterDataUser(this.user).subscribe({

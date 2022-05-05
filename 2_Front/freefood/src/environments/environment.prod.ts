@@ -3,7 +3,7 @@ export const environment = {
 
   AUTH_API: "http://localhost:8080/",
   USER_CONTROLLER: "user",
-  RESTAURANT_CONTROLLER: "user",
+  RESTAURANT_CONTROLLER: "restaurant",
   
   REDIRECT_DASHBOARD: "/dashboard",
   REDIRECT_AUTHENTICATION: "/authentication",

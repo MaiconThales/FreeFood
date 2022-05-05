@@ -20,6 +20,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import {
   DashboardPainelOneComponent,
@@ -29,7 +31,9 @@ import {
   RequestCrudComponent,
   MenuCruComponent,
   NotFoundComponent,
-  UserEditComponent
+  UserEditComponent,
+  RestaurantDialogComponent,
+  RestaurantLiberateComponent
 } from './components';
 
 import {
@@ -54,7 +58,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     RequestCrudComponent,
     MenuCruComponent,
     NotFoundComponent,
-    UserEditComponent
+    UserEditComponent,
+    RestaurantDialogComponent,
+    RestaurantLiberateComponent
   ],
   imports: [
     TranslateModule.forRoot({
@@ -88,7 +94,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSidenavModule,
     MatDividerModule,
     MatSnackBarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [
     authInterceptorProviders

@@ -15,13 +15,6 @@ public interface RestaurantService {
 	Restaurant findById(Long idRestaurant);
 	
 	/**
-	 * Retorna todos os registros do banco.
-	 * 
-	 * @return Retorna todos os dados do Banco.
-	 * */
-	List<Restaurant> findAll();
-	
-	/**
 	 * Função para salvar o objeto.
 	 * 
 	 * @param restaurant é o objeto que se deseja salvar
@@ -43,5 +36,9 @@ public interface RestaurantService {
 	 * @param idRestaurant o ID do objeto que se deseja deletar
 	 * */
 	void deleteRestaurant(Long idRestaurant);
+	
+	List<Restaurant> findRestaurantByUserId(Long idUser);
+	
+	boolean verifyAccessRestaurnt(Long idUser, Long idRestaurant);
 	
 }

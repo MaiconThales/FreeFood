@@ -43,5 +43,14 @@ public class UserServiceImpl implements UserService {
 	public String getLanguageUser(Long idUser) {
 		return this.userRepository.getLanguageUser(idUser);
 	}
+
+	@Override
+	public User findByUsername(String username) {
+		Optional<User> result = this.userRepository.findByUsername(username);
+		if(result.isPresent()) {
+			return result.get();
+		}
+		return null;
+	}
 	
 }

@@ -26,11 +26,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
-	public List<Restaurant> findAll() {
-		return this.restaurantRepository.findAll();
-	}
-
-	@Override
 	public Restaurant saveRestaurant(Restaurant restaurant) {
 		return this.restaurantRepository.save(restaurant);
 	}
@@ -43,6 +38,18 @@ public class RestaurantServiceImpl implements RestaurantService {
 	@Override
 	public void deleteRestaurant(Long idRestaurant) {
 		this.restaurantRepository.deleteById(idRestaurant);
+	}
+
+	@Override
+	public List<Restaurant> findRestaurantByUserId(Long idUser) {
+		return this.restaurantRepository.findRestaurantByUserId(idUser);
+	}
+
+	@Override
+	public boolean verifyAccessRestaurnt(Long idUser, Long idRestaurant) {
+		List<Long> accessRestaurant = this.restaurantRepository.returnIdRestaurantByUserId(idUser);
+		Long result = accessRestaurant.stream().filter(a -> a.equals(idRestaurant)).findAny().orElse(null);
+		return result != null;
 	}
 
 }

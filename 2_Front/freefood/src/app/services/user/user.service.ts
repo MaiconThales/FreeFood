@@ -11,7 +11,7 @@ import { LogOutRequest, User } from 'src/app/models';
 export class UserService {
 
   constructor(
-    private http: HttpClient,
+    private http: HttpClient
   ) { }
 
   getDataUser(idUser: number): Observable<any> {

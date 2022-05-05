@@ -6,7 +6,13 @@
         "WORD_MSG_ALTER_SUCCESS": "Alteração realizada com sucesso",
         "MSG_USERNAME_ALREADY": "Username não disponível",
         "MSG_EMAIL_ALREADY": "E-mail não disponível",
-        "MSG_USER_CREATE_SUCCESS": "Usuário cadastro com sucesso"
+        "MSG_USER_CREATE_SUCCESS": "Usuário cadastro com sucesso",
+        "OPTIONS": "Opções",
+        "MSG_REMOVE": "Removido com sucesso",
+        "MSG_EDIT": "Editado com sucesso",
+        "WORD_MSG_LIBERATE_SUCCESS": "Restaurante liberado com sucesso",
+        "WORD_MSG_NO_USER": "Usuário não existe",
+        "WORD_MSG_FORBIDDEN": "Usuário não tem acesso a este restaurante"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Editar perfil",
@@ -42,5 +48,19 @@
         "LABEL_NAME": "Nome",
         "LABEL_PHONE": "Telefone",
         "LABEL_BUSINESSTITLE": "Organização"
+    },
+    "RESTAURANT": {
+        "TITLE_PAGE": "Restaurantes",
+        "FILTER": "Por favor insera o filtro desejado",
+        "BTN_NEW": "Cadastrar restaurante",
+        "LABEL_ID": "ID",
+        "LABEL_NAME": "Nome",
+        "LABEL_ADDRESS": "Endereço",
+        "NO_DATA": "Não há dados",
+        "FILTER_NO_DATA": "Nada encontrado para",
+        "TITLE_CREATE_RESTAURANT": "Criar restaurante",
+        "MSG_INPUT_NAME": "Nome é",
+        "MSG_INPUT_ADDRESS": "Endereço é",
+        "TITLE_LIBERATE_RESTAURANT": "Liberar organização para usuário"
     }
 }
