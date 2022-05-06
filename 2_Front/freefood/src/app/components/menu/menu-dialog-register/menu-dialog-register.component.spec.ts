@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuCruComponent } from './menu-cru.component';
+import { MenuDialogRegisterComponent } from './menu-dialog-register.component';
 
-describe('MenuCruComponent', () => {
-  let component: MenuCruComponent;
-  let fixture: ComponentFixture<MenuCruComponent>;
+describe('MenuDialogRegisterComponent', () => {
+  let component: MenuDialogRegisterComponent;
+  let fixture: ComponentFixture<MenuDialogRegisterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MenuCruComponent ]
+      declarations: [ MenuDialogRegisterComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MenuCruComponent);
+    fixture = TestBed.createComponent(MenuDialogRegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

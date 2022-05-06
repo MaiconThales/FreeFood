@@ -1,0 +1,1 @@
+export * from './dialog-confirm-remove/dialog-confirm-remove.component';

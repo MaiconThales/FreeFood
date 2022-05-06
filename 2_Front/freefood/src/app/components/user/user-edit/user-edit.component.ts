@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 
-import { User, JwtResponse } from 'src/app/models';
+import { User } from 'src/app/models';
 import { TokenStorageService, UserService } from 'src/app/services';
 import { MyErrorStateMatcher } from '../../../errors';
 import { EventBusService } from '../../../shared/event-bus.service';
@@ -37,8 +37,7 @@ export class UserEditComponent implements OnInit {
   }
 
   getDataUser() {
-    let u: JwtResponse = this.token.getUser();
-    this.userService.getDataUser(u.id).subscribe({
+    this.userService.getDataUser(this.token.getIdUser()).subscribe({
       next: data => {
         this.createFormUser(data, 2);
       },

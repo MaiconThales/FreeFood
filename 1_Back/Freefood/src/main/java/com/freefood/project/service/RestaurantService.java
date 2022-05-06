@@ -2,7 +2,10 @@ package com.freefood.project.service;
 
 import java.util.List;
 
-import com.freefood.project.model.Restaurant;
+import org.springframework.http.ResponseEntity;
+
+import com.freefood.project.dto.RestaurantDTO;
+import com.freefood.project.payload.response.MessageResponse;
 
 public interface RestaurantService {
 
@@ -12,7 +15,7 @@ public interface RestaurantService {
 	 * @param id do Restaurante
 	 * @return Retorna o restaurante de acordo com o ID passado no parametro.
 	 * */
-	Restaurant findById(Long idRestaurant);
+	ResponseEntity<RestaurantDTO> findById(Long idRestaurant);
 	
 	/**
 	 * Função para salvar o objeto.
@@ -20,7 +23,7 @@ public interface RestaurantService {
 	 * @param restaurant é o objeto que se deseja salvar
 	 * @return Com a ação bem sucedida o spring vai retornar o objeto cadastrado
 	 * */
-	Restaurant saveRestaurant(Restaurant restaurant);
+	ResponseEntity<MessageResponse> saveRestaurant(RestaurantDTO restaurant);
 	
 	/**
 	 * Função para fazer o update do objeto.
@@ -28,17 +31,19 @@ public interface RestaurantService {
 	 * @param restaurant é o objeto que se deseja fazer o update
 	 * @return Com a ação bem sucedida o spring vai retornar o objeto que sofreu o update
 	 * */
-	Restaurant updateRestaurant(Restaurant restaurant);
+	ResponseEntity<MessageResponse> updateRestaurant(RestaurantDTO restaurant, Long idUser);
 	
 	/**
 	 * Função para deletar o objeto.
 	 * 
 	 * @param idRestaurant o ID do objeto que se deseja deletar
 	 * */
-	void deleteRestaurant(Long idRestaurant);
+	ResponseEntity<MessageResponse> deleteRestaurant(Long idRestaurant, Long idUser);
 	
-	List<Restaurant> findRestaurantByUserId(Long idUser);
+	ResponseEntity<List<RestaurantDTO>> findRestaurantByUserId(Long idUser);
 	
-	boolean verifyAccessRestaurnt(Long idUser, Long idRestaurant);
+	ResponseEntity<MessageResponse> liberateRestaurant(RestaurantDTO restaurant, String username, Long idUser);
+	
+	boolean verifyAccessRestaurant(Long idUser, Long idRestaurant);
 	
 }

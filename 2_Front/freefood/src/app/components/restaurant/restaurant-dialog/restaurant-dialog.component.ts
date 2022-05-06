@@ -53,7 +53,7 @@ export class RestaurantDialogComponent {
         id: this.restaurantForm.get('id')?.value,
         name: this.restaurantForm.get('name')?.value,
         address: this.restaurantForm.get('address')?.value,
-        users: [{id: this.token.getUser().id}]
+        users: [{id: this.token.getIdUser().toString()}]
       }
     } else {
       restaurant = {

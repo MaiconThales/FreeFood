@@ -5,7 +5,7 @@ import { JwtResponse } from '../../models';
 @Injectable({
   providedIn: 'root'
 })
-export class LayoutMenuService {
+export class UserInfoService {
 
   showMenu = new EventEmitter<boolean>();
   user = new EventEmitter<JwtResponse>();
@@ -19,5 +19,5 @@ export class LayoutMenuService {
   alterValue(value: boolean): void {
     this.showMenu.emit(value);
   }
-
+  
 }

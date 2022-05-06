@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { LayoutMenuService, UserService } from '../index';
+import { UserInfoService, UserService } from '../index';
 import { LogOutRequest } from '../../models';
 
 const TOKEN_KEY = 'auth-token';
@@ -14,12 +14,12 @@ const REFRESHTOKEN_KEY = 'auth-refreshtoken';
 export class TokenStorageService {
 
   constructor(
-    private layoutMenuService: LayoutMenuService,
+    private userInfoService: UserInfoService,
     private userService: UserService,
     private snackBar: MatSnackBar
   ) { }
 
-  signOut(): void {
+  public signOut(): void {
     let logOutRequest: LogOutRequest = {userId: this.getUser().id};
     this.userService.logoutUser(logOutRequest).subscribe({
       error: err => {
@@ -31,7 +31,7 @@ export class TokenStorageService {
       }
     });
     window.sessionStorage.clear();
-    this.layoutMenuService.alterValue(false);
+    this.userInfoService.alterValue(false);
   }
 
   public saveToken(token: string): void {
@@ -47,7 +47,7 @@ export class TokenStorageService {
   public getToken(): string | null {
     var token = window.sessionStorage.getItem(TOKEN_KEY);
     if (token != null) {
-      this.layoutMenuService.alterValue(true);
+      this.userInfoService.alterValue(true);
     }
     return token;
   }
@@ -72,6 +72,11 @@ export class TokenStorageService {
 
   public getRefreshToken(): string | null {
     return window.sessionStorage.getItem(REFRESHTOKEN_KEY);
+  }
+
+  public getIdUser(): number {
+    let userId = this.getUser().id;
+    return userId;
   }
 
 }

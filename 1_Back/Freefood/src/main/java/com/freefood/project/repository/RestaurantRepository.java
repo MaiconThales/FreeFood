@@ -15,17 +15,13 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
 	@Transactional(readOnly = true)
 	Restaurant findById(String idRestaurant);
-	
-	@Query(value="SELECT r.* FROM restaurant r "
-			+ " LEFT JOIN restaurant_user ru on ru.restaurant_id = r.id"
-			+ " WHERE ru.user_id = :idUser", 
-	nativeQuery=true)
+
+	@Query(value = "SELECT r.* FROM restaurant r LEFT JOIN restaurant_user ru on ru.restaurant_id = r.id"
+			+ " WHERE ru.user_id = :idUser", nativeQuery = true)
 	List<Restaurant> findRestaurantByUserId(@Param("idUser") Long idUser);
-	
-	@Query(value="SELECT r.id FROM restaurant r "
-			+ " LEFT JOIN restaurant_user ru on ru.restaurant_id = r.id"
-			+ " WHERE ru.user_id = :idUser", 
-	nativeQuery=true)
+
+	@Query(value = "SELECT r.id FROM restaurant r LEFT JOIN restaurant_user ru on ru.restaurant_id = r.id"
+			+ " WHERE ru.user_id = :idUser", nativeQuery = true)
 	List<Long> returnIdRestaurantByUserId(@Param("idUser") Long idUser);
-	
+
 }

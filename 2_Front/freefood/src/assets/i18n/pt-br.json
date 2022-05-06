@@ -10,10 +10,14 @@
         "OPTIONS": "Opções",
         "MSG_REMOVE": "Removido com sucesso",
         "MSG_EDIT": "Editado com sucesso",
+        "MSG_CREATE": "Cadastrado com sucesso",
         "WORD_MSG_LIBERATE_SUCCESS": "Restaurante liberado com sucesso",
         "WORD_MSG_NO_USER": "Usuário não existe",
         "WORD_MSG_FORBIDDEN": "Usuário não tem acesso a este restaurante",
-        "WORD_MSG_SUCCESS": "Sucesso"
+        "WORD_MSG_SUCCESS": "Sucesso",
+        "YES": "Sim",
+        "NO": "Não",
+        "DESCRIPTION_REMOVE": "Deseja remover o registro?"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Editar perfil",
@@ -63,5 +67,15 @@
         "MSG_INPUT_NAME": "Nome é",
         "MSG_INPUT_ADDRESS": "Endereço é",
         "TITLE_LIBERATE_RESTAURANT": "Liberar organização para usuário"
+    },
+    "MENU": {
+        "TITLE_PAGE": "Cardápio",
+        "BTN_NEW": "Novo",
+        "FILTER": "Por favor insera o filtro desejado",
+        "LABEL_ID": "ID",
+        "LABEL_NAME": "Nome",
+        "LABEL_RESTAURANT": "Restaurante",
+        "FILTER_NO_DATA": "Nada encontrado para",
+        "NO_DATA": "Não há dados"
     }
 }

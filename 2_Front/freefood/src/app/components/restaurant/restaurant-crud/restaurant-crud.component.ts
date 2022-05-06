@@ -23,8 +23,6 @@ export class RestaurantCrudComponent implements OnInit {
   dataSource!: MatTableDataSource<Restaurant>;
   restaurants: Restaurant[] = [];
 
-  idUser!: number;
-
   constructor(
     public dialog: MatDialog,
     private restaurantService: RestaurantService,
@@ -34,7 +32,6 @@ export class RestaurantCrudComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.idUser = this.token.getUser().id;
     this.getRestaurant();
   }
 
@@ -48,7 +45,7 @@ export class RestaurantCrudComponent implements OnInit {
   }
 
   getRestaurant(): void {
-    this.restaurantService.getRestaurant(this.idUser).subscribe({
+    this.restaurantService.getRestaurant(this.token.getIdUser()).subscribe({
       next: data => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
@@ -115,7 +112,7 @@ export class RestaurantCrudComponent implements OnInit {
   }
 
   updateRestaurant(restaurant: Restaurant): void {
-    this.restaurantService.updateRestaurant(restaurant, this.idUser).subscribe({
+    this.restaurantService.updateRestaurant(restaurant, this.token.getIdUser()).subscribe({
       next: () => {
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.MSG_EDIT'), 'Ok', {
           horizontalPosition: 'center',
@@ -135,7 +132,7 @@ export class RestaurantCrudComponent implements OnInit {
   }
 
   liberateRestaurant(restaurant: Restaurant, username: String): void {
-    this.restaurantService.liberateRestaurant(restaurant, this.idUser, username). subscribe({
+    this.restaurantService.liberateRestaurant(restaurant, this.token.getIdUser(), username). subscribe({
       next: data => {
         this.snackBar.open(this.translate.instant(data.message), 'Ok', {
           horizontalPosition: 'center',
@@ -154,7 +151,7 @@ export class RestaurantCrudComponent implements OnInit {
   }
 
   removeRestaurant(idRestaurant: number): void {
-    this.restaurantService.removeRestaurant(idRestaurant, this.idUser).subscribe({
+    this.restaurantService.removeRestaurant(idRestaurant, this.token.getIdUser()).subscribe({
       next: () => {
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.MSG_REMOVE'), 'Ok', {
           horizontalPosition: 'center',

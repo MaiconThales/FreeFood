@@ -2,24 +2,12 @@ package com.freefood.project.service;
 
 import java.util.List;
 
-import com.freefood.project.model.Menu;
+import org.springframework.http.ResponseEntity;
+
+import com.freefood.project.dto.MenuDTO;
+import com.freefood.project.payload.response.MessageResponse;
 
 public interface MenuService {
-
-	/**
-	 * Retorna o menu pelo ID passado.
-	 * 
-	 * @param id do Menu
-	 * @return Retorna o menu de acordo com o ID passado no parametro.
-	 * */
-	Menu findById(Long idMenu);
-	
-	/**
-	 * Retorna todos os registros do banco.
-	 * 
-	 * @return Retorna todos os dados do Banco.
-	 * */
-	List<Menu> findAll();
 	
 	/**
 	 * Função para salvar o objeto.
@@ -27,7 +15,7 @@ public interface MenuService {
 	 * @param menu é o objeto que se deseja salvar
 	 * @return Com a ação bem sucedida o spring vai retornar o objeto cadastrado
 	 * */
-	Menu saveMenu(Menu menu);
+	ResponseEntity<MessageResponse> saveMenu(MenuDTO menu);
 	
 	/**
 	 * Função para fazer o update do objeto.
@@ -35,13 +23,15 @@ public interface MenuService {
 	 * @param menu é o objeto que se deseja fazer o update
 	 * @return Com a ação bem sucedida o spring vai retornar o objeto que sofreu o update
 	 * */
-	Menu updateMenu(Menu menu);
+	ResponseEntity<MessageResponse> updateMenu(MenuDTO menu);
 	
 	/**
 	 * Função para deletar o objeto.
 	 * 
 	 * @param idMenu o ID do objeto que se deseja deletar
 	 * */
-	void deleteMenu(Long idMenu);
+	ResponseEntity<MessageResponse> deleteMenu(Long idMenu, Long idUser, Long idRestaurant);
+	
+	ResponseEntity<List<MenuDTO>> getMenu(Long idRestaurant, Long idUser);
 	
 }

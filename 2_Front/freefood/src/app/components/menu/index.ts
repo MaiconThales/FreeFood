@@ -1,1 +1,2 @@
-export * from './menu-cru/menu-cru.component';
+export * from './menu-list/menu-list.component';
+export * from './menu-dialog-register/menu-dialog-register.component';

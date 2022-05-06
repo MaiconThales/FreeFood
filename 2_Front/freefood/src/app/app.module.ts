@@ -22,6 +22,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import {
   DashboardPainelOneComponent,
@@ -29,11 +31,13 @@ import {
   LoginCreateComponent,
   RestaurantCrudComponent,
   RequestCrudComponent,
-  MenuCruComponent,
+  MenuListComponent,
   NotFoundComponent,
   UserEditComponent,
   RestaurantDialogComponent,
-  RestaurantLiberateComponent
+  RestaurantLiberateComponent,
+  MenuDialogRegisterComponent,
+  DialogConfirmRemoveComponent
 } from './components';
 
 import {
@@ -56,11 +60,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginCreateComponent,
     RestaurantCrudComponent,
     RequestCrudComponent,
-    MenuCruComponent,
+    MenuListComponent,
     NotFoundComponent,
     UserEditComponent,
     RestaurantDialogComponent,
-    RestaurantLiberateComponent
+    RestaurantLiberateComponent,
+    MenuDialogRegisterComponent,
+    DialogConfirmRemoveComponent
+    
   ],
   imports: [
     TranslateModule.forRoot({
@@ -96,7 +103,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSnackBarModule,
     MatSelectModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatAutocompleteModule,
+    MatButtonToggleModule
   ],
   providers: [
     authInterceptorProviders

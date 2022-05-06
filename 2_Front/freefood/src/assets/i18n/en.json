@@ -10,10 +10,14 @@
         "OPTIONS": "Options",
         "MSG_REMOVE": "Successfully removed",
         "MSG_EDIT": "Edited successfully",
+        "MSG_CREATE": "Create successfully",
         "WORD_MSG_LIBERATE_SUCCESS": "Restaurant successfully released",
         "WORD_MSG_NO_USER": "User does not exist",
         "WORD_MSG_FORBIDDEN": "User does not have access to this restaurant",
-        "WORD_MSG_SUCCESS": "Success"
+        "WORD_MSG_SUCCESS": "Success",
+        "YES": "Yes",
+        "NO": "No",
+        "DESCRIPTION_REMOVE": "Do you want to remove the registry?"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Edit profile",
@@ -63,5 +67,15 @@
         "MSG_INPUT_NAME": "Name is",
         "MSG_INPUT_ADDRESS": "Address is",
         "TITLE_LIBERATE_RESTAURANT": "Release organization to user"
+    },
+    "MENU": {
+        "TITLE_PAGE": "Menu",
+        "BTN_NEW": "New",
+        "FILTER": "Please enter the desired filter",
+        "LABEL_ID": "ID",
+        "LABEL_NAME": "Name",
+        "LABEL_RESTAURANT": "Restaurant",
+        "FILTER_NO_DATA": "Nothing found for",
+        "NO_DATA": "No data"
     }
 }

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
 
-import { TokenStorageService, LayoutMenuService } from './services';
+import { TokenStorageService, UserInfoService } from './services';
 import { environment as e } from '../environments/environment.prod';
 import { JwtResponse } from './models';
 import { EventBusService } from './shared/event-bus.service';
@@ -35,16 +35,16 @@ export class AppComponent {
   constructor(
     private tokenStorageService: TokenStorageService,
     private router: Router,
-    private layoutMenuService: LayoutMenuService,
+    private userInfoService: UserInfoService,
     public translate: TranslateService,
     private eventBusService: EventBusService
   ) { }
 
   ngOnInit(): void {
-    this.layoutMenuService.showMenu.subscribe(show => {
+    this.userInfoService.showMenu.subscribe(show => {
       this.showMenu = show;
     });
-    this.layoutMenuService.user.subscribe(u => {
+    this.userInfoService.user.subscribe(u => {
       this.infoUser = u;
     });
     if (!!this.tokenStorageService.getToken()) {
@@ -54,7 +54,7 @@ export class AppComponent {
       this.infoUser.email = userInfo.email;
       this.infoUser.language = userInfo.language;
 
-      this.layoutMenuService.setValueUser(this.infoUser);
+      this.userInfoService.setValueUser(this.infoUser);
     }
 
     const browserLang = this.translate.getBrowserLang();

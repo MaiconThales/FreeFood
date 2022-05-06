@@ -7,7 +7,7 @@ import {
   DashboardPainelOneComponent,
   LoginAuthenticationComponent,
   RestaurantCrudComponent,
-  MenuCruComponent,
+  MenuListComponent,
   RequestCrudComponent,
   NotFoundComponent,
   UserEditComponent
@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'authentication', component: LoginAuthenticationComponent },
   { path: 'dashboard', component: DashboardPainelOneComponent, canActivate: [AuthGuard] },
   { path: 'restaurant', component: RestaurantCrudComponent, canActivate: [AuthGuard] },
-  { path: 'menu', component: MenuCruComponent, canActivate: [AuthGuard] },
+  { path: 'menu', component: MenuListComponent, canActivate: [AuthGuard] },
   { path: 'request', component: RequestCrudComponent, canActivate: [AuthGuard] },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'profile-edit', component: UserEditComponent, canActivate: [AuthGuard] },

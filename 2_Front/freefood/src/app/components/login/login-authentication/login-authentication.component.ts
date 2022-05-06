@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { JwtResponse, LoginRequest, SignupRequest } from '../../../models';
 import { MyErrorStateMatcher } from '../../../errors';
 import { LoginCreateComponent } from '../login-create/login-create.component';
-import { AuthService, TokenStorageService, LayoutMenuService } from '../../../services';
+import { AuthService, TokenStorageService, UserInfoService } from '../../../services';
 import { environment as e } from '../../../../environments/environment.prod';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -31,7 +31,7 @@ export class LoginAuthenticationComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private layoutMenuService: LayoutMenuService,
+    private userInfoService: UserInfoService,
     public translate: TranslateService
   ) { }
 
@@ -41,9 +41,9 @@ export class LoginAuthenticationComponent implements OnInit {
       password: new FormControl('', [Validators.required])
     });
     if (this.tokenStorage.getToken()) {
-      this.layoutMenuService.alterValue(true);
+      this.userInfoService.alterValue(true);
       this.userInfo = this.tokenStorage.getUser();
-      this.layoutMenuService.setValueUser(this.userInfo);
+      this.userInfoService.setValueUser(this.userInfo);
     }
   }
 
@@ -60,8 +60,8 @@ export class LoginAuthenticationComponent implements OnInit {
         this.tokenStorage.saveUser(data);
 
         this.userInfo = data;
-        this.layoutMenuService.alterValue(true);
-        this.layoutMenuService.setValueUser(this.userInfo);
+        this.userInfoService.alterValue(true);
+        this.userInfoService.setValueUser(this.userInfo);
         this.router.navigate([e.REDIRECT_DASHBOARD]);
 
         this.translate.use(data.language);
@@ -69,7 +69,7 @@ export class LoginAuthenticationComponent implements OnInit {
       error: err => {
         this.resetForm();
         this.errorMessage = err.message;
-        this.layoutMenuService.alterValue(false);
+        this.userInfoService.alterValue(false);
         this.snackBar.open('Login ou senha inválido', '', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
