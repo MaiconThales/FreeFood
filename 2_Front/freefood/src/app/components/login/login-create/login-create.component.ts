@@ -20,10 +20,14 @@ export class LoginCreateComponent {
   constructor(
     public dialogRef: MatDialogRef<LoginCreateComponent>
   ) { 
+    this.createForm();
+  }
+
+  createForm(): void {
     this.userCreateForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       language: new FormControl('', [Validators.required])
     });
   }

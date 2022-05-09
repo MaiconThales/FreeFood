@@ -33,6 +33,9 @@
                 {{'PROFILE.MSG_INPUT_EMAIL' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_MASCULINE' |
                     translate}}</strong>
             </mat-error>
+            <mat-error *ngIf="userEditForm.controls['email'].hasError('email')">
+                {{'GLOBAL_WORD.EMAIL_INVALID' | translate}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field appearance="standard">
             <mat-label>

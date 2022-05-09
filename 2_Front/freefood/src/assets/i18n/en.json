@@ -22,7 +22,8 @@
         "DESCRIPTION_REMOVE": "Do you want to remove the registry?",
         "DESCRIPTION_LABEL_SHARED_RESTAURANT": "Share restaurant",
         "DESCRIPTION_LABEL_EDIT": "To edit",
-        "DESCRIPTTION_LABEL_DELETE": "Delete"
+        "DESCRIPTTION_LABEL_DELETE": "Delete",
+        "EMAIL_INVALID": "The content typed does not follow the pattern of an email!"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Edit profile",
