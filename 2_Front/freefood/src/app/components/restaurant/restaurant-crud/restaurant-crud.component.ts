@@ -10,6 +10,7 @@ import { RestaurantDialogComponent, RestaurantLiberateComponent } from '../';
 import { RestaurantService, TokenStorageService } from 'src/app/services';
 import { EventData, Restaurant } from 'src/app/models';
 import { EventBusService } from 'src/app/shared/event-bus.service';
+import { DialogConfirmRemoveComponent } from '../../shared';
 
 @Component({
   selector: 'app-restaurant-crud',
@@ -24,6 +25,10 @@ export class RestaurantCrudComponent implements OnInit {
   dataSource!: MatTableDataSource<Restaurant>;
   restaurants: Restaurant[] = [];
 
+  labelSharedRestaurant!: String;
+  labelEdit!: String;
+  labelDelete!: String;
+
   constructor(
     public dialog: MatDialog,
     private restaurantService: RestaurantService,
@@ -34,7 +39,16 @@ export class RestaurantCrudComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getLabel();
     this.getRestaurant();
+  }
+
+  getLabel(): void {
+    setTimeout(() => {
+      this.labelSharedRestaurant = this.translate.instant('GLOBAL_WORD.DESCRIPTION_LABEL_SHARED_RESTAURANT');
+      this.labelEdit = this.translate.instant('GLOBAL_WORD.DESCRIPTION_LABEL_EDIT');
+      this.labelDelete = this.translate.instant('GLOBAL_WORD.DESCRIPTTION_LABEL_DELETE');
+    }, 1000);
   }
 
   applyFilter(event: Event) {
@@ -68,7 +82,7 @@ export class RestaurantCrudComponent implements OnInit {
   openDialogCreateRestaurant(type: number, object: any): void {
     const dialogRef = this.dialog.open(RestaurantDialogComponent, {
       width: '500px',
-      height: '220px',
+      height: '180px',
       data: object
     });
 
@@ -89,12 +103,25 @@ export class RestaurantCrudComponent implements OnInit {
   openDialogLiberateRestaurant(restaurant: Restaurant): void {
     const dialogRef = this.dialog.open(RestaurantLiberateComponent, {
       width: '500px',
-      height: '220px'
+      height: '180px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
         this.liberateRestaurant(restaurant, result);
+      }
+    });
+  }
+
+  openDialogRemove(restaurant: Restaurant): void {
+    const dialogRef = this.dialog.open(DialogConfirmRemoveComponent, {
+      width: '300px',
+      height: '170px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.removeRestaurant(restaurant);
       }
     });
   }
@@ -156,25 +183,27 @@ export class RestaurantCrudComponent implements OnInit {
     });
   }
 
-  removeRestaurant(idRestaurant: number): void {
-    this.restaurantService.removeRestaurant(idRestaurant, this.token.getIdUser()).subscribe({
-      next: () => {
-        this.snackBar.open(this.translate.instant('GLOBAL_WORD.MSG_REMOVE'), 'Ok', {
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          duration: 10000
-        });
-        this.getRestaurant();
-      },
-      error: err => {
-        this.functionBusService(err);
-        this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          duration: 10000
-        });
-      }
-    });
+  removeRestaurant(restaurant: Restaurant): void {
+    if(restaurant.id != null) {
+      this.restaurantService.removeRestaurant(restaurant.id, this.token.getIdUser()).subscribe({
+        next: () => {
+          this.snackBar.open(this.translate.instant('GLOBAL_WORD.MSG_REMOVE'), 'Ok', {
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            duration: 10000
+          });
+          this.getRestaurant();
+        },
+        error: err => {
+          this.functionBusService(err);
+          this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            duration: 10000
+          });
+        }
+      });
+    }
   }
 
   private functionBusService(err: any): void {

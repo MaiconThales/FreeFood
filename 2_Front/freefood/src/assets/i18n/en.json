@@ -19,7 +19,10 @@
         "WORD_MSG_SUCCESS": "Success",
         "YES": "Yes",
         "NO": "No",
-        "DESCRIPTION_REMOVE": "Do you want to remove the registry?"
+        "DESCRIPTION_REMOVE": "Do you want to remove the registry?",
+        "DESCRIPTION_LABEL_SHARED_RESTAURANT": "Share restaurant",
+        "DESCRIPTION_LABEL_EDIT": "To edit",
+        "DESCRIPTTION_LABEL_DELETE": "Delete"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Edit profile",

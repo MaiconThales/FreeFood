@@ -19,7 +19,10 @@
         "WORD_MSG_SUCCESS": "Sucesso",
         "YES": "Sim",
         "NO": "Não",
-        "DESCRIPTION_REMOVE": "Deseja remover o registro?"
+        "DESCRIPTION_REMOVE": "Deseja remover o registro?",
+        "DESCRIPTION_LABEL_SHARED_RESTAURANT": "Compartilhar restaurante",
+        "DESCRIPTION_LABEL_EDIT": "Editar",
+        "DESCRIPTTION_LABEL_DELETE": "Deletar"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Editar perfil",
