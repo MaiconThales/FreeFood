@@ -111,7 +111,7 @@ export class UserEditComponent implements OnInit {
     }
   }
 
-  functionBusService(err: any): void {
+  private functionBusService(err: any): void {
     if (err.status === 403) {
       this.eventBusService.emit(new EventData('logout', null));
     }

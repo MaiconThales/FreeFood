@@ -76,6 +76,10 @@
         "LABEL_NAME": "Name",
         "LABEL_RESTAURANT": "Restaurant",
         "FILTER_NO_DATA": "Nothing found for",
-        "NO_DATA": "No data"
+        "NO_DATA": "No data",
+        "TITLE_CREATE_MENU": "Register a menu",
+        "MSG_INPUT_NAME": "Name is",
+        "MSG_INPUT_RESTAURANT": "Restaurant is",
+        "MSG_NO_CONTENT": "No data"
     }
 }

@@ -8,7 +8,8 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { RestaurantDialogComponent, RestaurantLiberateComponent } from '../';
 import { RestaurantService, TokenStorageService } from 'src/app/services';
-import { Restaurant } from 'src/app/models';
+import { EventData, Restaurant } from 'src/app/models';
+import { EventBusService } from 'src/app/shared/event-bus.service';
 
 @Component({
   selector: 'app-restaurant-crud',
@@ -28,7 +29,8 @@ export class RestaurantCrudComponent implements OnInit {
     private restaurantService: RestaurantService,
     private snackBar: MatSnackBar,
     private translate: TranslateService,
-    private token: TokenStorageService
+    private token: TokenStorageService,
+    private eventBusService: EventBusService
   ) { }
 
   ngOnInit(): void {
@@ -52,7 +54,8 @@ export class RestaurantCrudComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.restaurants = data;
       },
-      error: () => {
+      error: err => {
+        this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -101,7 +104,8 @@ export class RestaurantCrudComponent implements OnInit {
       next: () => {
         this.getRestaurant();
       },
-      error: () => {
+      error: err => {
+        this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -121,7 +125,8 @@ export class RestaurantCrudComponent implements OnInit {
         });
         this.getRestaurant();
       },
-      error: () => {
+      error: err => {
+        this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -141,6 +146,7 @@ export class RestaurantCrudComponent implements OnInit {
         });
       },
       error: err => {
+        this.functionBusService(err);
         this.snackBar.open(this.translate.instant(err.error.message), 'Ok', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -160,7 +166,8 @@ export class RestaurantCrudComponent implements OnInit {
         });
         this.getRestaurant();
       },
-      error: () => {
+      error: err => {
+        this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -168,6 +175,12 @@ export class RestaurantCrudComponent implements OnInit {
         });
       }
     });
+  }
+
+  private functionBusService(err: any): void {
+    if (err.status === 403) {
+      this.eventBusService.emit(new EventData('logout', null));
+    }
   }
 
 }

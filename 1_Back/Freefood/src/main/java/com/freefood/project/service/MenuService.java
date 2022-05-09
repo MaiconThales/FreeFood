@@ -34,4 +34,6 @@ public interface MenuService {
 	
 	ResponseEntity<List<MenuDTO>> getMenu(Long idRestaurant, Long idUser);
 	
+	ResponseEntity<List<MenuDTO>> getAllMenu();
+	
 }

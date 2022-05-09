@@ -76,6 +76,10 @@
         "LABEL_NAME": "Nome",
         "LABEL_RESTAURANT": "Restaurante",
         "FILTER_NO_DATA": "Nada encontrado para",
-        "NO_DATA": "Não há dados"
+        "NO_DATA": "Não há dados",
+        "TITLE_CREATE_MENU": "Cadastrar um cardápio",
+        "MSG_INPUT_NAME": "Nome é",
+        "MSG_INPUT_RESTAURANT": "Restaurant é",
+        "MSG_NO_CONTENT": "Não há dados"
     }
 }

@@ -32,4 +32,8 @@ export class MenuService {
     return this.http.put(e.AUTH_API + e.MENU_CONTROLLER + '/updateMenu', menu);
   }
 
+  getAllMenu(): Observable<any> {
+    return this.http.get(e.AUTH_API + e.MENU_CONTROLLER + '/getAll');
+  }
+
 }

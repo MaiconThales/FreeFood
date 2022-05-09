@@ -10,9 +10,10 @@ import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 
 import { MenuDialogRegisterComponent } from '../';
-import { Menu, Restaurant } from 'src/app/models';
+import { EventData, Menu, Restaurant } from 'src/app/models';
 import { RestaurantService, TokenStorageService, MenuService } from 'src/app/services';
 import { DialogConfirmRemoveComponent } from '../../shared';
+import { EventBusService } from 'src/app/shared/event-bus.service';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class MenuListComponent implements OnInit {
     private restaurantService: RestaurantService,
     private snackBar: MatSnackBar,
     private translate: TranslateService,
-    private menuService: MenuService
+    private menuService: MenuService,
+    private eventBusService: EventBusService
   ) { }
 
   ngOnInit(): void {
@@ -92,7 +94,8 @@ export class MenuListComponent implements OnInit {
         this.restaurantByUser = data;
         this.configAutoCompleteInput(data);
       },
-      error: () => {
+      error: err => {
+        this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -113,7 +116,8 @@ export class MenuListComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.menus = data;
       },
-      error: () => {
+      error: err => {
+        this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -172,6 +176,7 @@ export class MenuListComponent implements OnInit {
         });
       },
       error: err => {
+        this.functionBusService(err);
         this.snackBar.open(this.translate.instant(err.message), 'Ok', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -192,6 +197,7 @@ export class MenuListComponent implements OnInit {
         });
       },
       error: err => {
+        this.functionBusService(err);
         this.snackBar.open(this.translate.instant(err.message), 'Ok', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -212,6 +218,7 @@ export class MenuListComponent implements OnInit {
         });
       },
       error: err => {
+        this.functionBusService(err);
         this.snackBar.open(this.translate.instant(err.message), 'Ok', {
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -227,6 +234,12 @@ export class MenuListComponent implements OnInit {
     } else {
       let search = this.restaurantSelect.value;
       this.getMenus(search.id, this.idUser);
+    }
+  }
+
+  private functionBusService(err: any): void {
+    if (err.status === 403) {
+      this.eventBusService.emit(new EventData('logout', null));
     }
   }
 

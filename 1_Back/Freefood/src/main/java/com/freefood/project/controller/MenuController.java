@@ -49,5 +49,10 @@ public class MenuController {
 	public ResponseEntity<MessageResponse> deleteMenu(@RequestParam("idMenu") Long idMenu, @RequestParam("idUser") Long idUser,  @RequestParam("idRestaurant") Long idRestaurant) {
 		return this.menuService.deleteMenu(idMenu, idUser, idRestaurant);
 	}
+	
+	@GetMapping("/getAll")
+	public ResponseEntity<List<MenuDTO>> getAllMenu() {
+		return this.menuService.getAllMenu();
+	}
 
 }
