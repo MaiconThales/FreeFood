@@ -18,4 +18,5 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /*TITLES*/
 .title-general {
     font-weight: bolder !important;
+    margin-top: 2% !important;
 }

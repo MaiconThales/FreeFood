@@ -59,7 +59,7 @@ export class UserEditComponent implements OnInit {
           id: new FormControl(''),
           username: new FormControl('', [Validators.required]),
           password: new FormControl(''),
-          email: new FormControl('', [Validators.required]),
+          email: new FormControl('', [Validators.required, Validators.email]),
           language: new FormControl('', [Validators.required]),
           phone: new FormControl(''),
           name: new FormControl('')
@@ -70,7 +70,7 @@ export class UserEditComponent implements OnInit {
           id: new FormControl(user.id),
           username: new FormControl(user.username, [Validators.required]),
           password: new FormControl(user.password),
-          email: new FormControl(user.email, [Validators.required]),
+          email: new FormControl(user.email, [Validators.required, Validators.email]),
           language: new FormControl(user.language, [Validators.required]),
           phone: new FormControl(user.phone),
           name: new FormControl(user.name)
