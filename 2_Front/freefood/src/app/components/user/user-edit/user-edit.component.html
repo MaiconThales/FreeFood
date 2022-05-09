@@ -40,7 +40,7 @@
             </mat-label>
             <mat-select formControlName="language" name="language">
                 <mat-option *ngFor="let l of language" [value]="l">
-                    {{l}}
+                    {{l | translate}}
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="userEditForm.controls['language'].hasError('required')">
@@ -61,7 +61,7 @@
             <mat-label>
                 {{'PROFILE.LABEL_PHONE' | translate}}
             </mat-label>
-            <input matInput id="phone" type="text" formControlName="phone">
+            <input matInput id="phone" type="text" formControlName="phone" mask="(00) 0000 0000||(00) 00000 0000">
         </mat-form-field>
     </div>
     <!--Btns-->

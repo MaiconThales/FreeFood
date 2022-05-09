@@ -9,6 +9,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { JwtModule } from "@auth0/angular-jwt";
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -47,10 +48,13 @@ import {
 export function tokenGetter() {
   return localStorage.getItem("access_token");
 }
-
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
+
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
 
 @NgModule({
   declarations: [
@@ -78,10 +82,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
       defaultLanguage: 'en'
     }),
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -89,6 +89,11 @@ export function HttpLoaderFactory(http: HttpClient) {
         disallowedRoutes: [""],
       },
     }),
+    NgxMaskModule.forRoot(maskConfig),
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,

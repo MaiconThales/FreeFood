@@ -41,3 +41,6 @@ Projeto de teste para fazer algo semelhante ao IFood. Utilizando Spring Boot par
 - Comando: npm install --save jwt-decode
 ### Sketeton (Aquardando):
 - Link: https://www.npmjs.com/package/ngx-skeleton-loader
+### ngx-mask
+- Link: https://www.npmjs.com/package/ngx-mask
+- Comando: npm i ngx-mask
