@@ -35,6 +35,11 @@ export class MenuListComponent implements OnInit {
   filteredOptions!: Observable<Restaurant[]>;
   idUser!: number;
 
+  labelEdit!: String;
+  labelDelete!: String;
+  labelSearch!: String;
+  labelClear!: String;
+
   constructor(
     public dialog: MatDialog,
     private token: TokenStorageService,
@@ -47,8 +52,18 @@ export class MenuListComponent implements OnInit {
 
   ngOnInit(): void {
     this.idUser = this.token.getIdUser();
+    this.getLabel();
     this.getRestaurantsByUser();
     this.getMenus(0, this.idUser);
+  }
+
+  getLabel(): void {
+    setTimeout(() => {
+      this.labelEdit = this.translate.instant('GLOBAL_WORD.DESCRIPTION_LABEL_EDIT');
+      this.labelDelete = this.translate.instant('GLOBAL_WORD.DESCRIPTTION_LABEL_DELETE');
+      this.labelSearch = this.translate.instant('GLOBAL_WORD.DESCRIPTION_LABEL_SEARCH');
+      this.labelClear = this.translate.instant('GLOBAL_WORD.DESCRIPTION_LABEL_CLEAR');
+    }, 1000);
   }
 
   configAutoCompleteInput(data: any): void {

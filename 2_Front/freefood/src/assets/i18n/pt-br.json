@@ -23,6 +23,8 @@
         "DESCRIPTION_LABEL_SHARED_RESTAURANT": "Compartilhar restaurante",
         "DESCRIPTION_LABEL_EDIT": "Editar",
         "DESCRIPTTION_LABEL_DELETE": "Deletar",
+        "DESCRIPTION_LABEL_SEARCH": "Realizar busca",
+        "DESCRIPTION_LABEL_CLEAR": "Limpar busca",
         "EMAIL_INVALID": "O conteúdo digitado não segue o padrão de um e-mail!"
     },
     "SLIDE_BAR": {

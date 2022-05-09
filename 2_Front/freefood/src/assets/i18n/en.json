@@ -23,6 +23,8 @@
         "DESCRIPTION_LABEL_SHARED_RESTAURANT": "Share restaurant",
         "DESCRIPTION_LABEL_EDIT": "To edit",
         "DESCRIPTTION_LABEL_DELETE": "Delete",
+        "DESCRIPTION_LABEL_SEARCH": "Perform search",
+        "DESCRIPTION_LABEL_CLEAR": "Clear search",
         "EMAIL_INVALID": "The content typed does not follow the pattern of an email!"
     },
     "SLIDE_BAR": {
