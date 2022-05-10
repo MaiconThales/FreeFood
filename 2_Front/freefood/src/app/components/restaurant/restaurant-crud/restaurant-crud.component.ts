@@ -9,8 +9,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { RestaurantDialogComponent, RestaurantLiberateComponent } from '../';
 import { RestaurantService, TokenStorageService } from 'src/app/services';
 import { EventData, Restaurant } from 'src/app/models';
-import { EventBusService } from 'src/app/shared/event-bus.service';
 import { DialogConfirmRemoveComponent } from '../../shared';
+import { EventBusService } from 'src/app/shared';
 
 @Component({
   selector: 'app-restaurant-crud',

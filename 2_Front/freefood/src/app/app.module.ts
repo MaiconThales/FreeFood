@@ -42,9 +42,7 @@ import {
   DialogConfirmRemoveComponent
 } from './components';
 
-import {
-  authInterceptorProviders
-} from './helpers/auth.interceptor';
+import { authInterceptorProviders } from './shared/helpers/auth.interceptor';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");

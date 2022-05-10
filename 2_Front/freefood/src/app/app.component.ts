@@ -6,8 +6,8 @@ import { Subscription } from 'rxjs';
 import { TokenStorageService, UserInfoService } from './services';
 import { environment as e } from '../environments/environment.prod';
 import { JwtResponse } from './models';
-import { EventBusService } from './shared/event-bus.service';
 import { TranslateService } from '@ngx-translate/core';
+import { EventBusService } from './shared';
 
 @Component({
   selector: 'app-root',

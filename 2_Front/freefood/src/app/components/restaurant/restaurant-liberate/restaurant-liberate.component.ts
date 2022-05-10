@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
-import { MyErrorStateMatcher } from 'src/app/errors';
+import { MyErrorStateMatcher } from 'src/app/shared';
 
 @Component({
   selector: 'app-restaurant-liberate',

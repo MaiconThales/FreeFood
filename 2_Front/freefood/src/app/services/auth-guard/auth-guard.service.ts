@@ -16,11 +16,11 @@ export class AuthGuardService implements CanActivate {
   ) { }
 
   canActivate(): boolean {
-    if(!this.authService.isAuthenticated()) {
+    /*if(!this.authService.isAuthenticated()) {
       this.router.navigate([e.REDIRECT_AUTHENTICATION]);
       this.token.signOut();
       return false;
-    }
+    }*/
     return true;
   }
 

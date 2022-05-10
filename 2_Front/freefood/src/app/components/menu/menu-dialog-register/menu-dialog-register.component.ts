@@ -4,8 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-import { MyErrorStateMatcher } from 'src/app/errors';
 import { Menu, Restaurant } from 'src/app/models';
+import { MyErrorStateMatcher } from 'src/app/shared';
 
 @Component({
   selector: 'app-menu-dialog-register',

@@ -2,9 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { MyErrorStateMatcher } from 'src/app/errors';
 import { Restaurant } from 'src/app/models';
 import { TokenStorageService } from 'src/app/services';
+import { MyErrorStateMatcher } from 'src/app/shared';
 
 @Component({
   selector: 'app-restaurant-dialog',

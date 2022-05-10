@@ -5,10 +5,9 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { User } from 'src/app/models';
 import { TokenStorageService, UserService } from 'src/app/services';
-import { MyErrorStateMatcher } from '../../../errors';
-import { EventBusService } from '../../../shared/event-bus.service';
 import { EventData } from 'src/app/models';
 import { environment as e } from '../../../../environments/environment.prod';
+import { EventBusService, MyErrorStateMatcher } from 'src/app/shared';
 
 @Component({
   selector: 'app-user-edit',

@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { EventData, Menu } from 'src/app/models';
 import { MenuService } from 'src/app/services';
-import { EventBusService } from 'src/app/shared/event-bus.service';
+import { EventBusService } from 'src/app/shared';
 
 @Component({
   selector: 'app-dashboard-painel-one',

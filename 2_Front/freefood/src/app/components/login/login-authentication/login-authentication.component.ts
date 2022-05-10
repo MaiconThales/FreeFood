@@ -3,13 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-1
+
 import { JwtResponse, LoginRequest, SignupRequest } from '../../../models';
-import { MyErrorStateMatcher } from '../../../errors';
 import { LoginCreateComponent } from '../login-create/login-create.component';
 import { AuthService, TokenStorageService, UserInfoService } from '../../../services';
 import { environment as e } from '../../../../environments/environment.prod';
 import { TranslateService } from '@ngx-translate/core';
+import { MyErrorStateMatcher } from 'src/app/shared';
 
 @Component({
   selector: 'app-login-authentication',

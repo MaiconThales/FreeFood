@@ -4,7 +4,7 @@ import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http'
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
 
-import { AuthService, TokenStorageService } from '../services';
+import { AuthService, TokenStorageService } from '../../services';
 
 const TOKEN_HEADER_KEY = 'Authorization';
 

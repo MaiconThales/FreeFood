@@ -13,7 +13,7 @@ import { MenuDialogRegisterComponent } from '../';
 import { EventData, Menu, Restaurant } from 'src/app/models';
 import { RestaurantService, TokenStorageService, MenuService } from 'src/app/services';
 import { DialogConfirmRemoveComponent } from '../../shared';
-import { EventBusService } from 'src/app/shared/event-bus.service';
+import { EventBusService } from 'src/app/shared';
 
 
 @Component({
