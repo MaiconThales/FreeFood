@@ -44,11 +44,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
       const token = this.tokenService.getRefreshToken();
 
-      if (token)
+      if (token) {
         return this.authService.refreshToken(token).pipe(
           switchMap((token: any) => {
             this.isRefreshing = false;
-
             this.tokenService.saveToken(token.accessToken);
             this.refreshTokenSubject.next(token.accessToken);
 
@@ -56,11 +55,11 @@ export class AuthInterceptor implements HttpInterceptor {
           }),
           catchError((err) => {
             this.isRefreshing = false;
-
             this.tokenService.signOut();
             return throwError(() => err);
           })
         );
+      }
     }
 
     return this.refreshTokenSubject.pipe(

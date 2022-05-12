@@ -29,7 +29,6 @@ export class DashboardPainelOneComponent implements OnInit {
   getAllMenus(): void {
     this.menuService.getAllMenu().subscribe({
       next: data => {
-        console.log("Data:: ", data)
         this.menusAll = data;
       },
       error: err => {

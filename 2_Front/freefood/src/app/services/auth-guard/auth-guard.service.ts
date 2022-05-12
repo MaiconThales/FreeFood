@@ -1,27 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate } from '@angular/router';
+import { Router, CanActivate, CanLoad, Route, UrlSegment, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
 
-import { AuthService, TokenStorageService } from '../';
-import { environment as e } from '../../../environments/environment.prod';
+import { AuthService } from '../';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService implements CanLoad, CanActivate {
 
   constructor(
     public authService: AuthService,
-    public router: Router,
-    private token: TokenStorageService
+    public router: Router
   ) { }
 
+  canLoad(): boolean {
+    if(this.authService.isAuthenticated()) {
+      return true;
+    }
+    return false;
+  }
+
   canActivate(): boolean {
-    /*if(!this.authService.isAuthenticated()) {
-      this.router.navigate([e.REDIRECT_AUTHENTICATION]);
-      this.token.signOut();
-      return false;
-    }*/
-    return true;
+    if(this.authService.isAuthenticated()) {
+      return true;
+    }
+    return false;
   }
 
 }

@@ -14,14 +14,40 @@ import {
 } from './components';
 
 const routes: Routes = [
+  { 
+    path: 'dashboard', 
+    component: DashboardPainelOneComponent, 
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard] 
+  },
+  { 
+    path: 'restaurant', 
+    component: RestaurantCrudComponent, 
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard] 
+  },
+  { 
+    path: 'menu', 
+    component: MenuListComponent, 
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard] 
+  },
+  { 
+    path: 'request', 
+    component: RequestCrudComponent, 
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard] 
+  },
+  { 
+    path: 'profile-edit', 
+    component: UserEditComponent, 
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard] 
+  },
   { path: 'authentication', component: LoginAuthenticationComponent },
-  { path: 'dashboard', component: DashboardPainelOneComponent, canActivate: [AuthGuard] },
-  { path: 'restaurant', component: RestaurantCrudComponent, canActivate: [AuthGuard] },
-  { path: 'menu', component: MenuListComponent, canActivate: [AuthGuard] },
-  { path: 'request', component: RequestCrudComponent, canActivate: [AuthGuard] },
-  { path: 'not-found', component: NotFoundComponent },
-  { path: 'profile-edit', component: UserEditComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '/not-found', pathMatch: 'full' }
+  { path: '**', redirectTo: '/not-found', pathMatch: 'full' },
+  { path: 'not-found', component: NotFoundComponent }
+  
 ];
 
 @NgModule({
