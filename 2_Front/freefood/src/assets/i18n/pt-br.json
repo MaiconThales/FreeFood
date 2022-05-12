@@ -25,7 +25,14 @@
         "DESCRIPTTION_LABEL_DELETE": "Deletar",
         "DESCRIPTION_LABEL_SEARCH": "Realizar busca",
         "DESCRIPTION_LABEL_CLEAR": "Limpar busca",
-        "EMAIL_INVALID": "O conteúdo digitado não segue o padrão de um e-mail!"
+        "EMAIL_INVALID": "O conteúdo digitado não segue o padrão de um e-mail!",
+        "ITEMS_PER_PAGE_LABEL": "Itens por página",
+        "NEXT_PAGE_LABEL": "Próxima página",
+        "PREVIOUS_PAGE_LABEL": "Página anterior",
+        "FIRST_PAGE_LABEL": "Primeira página",
+        "LAST_PAGE_LABEL": "Última página",
+        "RANGE_PAGE_LABEL_1": "0 de {{length}}",
+        "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} de {{length}}"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Editar perfil",

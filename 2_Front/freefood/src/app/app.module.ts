@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { JwtModule } from "@auth0/angular-jwt";
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 
@@ -22,7 +22,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -42,7 +42,7 @@ import {
   DialogConfirmRemoveComponent
 } from './components';
 
-import { authInterceptorProviders } from './shared/helpers/auth.interceptor';
+import { authInterceptorProviders, PaginatorI18n } from './shared';
 import { AuthGuardService, AuthService } from './services';
 
 export function tokenGetter() {
@@ -71,15 +71,11 @@ const maskConfig: Partial<IConfig> = {
     RestaurantLiberateComponent,
     MenuDialogRegisterComponent,
     DialogConfirmRemoveComponent
-    
   ],
   imports: [
     TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      },
+      loader: { provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient] },
+      isolate: true,
       defaultLanguage: 'en'
     }),
     JwtModule.forRoot({
@@ -116,7 +112,11 @@ const maskConfig: Partial<IConfig> = {
   providers: [
     authInterceptorProviders,
     AuthGuardService,
-    AuthService
+    AuthService,
+    {
+      provide: MatPaginatorIntl, deps: [TranslateService],
+      useFactory: (translateService: TranslateService) => new PaginatorI18n(translateService).getPaginatorIntl()
+    }
   ],
   bootstrap: [AppComponent]
 })

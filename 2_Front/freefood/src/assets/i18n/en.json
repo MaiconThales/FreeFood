@@ -25,7 +25,14 @@
         "DESCRIPTTION_LABEL_DELETE": "Delete",
         "DESCRIPTION_LABEL_SEARCH": "Perform search",
         "DESCRIPTION_LABEL_CLEAR": "Clear search",
-        "EMAIL_INVALID": "The content typed does not follow the pattern of an email!"
+        "EMAIL_INVALID": "The content typed does not follow the pattern of an email!",
+        "ITEMS_PER_PAGE_LABEL": "Items per page",
+        "NEXT_PAGE_LABEL": "Next page",
+        "PREVIOUS_PAGE_LABEL": "Previous page",
+        "FIRST_PAGE_LABEL": "First page",
+        "LAST_PAGE_LABEL": "Last page",
+        "RANGE_PAGE_LABEL_1": "0 of {{length}}",
+        "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} of {{length}}"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Edit profile",

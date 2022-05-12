@@ -18,7 +18,7 @@ export class UserEditComponent implements OnInit {
 
   userEditForm!: FormGroup;
   matcher = new MyErrorStateMatcher();
-  
+
   user!: User;
   language: string[] = e.LANGUAGE_OPTIONS;
 
@@ -89,7 +89,7 @@ export class UserEditComponent implements OnInit {
       phone: this.userEditForm.get('phone')?.value,
       roles: []
     };
-    if(this.user != null) {
+    if (this.user != null) {
       this.userService.alterDataUser(this.user).subscribe({
         next: () => {
           this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_ALTER_SUCCESS'), 'Ok', {
@@ -97,6 +97,12 @@ export class UserEditComponent implements OnInit {
             verticalPosition: 'bottom',
             duration: 10000
           });
+          setTimeout(() => {
+            let user = this.token.getUser();
+            user.language = this.user.language;
+            this.token.saveUser(user);
+            window.location.reload();
+          }, 1000);
         },
         error: err => {
           this.functionBusService(err);
