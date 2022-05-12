@@ -43,6 +43,7 @@ import {
 } from './components';
 
 import { authInterceptorProviders } from './shared/helpers/auth.interceptor';
+import { AuthGuardService, AuthService } from './services';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -113,7 +114,9 @@ const maskConfig: Partial<IConfig> = {
     MatTooltipModule
   ],
   providers: [
-    authInterceptorProviders
+    authInterceptorProviders,
+    AuthGuardService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

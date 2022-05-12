@@ -145,7 +145,7 @@ export class MenuListComponent implements OnInit {
   openDialogRegister(type: number, object: any): void {
     const dialogRef = this.dialog.open(MenuDialogRegisterComponent, {
       width: '500px',
-      height: '220px',
+      height: '180px',
       data: {
         'menu': object,
         'restaurant': this.restaurantByUser
@@ -170,7 +170,7 @@ export class MenuListComponent implements OnInit {
   openDialogRemove(menu: Menu): void {
     const dialogRef = this.dialog.open(DialogConfirmRemoveComponent, {
       width: '300px',
-      height: '200px'
+      height: '180px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
