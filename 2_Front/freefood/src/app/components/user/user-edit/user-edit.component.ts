@@ -22,6 +22,8 @@ export class UserEditComponent implements OnInit {
   user!: User;
   language: string[] = e.LANGUAGE_OPTIONS;
 
+  labelSave!: string;
+
   constructor(
     private userService: UserService,
     private token: TokenStorageService,
@@ -31,8 +33,13 @@ export class UserEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.setLabels();
     this.createFormUser(undefined, 1);
     this.getDataUser();
+  }
+
+  setLabels(): void {
+    this.labelSave = this.translate.instant('GLOBAL_WORD.WORD_SAVE');
   }
 
   getDataUser() {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 import { MyErrorStateMatcher } from 'src/app/shared';
 
@@ -14,10 +15,20 @@ export class RestaurantLiberateComponent {
   userForm!: FormGroup;
   matcher = new MyErrorStateMatcher();
 
+  labelClose!: string;
+  labelSave!: string;
+
   constructor(
-    public dialogRef: MatDialogRef<RestaurantLiberateComponent>
+    public dialogRef: MatDialogRef<RestaurantLiberateComponent>,
+    private translate: TranslateService
   ) { 
+    this.setLabels();
     this.createForm();
+  }
+
+  setLabels(): void {
+    this.labelClose = this.translate.instant('GLOBAL_WORD.WORD_CLOSE');
+    this.labelSave = this.translate.instant('GLOBAL_WORD.WORD_SAVE');
   }
 
   createForm(): void {

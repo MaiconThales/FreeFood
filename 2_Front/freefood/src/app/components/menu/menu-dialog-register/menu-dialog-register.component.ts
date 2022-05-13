@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -21,17 +22,27 @@ export class MenuDialogRegisterComponent {
   options: Restaurant[] = [];
   filteredOptions!: Observable<Restaurant[]>;
 
+  labelClose!: string;
+  labelSave!: string;
+
   constructor(
     public dialogRef: MatDialogRef<MenuDialogRegisterComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private translate: TranslateService
   ) { 
     if(data.menu == null) {
       this.isCreate = true;
     } else {
       this.isCreate = false;
     }
+    this.setLabels();
     this.createForm();
     this.configAutoCompleteInput(data)
+  }
+
+  setLabels(): void {
+    this.labelClose = this.translate.instant('GLOBAL_WORD.WORD_CLOSE');
+    this.labelSave = this.translate.instant('GLOBAL_WORD.WORD_SAVE');
   }
 
   configAutoCompleteInput(data: any): void {

@@ -5,6 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { SignupRequest } from '../../../models'
 import { environment as e } from '../../../../environments/environment.prod';
 import { MyErrorStateMatcher } from 'src/app/shared';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login-create',
@@ -17,10 +18,20 @@ export class LoginCreateComponent {
   matcher = new MyErrorStateMatcher();
   language: string[] = e.LANGUAGE_OPTIONS;
 
+  labelClose!: string;
+  labelSave!: string;
+
   constructor(
-    public dialogRef: MatDialogRef<LoginCreateComponent>
+    public dialogRef: MatDialogRef<LoginCreateComponent>,
+    private translate: TranslateService
   ) { 
+    this.setLabels();
     this.createForm();
+  }
+
+  setLabels(): void {
+    this.labelClose = this.translate.instant('GLOBAL_WORD.WORD_CLOSE');
+    this.labelSave = this.translate.instant('GLOBAL_WORD.WORD_SAVE');
   }
 
   createForm(): void {

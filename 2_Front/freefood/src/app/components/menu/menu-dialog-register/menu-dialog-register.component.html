@@ -34,13 +34,13 @@
     <!--Btns-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <div>
-            <button (click)="onNoClick();" mat-icon-button>
+            <button (click)="onNoClick();" mat-icon-button matTooltip="{{labelClose}}" matTooltipPosition="left">
                 <mat-icon>close</mat-icon>
             </button>
         </div>
         <div>
             <button class="button-general-save" (click)="onSubmit()" type="submit" [disabled]="!menuForm.valid"
-                mat-icon-button>
+                mat-icon-button matTooltip="{{labelSave}}" matTooltipPosition="after">
                 <mat-icon>save</mat-icon>
             </button>
         </div>

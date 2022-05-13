@@ -71,7 +71,7 @@
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <div>
             <button class="button-general-save" (click)="onSubmit()" type="submit" [disabled]="!userEditForm.valid"
-                mat-icon-button>
+                mat-icon-button matTooltip="{{labelSave}}" matTooltipPosition="after">
                 <mat-icon>save</mat-icon>
             </button>
         </div>

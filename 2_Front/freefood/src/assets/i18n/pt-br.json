@@ -32,7 +32,9 @@
         "FIRST_PAGE_LABEL": "Primeira página",
         "LAST_PAGE_LABEL": "Última página",
         "RANGE_PAGE_LABEL_1": "0 de {{length}}",
-        "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} de {{length}}"
+        "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} de {{length}}",
+        "WORD_CLOSE": "Fechar",
+        "WORD_SAVE": "Salvar"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Editar perfil",
