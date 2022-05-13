@@ -20,4 +20,6 @@ JwtResponse authenticateUser(LoginRequest loginRequest);
 	
 	ResponseEntity<MessageResponse> logoutUser(LogOutRequest logOutRequest);
 
+	ResponseEntity<Boolean> isUserLogger();
+	
 }

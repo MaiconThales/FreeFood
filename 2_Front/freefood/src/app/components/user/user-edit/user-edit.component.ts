@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { User } from 'src/app/models';
 import { TokenStorageService, UserService } from 'src/app/services';
 import { EventData } from 'src/app/models';
-import { environment as e } from '../../../../environments/environment.prod';
+import { environment as e } from 'src/environments/environment.prod';
 import { EventBusService, MyErrorStateMatcher } from 'src/app/shared';
 
 @Component({

@@ -85,4 +85,9 @@ public class UserController {
 		return this.loginService.logoutUser(logOutRequest);
 	}
 
+	@GetMapping("/auth/isLogged")
+	public ResponseEntity<Boolean> isUserLogger() {
+		return this.loginService.isUserLogger();
+	}
+	
 }

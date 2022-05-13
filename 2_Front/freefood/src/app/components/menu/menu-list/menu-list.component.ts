@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 
-import { MenuDialogRegisterComponent } from '../';
+import { MenuDialogRegisterComponent } from 'src/app/components/menu';
 import { EventData, Menu, Restaurant } from 'src/app/models';
 import { RestaurantService, TokenStorageService, MenuService } from 'src/app/services';
-import { DialogConfirmRemoveComponent } from '../../shared';
+import { DialogConfirmRemoveComponent } from 'src/app/components/shared';
 import { EventBusService } from 'src/app/shared';
 
 

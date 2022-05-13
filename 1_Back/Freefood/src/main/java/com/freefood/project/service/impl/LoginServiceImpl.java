@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -126,10 +127,6 @@ public class LoginServiceImpl implements LoginService {
 	
 	@Override
 	public ResponseEntity<TokenRefreshResponse> refreshtoken(TokenRefreshRequest request) {
-		/**
-		 * TODO Futuramente tem que colocar uma maneira de atualizar o horário, pois
-		 * atualmente só faz um reflesh
-		 */
 		String requestRefreshToken = request.getRefreshToken();
 
 		Optional<User> resultUser = refreshTokenService.findByToken(requestRefreshToken).map(refreshTokenService::verifyExpiration).map(RefreshToken::getUser);
@@ -145,6 +142,15 @@ public class LoginServiceImpl implements LoginService {
 	public ResponseEntity<MessageResponse> logoutUser(LogOutRequest logOutRequest) {
 		refreshTokenService.deleteByUserId(logOutRequest.getUserId());
 		return ResponseEntity.ok(new MessageResponse("Log out successful!"));
+	}
+
+	@Override
+	public ResponseEntity<Boolean> isUserLogger() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+		    return new ResponseEntity<>(authentication.isAuthenticated(), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
 	}
 
 	

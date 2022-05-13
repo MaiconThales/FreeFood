@@ -36,6 +36,10 @@ export class AuthService {
     }, httpOptions);
   }
 
+  isLogged(): Observable<any> {
+    return this.http.get(e.AUTH_API + e.USER_CONTROLLER + '/auth/isLogged');
+  }
+
   public isAuthenticated(): boolean {
     const token = this.tokenStorageService.getToken();
 

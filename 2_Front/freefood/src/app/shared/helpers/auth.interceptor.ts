@@ -3,8 +3,10 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { AuthService, TokenStorageService } from '../../services';
+import { environment as e } from 'src/environments/environment.prod';
 
 const TOKEN_HEADER_KEY = 'Authorization';
 
@@ -16,7 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
     private tokenService: TokenStorageService, 
-    private authService: AuthService
+    private authService: AuthService,
+    private route: Router
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
@@ -56,6 +59,7 @@ export class AuthInterceptor implements HttpInterceptor {
           catchError((err) => {
             this.isRefreshing = false;
             this.tokenService.signOut();
+            this.route.navigate([e.REDIRECT_AUTHENTICATION]);
             return throwError(() => err);
           })
         );

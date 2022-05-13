@@ -6,10 +6,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { RestaurantDialogComponent, RestaurantLiberateComponent } from '../';
+import { RestaurantDialogComponent, RestaurantLiberateComponent } from 'src/app/components/restaurant';
 import { RestaurantService, TokenStorageService } from 'src/app/services';
 import { EventData, Restaurant } from 'src/app/models';
-import { DialogConfirmRemoveComponent } from '../../shared';
+import { DialogConfirmRemoveComponent } from 'src/app/components/shared';
 import { EventBusService } from 'src/app/shared';
 
 @Component({
