@@ -5,4 +5,5 @@ export interface Menu {
     restaurant: Restaurant;
     name: string;
     linkImage?: string;
+    description?: string;
 }

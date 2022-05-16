@@ -92,6 +92,7 @@
         "LABEL_ID": "ID",
         "LABEL_NAME": "Nome",
         "LABEL_RESTAURANT": "Restaurante",
+        "LABEL_DESCRIPTION": "Descrição",
         "FILTER_NO_DATA": "Nada encontrado para",
         "NO_DATA": "Não há dados",
         "TITLE_CREATE_MENU": "Cadastrar um cardápio",

@@ -27,16 +27,20 @@ public class Menu {
 	@Column(nullable = true)
 	private String linkImage;
 	
+	@Column(nullable = false)
+	private String description;
+	
 	public Menu() {
 		
 	}
 	
-	public Menu(Long idMenu, Restaurant restaurant, String name, String linkImage) {
+	public Menu(Long idMenu, Restaurant restaurant, String name, String linkImage, String description) {
 		super();
 		this.idMenu = idMenu;
 		this.restaurant = restaurant;
 		this.name = name;
 		this.linkImage = linkImage;
+		this.description = description;
 	}
 
 	public Long getIdMenu() {
@@ -69,6 +73,14 @@ public class Menu {
 
 	public void setLinkImage(String linkImage) {
 		this.linkImage = linkImage;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

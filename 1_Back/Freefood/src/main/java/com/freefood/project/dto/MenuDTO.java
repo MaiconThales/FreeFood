@@ -8,17 +8,19 @@ public class MenuDTO {
 	private Restaurant restaurant;
 	private String name;
 	private String linkImage;
+	private String description;
 	
 	public MenuDTO() {
 		
 	}
 	
-	public MenuDTO(Long idMenu, Restaurant restaurant, String name, String linkImage) {
+	public MenuDTO(Long idMenu, Restaurant restaurant, String name, String linkImage, String description) {
 		super();
 		this.idMenu = idMenu;
 		this.restaurant = restaurant;
 		this.name = name;
 		this.linkImage = linkImage;
+		this.description = description;
 	}
 	
 	public Long getIdMenu() {
@@ -44,6 +46,14 @@ public class MenuDTO {
 	}
 	public void setLinkImage(String linkImage) {
 		this.linkImage = linkImage;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

@@ -92,6 +92,7 @@
         "LABEL_ID": "ID",
         "LABEL_NAME": "Name",
         "LABEL_RESTAURANT": "Restaurant",
+        "LABEL_DESCRIPTION": "Description",
         "FILTER_NO_DATA": "Nothing found for",
         "NO_DATA": "No data",
         "TITLE_CREATE_MENU": "Register a menu",

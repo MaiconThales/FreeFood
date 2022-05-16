@@ -145,7 +145,7 @@ export class MenuListComponent implements OnInit {
   openDialogRegister(type: number, object: any): void {
     const dialogRef = this.dialog.open(MenuDialogRegisterComponent, {
       width: '500px',
-      height: '180px',
+      height: '270px',
       data: {
         'menu': object,
         'restaurant': this.restaurantByUser

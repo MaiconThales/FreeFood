@@ -68,13 +68,15 @@ export class MenuDialogRegisterComponent {
       this.menuForm = new FormGroup({
         idMenu: new FormControl(''),
         name: new FormControl('', [Validators.required]),
-        restaurant: new FormControl('', [Validators.required])
+        restaurant: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required])
       });
     } else {
       this.menuForm = new FormGroup({
         idMenu: new FormControl(this.data.menu.idMenu),
         name: new FormControl(this.data.menu.name, [Validators.required]),
-        restaurant: new FormControl(this.data.menu.restaurant, [Validators.required])
+        restaurant: new FormControl(this.data.menu.restaurant, [Validators.required]),
+        description: new FormControl(this.data.menu.description, [Validators.required])
       });
     }
   }
@@ -85,12 +87,14 @@ export class MenuDialogRegisterComponent {
       menu = {
         name: this.menuForm.get('name')?.value,
         restaurant: this.menuForm.get('restaurant')?.value,
+        description: this.menuForm.get('description')?.value
       }
     } else {
       menu = {
         idMenu: this.menuForm.get('idMenu')?.value,
         name: this.menuForm.get('name')?.value,
-        restaurant: this.menuForm.get('restaurant')?.value
+        restaurant: this.menuForm.get('restaurant')?.value,
+        description: this.menuForm.get('description')?.value
       }
     }
     

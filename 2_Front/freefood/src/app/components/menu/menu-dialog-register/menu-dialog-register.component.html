@@ -1,4 +1,4 @@
-<form [formGroup]="menuForm">
+<form [formGroup]="menuForm" class="menu-form">
     <!--Title-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         {{'MENU.TITLE_CREATE_MENU' | translate}}
@@ -17,8 +17,7 @@
         </mat-form-field>
         <mat-form-field appearance="standard">
             <mat-label>{{'MENU.LABEL_RESTAURANT' | translate}}</mat-label>
-            <input type="text" matInput formControlName="restaurant"
-                [matAutocomplete]="auto">
+            <input type="text" matInput formControlName="restaurant" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                     {{option.name}}
@@ -26,6 +25,18 @@
             </mat-autocomplete>
             <mat-error *ngIf="menuForm.controls['restaurant'].hasError('required')">
                 {{'MENU.MSG_INPUT_RESTAURANT' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_MASCULINE' |
+                    translate}}</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!--Description-->
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <mat-form-field class="input-full-width" appearance="standard">
+            <mat-label>{{'MENU.LABEL_DESCRIPTION' | translate}}</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+            <mat-error *ngIf="menuForm.controls['description'].hasError('required')">
+                {{'MENU.LABEL_DESCRIPTION' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_MASCULINE' |
                     translate}}</strong>
             </mat-error>
         </mat-form-field>
