@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
 
-import { User } from 'src/app/models';
-import { TokenStorageService, UserService } from 'src/app/services';
+import { Address, User } from 'src/app/models';
+import { AddressService, TokenStorageService, UserService } from 'src/app/services';
 import { EventData } from 'src/app/models';
 import { environment as e } from 'src/environments/environment.prod';
 import { EventBusService, MyErrorStateMatcher } from 'src/app/shared';
+import { AddressUserComponent } from 'src/app/components/user';
 
 @Component({
   selector: 'app-user-edit',
@@ -20,30 +22,42 @@ export class UserEditComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   user!: User;
+  address!: Address[];
   language: string[] = e.LANGUAGE_OPTIONS;
+  idUser!: number;
 
   labelSave!: string;
+  labelAddress!: string;
+  labelEditAddress!: string;
+  labelRemoveAddress!: string;
 
   constructor(
     private userService: UserService,
     private token: TokenStorageService,
     private snackBar: MatSnackBar,
     private eventBusService: EventBusService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    public dialog: MatDialog,
+    private addressService: AddressService
   ) { }
 
   ngOnInit(): void {
+    this.idUser = this.token.getIdUser();
     this.setLabels();
     this.createFormUser(undefined, 1);
     this.getDataUser();
+    this.getAddressByUser();
   }
 
   setLabels(): void {
     this.labelSave = this.translate.instant('GLOBAL_WORD.WORD_SAVE');
+    this.labelAddress = this.translate.instant('GLOBAL_WORD.WORD_ADDRESS');
+    this.labelEditAddress = this.translate.instant('GLOBAL_WORD.WORD_EDIT_ADDRESS');
+    this.labelRemoveAddress = this.translate.instant('GLOBAL_WORD.WORD_REMOVE_ADDRESS');
   }
 
   getDataUser() {
-    this.userService.getDataUser(this.token.getIdUser()).subscribe({
+    this.userService.getDataUser(this.idUser).subscribe({
       next: data => {
         this.createFormUser(data, 2);
       },
@@ -121,6 +135,103 @@ export class UserEditComponent implements OnInit {
         }
       });
     }
+  }
+
+  openDialogAddress(address: Address | null): void {
+    const dialogRef = this.dialog.open(AddressUserComponent, {
+      width: '500px',
+      height: '250px',
+      data: address
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        if(address == null) {
+          this.saveAddress(result);
+        } else {
+          this.updateAddress(result);
+        }
+      }
+    });
+  }
+
+  getAddressByUser(): void {
+    this.addressService.getAddressByUser(this.idUser).subscribe({
+      next: data => {
+        this.address = data;
+      },
+      error: err => {
+        this.functionBusService(err);
+        this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 10000
+        });
+      }
+    });
+  }
+
+  saveAddress(address: Address): void {
+    this.addressService.saveAddress(address).subscribe({
+      next: data => {
+        this.getAddressByUser();
+        this.snackBar.open(this.translate.instant(data.message), 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 10000
+        });
+      },
+      error: err => {
+        this.functionBusService(err);
+          this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            duration: 10000
+          });
+      }
+    });
+  }
+
+  updateAddress(address: Address): void {
+    this.addressService.updateAddress(address).subscribe({
+      next: data => {
+        this.getAddressByUser();
+        this.snackBar.open(this.translate.instant(data.message), 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 10000
+        });
+      },
+      error: err => {
+        this.functionBusService(err);
+          this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            duration: 10000
+          });
+      }
+    });
+  }
+
+  deleteAddress(idAddress: number): void {
+    this.addressService.deleteAddress(idAddress).subscribe({
+      next: data => {
+        this.getAddressByUser();
+        this.snackBar.open(this.translate.instant(data.message), 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 10000
+        });
+      },
+      error: err => {
+        this.functionBusService(err);
+        this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 10000
+        });
+      }
+    });
   }
 
   private functionBusService(err: any): void {

@@ -26,3 +26,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-left: 1%;
     margin-right: 1%;
 }
+
+/*TEXT*/
+.text-general {
+    font-weight: bolder !important;
+}

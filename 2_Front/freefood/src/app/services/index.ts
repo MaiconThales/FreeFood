@@ -5,3 +5,4 @@ export * from './user-info/user-info.service';
 export * from './restaurant/restaurant.service';
 export * from './user/user.service';
 export * from './menu/menu.service';
+export * from './address/address.service';

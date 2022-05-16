@@ -9,3 +9,4 @@ export * from './user/logOutRequest';
 export * from './menu/menu';
 export * from './request/request';
 export * from './event/eventData';
+export * from './address/Address';

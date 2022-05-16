@@ -34,7 +34,10 @@
         "RANGE_PAGE_LABEL_1": "0 of {{length}}",
         "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} of {{length}}",
         "WORD_CLOSE": "Close",
-        "WORD_SAVE": "Save"
+        "WORD_SAVE": "Save",
+        "WORD_ADDRESS": "Add address",
+        "WORD_EDIT_ADDRESS": "Edit address",
+        "WORD_REMOVE_ADDRESS": "Remove address"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Edit profile",
@@ -69,7 +72,8 @@
         "MSG_INPUT_LANGUAGE": "Language is",
         "LABEL_NAME": "Name",
         "LABEL_PHONE": "Phone",
-        "LABEL_BUSINESSTITLE": "Organization"
+        "LABEL_BUSINESSTITLE": "Organization",
+        "NO_DEFINE": "Undefined"
     },
     "RESTAURANT": {
         "TITLE_PAGE": "Restaurants",
@@ -102,5 +106,15 @@
     },
     "DASHBOARD": {
         "LIST_ALL_MENU": "List all options"
+    },
+    "ADDRESS": {
+        "TITLE_ADDRESS": "Add/Edit Address",
+        "LABEL_STREET": "Street",
+        "LABEL_DISTRICT": "District",
+        "LABEL_NUMBER": "Number",
+        "LABEL_COMPLEMENT": "Complement",
+        "MSG_INPUT_STREET": "Street is",
+        "MSG_INPUT_DISTRICT": "District is",
+        "MSG_INPUT_NUMBER": "Number is"
     }
 }

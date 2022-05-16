@@ -5,6 +5,7 @@ export const environment = {
   USER_CONTROLLER: "user",
   RESTAURANT_CONTROLLER: "restaurant",
   MENU_CONTROLLER: "menu",
+  ADDRESS_CONTROLLER: "address",
   
   REDIRECT_DASHBOARD: "/dashboard",
   REDIRECT_DASHBOARD_TWO: "/dashboardAllMenu",

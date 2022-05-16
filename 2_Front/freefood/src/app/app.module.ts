@@ -40,7 +40,8 @@ import {
   RestaurantLiberateComponent,
   MenuDialogRegisterComponent,
   DialogConfirmRemoveComponent,
-  DashboardPainelTwoComponent
+  DashboardPainelTwoComponent,
+  AddressUserComponent
 } from './components';
 
 import { authInterceptorProviders, PaginatorI18n } from './shared';
@@ -72,7 +73,8 @@ const maskConfig: Partial<IConfig> = {
     RestaurantLiberateComponent,
     MenuDialogRegisterComponent,
     DialogConfirmRemoveComponent,
-    DashboardPainelTwoComponent
+    DashboardPainelTwoComponent,
+    AddressUserComponent
   ],
   imports: [
     TranslateModule.forRoot({

@@ -1,7 +1,7 @@
 <form [formGroup]="userEditForm">
     <!--Title-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
-       <h1 class="title-general">{{'PROFILE.TITLE_ALTER_USER' | translate}}</h1>
+        <h1 class="title-general">{{'PROFILE.TITLE_ALTER_USER' | translate}}</h1>
     </div>
     <!--Username && password-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
@@ -67,9 +67,50 @@
             <input matInput id="phone" type="text" formControlName="phone" mask="(00) 0000 0000||(00) 00000 0000">
         </mat-form-field>
     </div>
+
+    <!--Address-->
+    <div fxLayout="row wrap" fxLayoutAlign=" none">
+        <div *ngFor="let a of address">
+            <mat-card class="card-address">
+                <mat-card-content>
+                    <div>
+                        <p>
+                            <span class="text-general">{{'ADDRESS.LABEL_STREET' | translate}}:</span> {{a.street}}
+                        </p>
+                        <p>
+                            <span class="text-general">{{'ADDRESS.LABEL_DISTRICT' | translate}}:</span> {{a.district}}
+                        </p>
+                        <p>
+                            <span class="text-general">{{'ADDRESS.LABEL_NUMBER' | translate}}:</span> {{a.number}}
+                        </p>
+                        <p>
+                            <span class="text-general">{{'ADDRESS.LABEL_COMPLEMENT' | translate}}:</span>
+                            <span *ngIf="a.complement != ''"> {{a.complement}}</span>
+                            <span *ngIf="a.complement == ''"> {{'PROFILE.NO_DEFINE' | translate}}</span>
+                        </p>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div fxLayout="row wrap" fxLayoutAlign="center center">
+                        <button mat-button (click)="openDialogAddress(a)" matTooltip="{{labelEditAddress}}" matTooltipPosition="left">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-button (click)="deleteAddress(a.id)" matTooltip="{{labelRemoveAddress}}" matTooltipPosition="after">
+                            <mat-icon>remove_circle_outline</mat-icon>
+                        </button>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+
     <!--Btns-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <div>
+            <button class="button-general-save" (click)="openDialogAddress(null)" mat-icon-button
+                matTooltip="{{labelAddress}}" matTooltipPosition="left">
+                <mat-icon>add_circle_outline</mat-icon>
+            </button>
             <button class="button-general-save" (click)="onSubmit()" type="submit" [disabled]="!userEditForm.valid"
                 mat-icon-button matTooltip="{{labelSave}}" matTooltipPosition="after">
                 <mat-icon>save</mat-icon>
