@@ -7,6 +7,7 @@ export const environment = {
   MENU_CONTROLLER: "menu",
   
   REDIRECT_DASHBOARD: "/dashboard",
+  REDIRECT_DASHBOARD_TWO: "/dashboardAllMenu",
   REDIRECT_AUTHENTICATION: "/authentication",
   REDIRECT_RESTAURANT: "/restaurant",
   REDIRECT_MENU: "/menu",

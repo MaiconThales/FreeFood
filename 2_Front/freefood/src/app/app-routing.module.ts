@@ -10,13 +10,20 @@ import {
   MenuListComponent,
   RequestCrudComponent,
   NotFoundComponent,
-  UserEditComponent
+  UserEditComponent,
+  DashboardPainelTwoComponent
 } from './components';
 
 const routes: Routes = [
   { 
     path: 'dashboard', 
     component: DashboardPainelOneComponent, 
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard] 
+  },
+  { 
+    path: 'dashboardAllMenu', 
+    component: DashboardPainelTwoComponent, 
     canLoad: [AuthGuard],
     canActivate: [AuthGuard] 
   },

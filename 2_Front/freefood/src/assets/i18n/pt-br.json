@@ -98,5 +98,8 @@
         "MSG_INPUT_NAME": "Nome é",
         "MSG_INPUT_RESTAURANT": "Restaurant é",
         "MSG_NO_CONTENT": "Não há dados"
+    },
+    "DASHBOARD": {
+        "LIST_ALL_MENU": "Listar todas as opções"
     }
 }

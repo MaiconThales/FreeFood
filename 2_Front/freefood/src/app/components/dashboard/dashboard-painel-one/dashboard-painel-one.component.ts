@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { EventData, Menu } from 'src/app/models';
 import { MenuService } from 'src/app/services';
 import { EventBusService } from 'src/app/shared';
+import { environment as e } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-dashboard-painel-one',
@@ -19,7 +21,8 @@ export class DashboardPainelOneComponent implements OnInit {
     private eventBusService: EventBusService,
     private menuService: MenuService,
     private snackBar: MatSnackBar,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private route: Router
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +43,10 @@ export class DashboardPainelOneComponent implements OnInit {
         });
       }
     });
+  }
+
+  redirectDashboardTwo(): void {
+    this.route.navigate([e.REDIRECT_DASHBOARD_TWO]);
   }
 
   private functionBusService(err: any): void {

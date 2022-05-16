@@ -1,22 +1,17 @@
 <div>
-    <!--CARD WITH MENU-->
-    <div *ngIf="menusAll.length > 0" fxLayout="row" fxFlex fxLayoutAlign="space-evenly center">
-        <div *ngFor="let m of menusAll">
-            <mat-card class="card-food">
-                <mat-card-title-group>
-                    <mat-card-title>{{m.name}}</mat-card-title>
-                    <mat-card-subtitle>CONTEUDO</mat-card-subtitle>
-                    <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-                </mat-card-title-group>
-                <mat-card-content>
-                    DESCRIÇÃO
-                </mat-card-content>
-            </mat-card>
-        </div>
+    <div fxLayout="row">
+        <div id="content-1">Os mais pedidos</div>
     </div>
-
-    <!--MSG NO DATA-->
-    <!--<div *ngIf="menusAll.length == 0">
-        {{'MENU.MSG_NO_CONTENT' | translate}}
-    </div>-->
+    <div fxLayout="row">
+        <div id="content-2">ADS</div>
+    </div>
+    <div fxLayout="row">
+        <div id="content-3">Categorias mais pedidas</div>
+        <div id="content-4">Melhores notas</div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end end">
+        <button class="button-general" (click)="redirectDashboardTwo()" mat-button>
+            {{ 'DASHBOARD.LIST_ALL_MENU' | translate}}
+        </button>
+    </div>
 </div>
