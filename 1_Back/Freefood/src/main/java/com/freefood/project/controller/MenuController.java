@@ -55,4 +55,9 @@ public class MenuController {
 		return this.menuService.getAllMenu();
 	}
 
+	@GetMapping("/getMenuByRestaurant")
+	public ResponseEntity<List<MenuDTO>> getMenuByRestaurant(@RequestParam("idRestaurant") Long idRestaurant) {
+		return this.menuService.getMenuByRestaurant(idRestaurant);
+	}
+	
 }

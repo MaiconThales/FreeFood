@@ -118,4 +118,22 @@ public class MenuServiceImpl implements MenuService {
 		}
 	}
 
+	
+	@Override
+	public ResponseEntity<List<MenuDTO>> getMenuByRestaurant(Long idRestaurant) {
+		List<MenuDTO> resultDto = null;
+		try {
+			List<Menu> menu = this.menuRepository.getMenuByRestaurant(idRestaurant);
+			
+			if(!menu.isEmpty()) {
+				resultDto = menu.stream().map(m -> modelMapper.map(m, MenuDTO.class)).collect(Collectors.toList());
+				return new ResponseEntity<>(resultDto, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(resultDto, HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

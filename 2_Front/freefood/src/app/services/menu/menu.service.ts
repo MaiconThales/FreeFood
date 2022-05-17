@@ -16,24 +16,29 @@ export class MenuService {
 
   getMenu(idRestaurant: number, idUser: number): Observable<any> {
     let param: any = {'idRestaurant': idRestaurant, 'idUser': idUser};
-    return this.http.get(e.AUTH_API + e.MENU_CONTROLLER + '/getMenu', { params: param });
+    return this.http.get(`${e.AUTH_API}${e.MENU_CONTROLLER}/getMenu`, { params: param });
   }
 
   saveMenu(menu: Menu): Observable<any> {
-    return this.http.post(e.AUTH_API + e.MENU_CONTROLLER + '/createMenu', menu);
+    return this.http.post(`${e.AUTH_API}${e.MENU_CONTROLLER}/createMenu`, menu);
   }
 
   removeMenu(idMenu: any, idUser: number, idRestaurant: any): Observable<any> {
     let param: any = {'idMenu': idMenu, 'idUser': idUser, 'idRestaurant': idRestaurant};
-    return this.http.delete(e.AUTH_API + e.MENU_CONTROLLER + '/deleteMenu', { params: param });
+    return this.http.delete(`${e.AUTH_API}${e.MENU_CONTROLLER}/deleteMenu`, { params: param });
   }
 
   updateMenu(menu: Menu): Observable<any> {
-    return this.http.put(e.AUTH_API + e.MENU_CONTROLLER + '/updateMenu', menu);
+    return this.http.put(`${e.AUTH_API}${e.MENU_CONTROLLER}/updateMenu`, menu);
   }
 
   getAllMenu(): Observable<any> {
-    return this.http.get(e.AUTH_API + e.MENU_CONTROLLER + '/getAll');
+    return this.http.get(`${e.AUTH_API}${e.MENU_CONTROLLER}/getAll`);
+  }
+
+  getMenuByRestaurant(idRestaurant: number) {
+    let param: any = {'idRestaurant': idRestaurant};
+    return this.http.get(`${e.AUTH_API}${e.MENU_CONTROLLER}/getMenuByRestaurant`, { params: param })
   }
 
 }
