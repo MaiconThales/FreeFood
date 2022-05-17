@@ -38,4 +38,8 @@ export class RestaurantService {
     return this.http.put(e.AUTH_API + e.RESTAURANT_CONTROLLER + '/liberateRestaurant', restaurant, { params: param })
   }
 
+  getAllRestaurant(): Observable<any> {
+    return this.http.get(e.AUTH_API + e.RESTAURANT_CONTROLLER + '/getAllRestaurant');
+  }
+
 }

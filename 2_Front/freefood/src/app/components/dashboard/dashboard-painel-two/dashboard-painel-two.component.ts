@@ -16,36 +16,9 @@ export class DashboardPainelTwoComponent implements OnInit {
   menusAll: Menu[] = [];
 
   constructor(
-    private eventBusService: EventBusService,
-    private translate: TranslateService,
-    private menuService: MenuService,
-    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
-    this.getAllMenus();
-  }
-
-  getAllMenus(): void {
-    this.menuService.getAllMenu().subscribe({
-      next: data => {
-        this.menusAll = data;
-      },
-      error: err => {
-        this.functionBusService(err);
-        this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          duration: 10000
-        });
-      }
-    });
-  }
-
-  private functionBusService(err: any): void {
-    if (err.status === 403) {
-      this.eventBusService.emit(new EventData('logout', null));
-    }
   }
 
 }

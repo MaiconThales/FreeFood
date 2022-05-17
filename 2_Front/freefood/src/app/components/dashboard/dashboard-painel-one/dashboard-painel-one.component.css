@@ -1,28 +1,13 @@
-#content-1 {
-    background-color: aqua;
-    width: 50%;
-    height: 50%;
-    margin-top: 1%;
-    margin-bottom: 1%;
+table {
+    width: 100%;
 }
-#content-2 {
-    background-color: aqua;
-    width: 50%;
-    height: 50%;
-    margin-top: 1%;
-    margin-bottom: 1%;
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
 }
-#content-3 {
-    background-color: aqua;
-    width: 50%;
-    height: 50%;
-    margin-top: 1%;
-    margin-bottom: 1%;
+td,th {
+    width: 25%;
 }
-#content-4 {
-    background-color: aqua;
-    width: 50%;
-    height: 50%;
-    margin-top: 1%;
-    margin-bottom: 1%;
+td.mat-cell:hover {
+    background-color: rgb(236, 231, 231);
 }

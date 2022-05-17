@@ -46,4 +46,6 @@ public interface RestaurantService {
 	
 	boolean verifyAccessRestaurant(Long idUser, Long idRestaurant);
 	
+	ResponseEntity<List<RestaurantDTO>> getAllRestaurant();
+	
 }

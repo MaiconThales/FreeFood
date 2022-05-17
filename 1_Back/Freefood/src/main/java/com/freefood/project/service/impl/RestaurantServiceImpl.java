@@ -148,4 +148,22 @@ public class RestaurantServiceImpl implements RestaurantService {
 		}
 	}
 
+	
+	@Override
+	public ResponseEntity<List<RestaurantDTO>> getAllRestaurant() {
+		List<RestaurantDTO> resultDto = null;
+		try {
+			List<Restaurant> result = this.restaurantRepository.findAll();
+			resultDto = result.stream().map(r -> modelMapper.map(r, RestaurantDTO.class)).collect(Collectors.toList());
+
+			if (resultDto != null) {
+				return new ResponseEntity<>(resultDto, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
-import { EventData, Menu } from 'src/app/models';
-import { MenuService } from 'src/app/services';
+import { EventData, Restaurant } from 'src/app/models';
+import { RestaurantService } from 'src/app/services';
 import { EventBusService } from 'src/app/shared';
 import { environment as e } from 'src/environments/environment.prod';
 
@@ -15,24 +18,32 @@ import { environment as e } from 'src/environments/environment.prod';
 })
 export class DashboardPainelOneComponent implements OnInit {
 
-  menusAll: Menu[] = [];
+  displayedColumns: string[] = ['name'];
+  dataSource!: MatTableDataSource<Restaurant>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  restaurants: Restaurant[] = [];
 
   constructor(
+    private restaurantService: RestaurantService,
     private eventBusService: EventBusService,
-    private menuService: MenuService,
     private snackBar: MatSnackBar,
     private translate: TranslateService,
     private route: Router
   ) { }
 
   ngOnInit(): void {
-    this.getAllMenus()
+    this.getAllRestaurant();
   }
 
-  getAllMenus(): void {
-    this.menuService.getAllMenu().subscribe({
+  getAllRestaurant(): void {
+    this.restaurantService.getAllRestaurant().subscribe({
       next: data => {
-        this.menusAll = data;
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.restaurants = data;
       },
       error: err => {
         this.functionBusService(err);
@@ -45,8 +56,17 @@ export class DashboardPainelOneComponent implements OnInit {
     });
   }
 
-  redirectDashboardTwo(): void {
-    this.route.navigate([e.REDIRECT_DASHBOARD_TWO]);
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  redirectMenu(idRestaurant: number): void {
+    this.route.navigate([`${e.REDIRECT_DASHBOARD_TWO}/${idRestaurant}`]);
   }
 
   private functionBusService(err: any): void {

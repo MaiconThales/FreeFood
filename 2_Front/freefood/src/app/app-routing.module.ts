@@ -22,7 +22,7 @@ const routes: Routes = [
     canActivate: [AuthGuard] 
   },
   { 
-    path: 'dashboardAllMenu', 
+    path: 'dashboardAllMenu/:id', 
     component: DashboardPainelTwoComponent, 
     canLoad: [AuthGuard],
     canActivate: [AuthGuard] 

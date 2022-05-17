@@ -105,7 +105,10 @@
         "MSG_NO_CONTENT": "No data"
     },
     "DASHBOARD": {
-        "LIST_ALL_MENU": "List all options"
+        "TITLE_PAGE": "Choose a restaurant",
+        "FILTER": "Please enter the name of the desired restaurant",
+        "LABEL_COLUMN_NAME": "Restaurant name",
+        "FILTER_NO_DATA": "Nothing found for:"
     },
     "ADDRESS": {
         "TITLE_ADDRESS": "Add/Edit Address",

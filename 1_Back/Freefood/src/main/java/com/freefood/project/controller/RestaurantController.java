@@ -59,6 +59,10 @@ public class RestaurantController {
 	public ResponseEntity<MessageResponse> liberateRestaurant(@RequestBody RestaurantDTO restaurant, @RequestParam("username") String username, @RequestParam("idUser") Long idUser) {
 		return this.restaurantService.liberateRestaurant(restaurant, username, idUser);
 	}
-
+	
+	@GetMapping("/getAllRestaurant")
+	public ResponseEntity<List<RestaurantDTO>> getAllRestaurant() {
+		return this.restaurantService.getAllRestaurant();
+	}
 	
 }
