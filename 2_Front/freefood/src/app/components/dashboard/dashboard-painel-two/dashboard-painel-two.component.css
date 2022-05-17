@@ -1,0 +1,31 @@
+table {
+    width: 100%;
+}
+.table-general {
+    height: 400px;
+    width: 100%;
+    max-width: 100%;
+    overflow: auto;
+}
+td.mat-column-star {
+    width: 20px;
+    padding-right: 8px;
+}
+th.mat-column-position,
+td.mat-column-position {
+    padding-left: 8px;
+}
+.mat-table-sticky-border-elem-right {
+    border-left: 1px solid #e0e0e0;
+}
+.mat-table-sticky-border-elem-left {
+    border-right: 1px solid #e0e0e0;
+}
+
+.mat-stepper-horizontal {
+    margin-top: 8px;
+  }
+  
+  .mat-form-field {
+    margin-top: 16px;
+  }

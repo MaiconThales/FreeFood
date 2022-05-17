@@ -36,7 +36,7 @@ export class MenuService {
     return this.http.get(`${e.AUTH_API}${e.MENU_CONTROLLER}/getAll`);
   }
 
-  getMenuByRestaurant(idRestaurant: number) {
+  getMenuByRestaurant(idRestaurant: number): Observable<any> {
     let param: any = {'idRestaurant': idRestaurant};
     return this.http.get(`${e.AUTH_API}${e.MENU_CONTROLLER}/getMenuByRestaurant`, { params: param })
   }

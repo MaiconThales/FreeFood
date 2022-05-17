@@ -26,6 +26,8 @@ import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginato
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import {
   DashboardPainelOneComponent,
@@ -111,7 +113,9 @@ const maskConfig: Partial<IConfig> = {
     MatPaginatorModule,
     MatAutocompleteModule,
     MatButtonToggleModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCheckboxModule,
+    MatStepperModule
   ],
   providers: [
     authInterceptorProviders,

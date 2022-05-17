@@ -1,11 +1,15 @@
 package com.freefood.project.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -16,6 +20,12 @@ public class Request {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idRequest;
+	
+	@Column(nullable = false)
+	private Long amount;
+	
+	@Column(nullable = true)
+	private String observation;
 	
 	@ManyToOne
     @JoinColumn(name="idRestaurant", nullable=false)
@@ -29,17 +39,9 @@ public class Request {
     @JoinColumn(name="idUser", nullable=false)
 	private User user;
 	
-	@Column(nullable = false)
-	private String name;
-	
-	@Column(nullable = false)
-	private Long amount;
-	
-	@Column(nullable = false)
-	private String deliveryAddress;
-	
-	@Column(nullable = true)
-	private String observation;
+	@ManyToOne
+    @JoinColumn(name="idAddress", nullable=false)
+	private Address address;
 
 	public Long getIdRequest() {
 		return idRequest;
@@ -47,6 +49,22 @@ public class Request {
 
 	public void setIdRequest(Long idRequest) {
 		this.idRequest = idRequest;
+	}
+
+	public Long getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Long amount) {
+		this.amount = amount;
+	}
+
+	public String getObservation() {
+		return observation;
+	}
+
+	public void setObservation(String observation) {
+		this.observation = observation;
 	}
 
 	public Restaurant getRestaurant() {
@@ -73,36 +91,12 @@ public class Request {
 		this.user = user;
 	}
 
-	public String getName() {
-		return name;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Long getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Long amount) {
-		this.amount = amount;
-	}
-
-	public String getDeliveryAddress() {
-		return deliveryAddress;
-	}
-
-	public void setDeliveryAddress(String deliveryAddress) {
-		this.deliveryAddress = deliveryAddress;
-	}
-
-	public String getObservation() {
-		return observation;
-	}
-
-	public void setObservation(String observation) {
-		this.observation = observation;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 	
 }
