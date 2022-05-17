@@ -42,6 +42,7 @@ export class AddressUserComponent {
       district: new FormControl((address != null && address.district != null) ? address.district : '', [Validators.required]),
       number: new FormControl((address != null && address.number != null) ? address.number : '', [Validators.required]),
       complement: new FormControl((address != null && address.complement != null) ? address.complement : ''),
+      isDefault: new FormControl((address != null && address.isDefault != null) ? address.isDefault : false),
       user: new FormControl((address != null && address.user != null) ? address.user : null)
     });
   }
@@ -54,6 +55,7 @@ export class AddressUserComponent {
       district: this.addressForm.get('district')?.value,
       number: this.addressForm.get('number')?.value,
       complement: this.addressForm.get('complement')?.value,
+      isDefault: this.addressForm.get('isDefault')?.value,
       user: this.addressForm.get('user')?.value != null ? this.addressForm.get('user')?.value : {id: this.token.getIdUser()}
     }
     

@@ -140,7 +140,7 @@ export class UserEditComponent implements OnInit {
   openDialogAddress(address: Address | null): void {
     const dialogRef = this.dialog.open(AddressUserComponent, {
       width: '500px',
-      height: '250px',
+      height: '280px',
       data: address
     });
 

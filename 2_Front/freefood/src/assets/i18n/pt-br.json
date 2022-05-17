@@ -118,6 +118,7 @@
         "LABEL_COMPLEMENT": "Complemento",
         "MSG_INPUT_STREET": "Rua é",
         "MSG_INPUT_DISTRICT": "Bairro é",
-        "MSG_INPUT_NUMBER": "Número é"
+        "MSG_INPUT_NUMBER": "Número é",
+        "IS_DEFAULT": "Endereço padrão"
     }
 }

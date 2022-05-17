@@ -88,6 +88,11 @@
                             <span *ngIf="a.complement != ''"> {{a.complement}}</span>
                             <span *ngIf="a.complement == ''"> {{'PROFILE.NO_DEFINE' | translate}}</span>
                         </p>
+                        <p>
+                            <span class="text-general">{{'ADDRESS.IS_DEFAULT' | translate}}:</span> 
+                            <span *ngIf="a.isDefault"> {{'GLOBAL_WORD.YES' | translate}}</span>
+                            <span *ngIf="!a.isDefault"> {{'GLOBAL_WORD.NO' | translate}}</span>
+                        </p>
                     </div>
                 </mat-card-content>
                 <mat-card-actions>

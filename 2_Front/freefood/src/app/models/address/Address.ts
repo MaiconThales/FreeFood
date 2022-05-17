@@ -7,4 +7,5 @@ export interface Address {
     number: number;
 	complement: string;
 	user: User;
+    isDefault: boolean;
 }

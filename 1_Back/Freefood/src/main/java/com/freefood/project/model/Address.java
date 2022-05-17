@@ -29,6 +29,9 @@ public class Address {
 	@Column(nullable = true)
 	private String complement;
 	
+	@Column(nullable = false)
+	private Boolean isDefault;
+	
 	@ManyToOne
     @JoinColumn(name="id_user", nullable=false)
 	private User user;
@@ -79,6 +82,14 @@ public class Address {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Boolean getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(Boolean isDefault) {
+		this.isDefault = isDefault;
 	}
 
 }

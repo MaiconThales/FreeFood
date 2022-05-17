@@ -49,6 +49,7 @@ public class AddressServiceImpl implements AddressService {
 	public ResponseEntity<MessageResponse> saveAddress(AddressDTO address) {
 		AddressDTO resultDto = null;
 		try {
+			this.updateIsDefault(address);
 			Address result = this.addressRepository.save(modelMapper.map(address, Address.class));
 			resultDto = modelMapper.map(result, AddressDTO.class);
 			
@@ -67,6 +68,7 @@ public class AddressServiceImpl implements AddressService {
 	public ResponseEntity<MessageResponse> updateMenu(AddressDTO address) {
 		AddressDTO resultDto = null;
 		try {
+			this.updateIsDefault(address);
 			resultDto = modelMapper.map(this.addressRepository.save(modelMapper.map(address, Address.class)), AddressDTO.class);
 			if(resultDto != null) {
 				return new ResponseEntity<>(new MessageResponse("GLOBAL_WORD.MSG_EDIT"), HttpStatus.OK);
@@ -89,4 +91,10 @@ public class AddressServiceImpl implements AddressService {
 		}
 	}
 
+	private void updateIsDefault(AddressDTO address) {
+		if(Boolean.TRUE.equals(address.getIsDefault())) {
+			this.addressRepository.updateIsDefault(address.getUser().getId());
+		}
+	}
+	
 }

@@ -9,18 +9,20 @@ public class AddressDTO {
 	private String district;
 	private Long number;
 	private String complement;
+	private Boolean isDefault;
 	private User user;
 	
 	public AddressDTO() {
 	}
 
-	public AddressDTO(Long id, String street, String district, Long number, String complement, User user) {
+	public AddressDTO(Long id, String street, String district, Long number, String complement, Boolean isDefault, User user) {
 		this.id = id;
 		this.street = street;
 		this.district = district;
 		this.number = number;
 		this.complement = complement;
 		this.user = user;
+		this.isDefault = isDefault; 
 	}
 
 	public Long getId() {
@@ -69,6 +71,14 @@ public class AddressDTO {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Boolean getIsDefault() {
+		return isDefault;
+	}
+
+	public void setIsDefault(Boolean isDefault) {
+		this.isDefault = isDefault;
 	}
 	
 }
