@@ -106,9 +106,15 @@
     },
     "DASHBOARD": {
         "TITLE_PAGE": "Choose a restaurant",
+        "TITLE_PAGE_MENU": "Choose your order",
         "FILTER": "Please enter the name of the desired restaurant",
         "LABEL_COLUMN_NAME": "Restaurant name",
-        "FILTER_NO_DATA": "Nothing found for:"
+        "FILTER_NO_DATA": "Nothing found for:",
+        "LABEL_SELECT_MENU": "Menu",
+        "LABEL_CONFIG_MENU": "Quantity and Address",
+        "LABEL_FINISH_MENU": "Finalize",
+        "BTN_NEXT": "Next",
+        "BTN_BACK": "Back"
     },
     "ADDRESS": {
         "TITLE_ADDRESS": "Add/Edit Address",

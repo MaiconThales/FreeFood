@@ -1,11 +1,11 @@
 <div class="views">
     <!--Title-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
-        <h1 class="title-general">{{'DASHBOARD.TITLE_PAGE' | translate}}</h1>
+        <h1 class="title-general">{{'DASHBOARD.TITLE_PAGE_MENU' | translate}}</h1>
     </div>
 
     <mat-stepper>
-        <mat-step label="Step 1" state="shop">
+        <mat-step label="{{labelStep1}}" state="shop">
             <!--Table-->
             <div class="table-general">
                 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -20,7 +20,7 @@
                             </mat-checkbox>
                         </th>
                         <td mat-cell *matCellDef="let row">
-                            <mat-checkbox (click)="$event.stopPropagation()"
+                            <mat-checkbox (click)="$event.stopPropagation(); setRequest(row, 1, !selection.hasValue());"
                                 (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
                                 [aria-label]="checkboxLabel(row)">
                             </mat-checkbox>
@@ -46,53 +46,92 @@
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                        (click)="selection.toggle(row); setRequest(row, 1, selection.isSelected(row));">
                     </tr>
                 </table>
             </div>
 
             <!--Btn next-->
             <div>
-                <button mat-button matStepperNext (click)="setRequest()">Next</button>
+                <button mat-button matStepperNext>{{'DASHBOARD.BTN_NEXT' | translate}}</button>
             </div>
         </mat-step>
 
-        <mat-step label="Step 2" state="info">
+        <mat-step label="{{labelStep2}}" state="info">
             <!--Formulario-->
-            <form [formGroup]="requestForm">
-                <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
-                    <mat-form-field appearance="standard">
-                        <mat-label>
-                            Amount
-                        </mat-label>
-                        <input matInput id="amount" type="number" formControlName="amount">
-                        <mat-error *ngIf="requestForm.controls['amount'].hasError('required')">
-                            {{'RESTAURANT.MSG_INPUT_NAME' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_MASCULINE'
-                                |
-                                translate}}</strong>
-                        </mat-error>
-                        <mat-error *ngIf="requestForm.controls['amount'].hasError('min')">
-                            Tem valor mínimo
-                        </mat-error>
-                    </mat-form-field>
-                    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
-                        <mat-form-field class="input-full-width" appearance="standard">
-                            <mat-label>Observation</mat-label>
-                            <textarea matInput formControlName="observation"></textarea>
-                        </mat-form-field>
+            <div *ngIf="isShowStep2">
+                <form [formGroup]="generalForm" (ngSubmit)="onSubmit()" novalidate>
+                    <div formArrayName="request">
+                        <div *ngFor="let r of request.controls; let i=index">
+                            <div [formGroupName]="i">
+                                <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px"
+                                    fxLayoutAlign="center center">
+                                    <div formGroupName="menu">
+                                        <mat-form-field appearance="standard">
+                                            <mat-label>
+                                                Pedido
+                                            </mat-label>
+                                            <input matInput id="name" type="text" formControlName="name">
+                                        </mat-form-field>
+                                    </div>
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>
+                                            Amount
+                                        </mat-label>
+                                        <input matInput id="amount" type="number" formControlName="amount">
+                                        <mat-error *ngIf="r.get('amount')?.hasError('required')">
+                                            {{'RESTAURANT.MSG_INPUT_NAME' | translate}}
+                                            <strong>{{'GLOBAL_WORD.WORD_REQUERID_MASCULINE'
+                                                |
+                                                translate}}</strong>
+                                        </mat-error>
+                                        <mat-error *ngIf="r.get('amount')?.hasError('min')">
+                                            Tem valor mínimo
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field class="input-full-width" appearance="standard">
+                                        <mat-label>Observation</mat-label>
+                                        <textarea matInput formControlName="observation"></textarea>
+                                    </mat-form-field>
+                                    <!--<button mat-icon-button (click)="removeRequest(i)"  matTooltip="Retirar da lista" matTooltipPosition="right">
+                                    <mat-icon>delete</mat-icon>
+                                </button>-->
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <!--Btns-->
+                    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+                        <div>
+                            <button class="button-general-save" type="submit"
+                                [disabled]="!generalForm.valid" mat-icon-button>
+                                <mat-icon>save</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!--No Data-->
+            <div *ngIf="!isShowStep2">
+                <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+                    <p>Não há nada!</p>
                 </div>
-            </form>
+            </div>
 
             <!--Btn next-->
             <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+                <button mat-button matStepperPrevious>{{'DASHBOARD.BTN_BACK' | translate}}</button>
+                <button mat-button matStepperNext>{{'DASHBOARD.BTN_NEXT' | translate}}</button>
             </div>
         </mat-step>
 
-        <mat-step label="Step 3">
+        <mat-step label="{{labelStep3}}">
             <p>You're welcome.</p>
+            <div>
+                <button mat-button matStepperPrevious>{{'DASHBOARD.BTN_BACK' | translate}}</button>
+            </div>
         </mat-step>
 
         <!-- Icon overrides. -->

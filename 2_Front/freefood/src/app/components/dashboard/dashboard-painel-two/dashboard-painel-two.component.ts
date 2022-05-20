@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder } from '@angular/forms'
 
 import { EventBusService, MyErrorStateMatcher } from 'src/app/shared';
 import { EventData, Menu, Request, Restaurant, User } from 'src/app/models';
@@ -25,14 +26,19 @@ import { AddressService, MenuService, TokenStorageService } from 'src/app/servic
 export class DashboardPainelTwoComponent implements OnInit {
 
   idRestaurantSelect!: number;
-  request!: Request;
 
-  requestForm!: FormGroup;
+  generalForm!: FormGroup;
   matcher = new MyErrorStateMatcher();
 
   displayedColumns: string[] = ['select', 'idMenu', 'name', 'description'];
   dataSource!: MatTableDataSource<Menu>;
   selection = new SelectionModel<Menu>(true, []);
+
+  isShowStep2: boolean = false;
+
+  labelStep1!: string;
+  labelStep2!: string;
+  labelStep3!: string;
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -41,11 +47,13 @@ export class DashboardPainelTwoComponent implements OnInit {
     private snackBar: MatSnackBar,
     private translate: TranslateService,
     private token: TokenStorageService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.idRestaurantSelect = this.actRoute.snapshot.params['id'];
+    this.setLabels();
     this.createForm();
     this.getMenuByRestaurant();
   }
@@ -63,11 +71,13 @@ export class DashboardPainelTwoComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     if (this.isAllSelected()) {
+      this.setRequest(null, 2, false);
       this.selection.clear();
       return;
     }
 
     this.selection.select(...this.dataSource.data);
+    this.setRequest(null, 2, true);
   }
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: Menu): string {
@@ -75,6 +85,88 @@ export class DashboardPainelTwoComponent implements OnInit {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.idMenu}`;
+  }
+  
+  createForm(): void {
+    this.generalForm = this.fb.group({
+      request: this.fb.array([])
+    });
+  }
+  get request(): FormArray {
+    return this.generalForm.get("request") as FormArray
+  }
+  newRequest(menu: Menu): FormGroup {
+    return this.fb.group({
+      amount: new FormControl('', [Validators.required, Validators.min(1)]),
+      observation: new FormControl(''),
+      menu: new FormGroup({
+        idMenu: new FormControl(menu.idMenu),
+        name: new FormControl({value: menu.name, disabled: true})
+      })
+    })
+  }
+  addRequest(menu: Menu) {
+    this.request.push(this.newRequest(menu));
+  }
+  removeRequest(i: number) {
+    this.request.removeAt(i);
+  }
+  onSubmit() {
+    console.log(this.selection);
+    console.log(this.selection.selected);
+  }
+  setRequest(value: any, type: number, check: boolean): void {
+    switch (type) {
+      case 1:
+        if (check) {
+          this.addRequest(value);
+          this.isShowStep2 = true;
+        } else {
+          let index = (<FormArray>this.generalForm.get('request')).length;
+          for (let i = 0; i < index; i++) {
+            let id = (<FormArray>this.generalForm.get('request')).controls[i].get('menu')?.get('idMenu')?.value;
+            if (id === value.idMenu) {
+              this.removeRequest(i);
+              break;
+            }
+          }
+          if(index > 1) {
+            this.isShowStep2 = true;
+          } else {
+            this.isShowStep2 = false;
+          }
+        }
+        break;
+      case 2:
+        if (check) {
+          let item = (<FormArray>this.generalForm.get('request')).length;
+          for (let i = 0; i < this.selection.selected.length; i++) {
+            if(item == 0) {
+              this.addRequest(this.selection.selected[i]);
+            } else {
+              for (let j = 0; j < item; j++) {
+                if(!((<FormArray>this.generalForm.get('request')).controls[j].get('menu')?.get('idMenu')?.value == this.selection.selected[i].idMenu)) {
+                  this.addRequest(this.selection.selected[i]);
+                }
+              }
+            }
+          }
+          this.isShowStep2 = true;
+        } else {
+          let item = (<FormArray>this.generalForm.get('request')).length;
+          for (let i = 0; i < item; i++) {
+            this.removeRequest(0);
+          }
+          this.isShowStep2 = false;
+        }
+        break;
+    }
+  }
+
+  setLabels(): void {
+    this.labelStep1 = this.translate.instant('DASHBOARD.LABEL_SELECT_MENU');
+    this.labelStep2 = this.translate.instant('DASHBOARD.LABEL_CONFIG_MENU');
+    this.labelStep3 = this.translate.instant('DASHBOARD.LABEL_FINISH_MENU');
   }
 
   getMenuByRestaurant(): void {
@@ -91,30 +183,6 @@ export class DashboardPainelTwoComponent implements OnInit {
         });
       }
     });
-  }
-
-  createForm(): void {
-    this.requestForm = new FormGroup({
-      amount: new FormControl(1, [Validators.required, Validators.min(1)]),
-      observation: new FormControl('')
-    })
-  }
-
-  setRequest(): void {
-    let menu: Menu[] = this.selection.selected;
-    if(menu.length > 0) {
-      menu.forEach(function(m) {
-
-      });
-    }
-
-    let user: User = {
-      id: this.token.getIdUser().toString()
-    };
-    let restaurant: Restaurant = {
-      id: menu[0].restaurant.id,
-      name: menu[0].name
-    };
   }
 
   private functionBusService(err: any): void {

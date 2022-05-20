@@ -105,10 +105,16 @@
         "MSG_NO_CONTENT": "Não há dados"
     },
     "DASHBOARD": {
-        "TITLE_PAGE": "Escolha um restaurant",
+        "TITLE_PAGE": "Escolha um restaurante",
+        "TITLE_PAGE_MENU": "Escolha seu pedido",
         "FILTER": "Por favor insera o nome do restaurante desejado",
         "LABEL_COLUMN_NAME": "Nome do restaurante",
-        "FILTER_NO_DATA": "Nada encontrado para:"
+        "FILTER_NO_DATA": "Nada encontrado para:",
+        "LABEL_SELECT_MENU": "Cardápio",
+        "LABEL_CONFIG_MENU": "Quantidade e Endereço",
+        "LABEL_FINISH_MENU": "Finalizar",
+        "BTN_NEXT": "Próximo",
+        "BTN_BACK": "Anterior"
     },
     "ADDRESS": {
         "TITLE_ADDRESS": "Adicionar/Editar endereço",
