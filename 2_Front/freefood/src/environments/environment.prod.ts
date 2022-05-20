@@ -14,6 +14,7 @@ export const environment = {
   REDIRECT_MENU: "/menu",
   REDIRECT_RESQUEST: "/request",
   REDIRECT_USER_EDIT: "/profile-edit",
+  REDIRECT_SHOPPING_CAR: "/shopping-car",
 
   LANGUAGE_OPTIONS: ['en', 'pt-br']
 };

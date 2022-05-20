@@ -45,7 +45,8 @@ import {
   DialogConfirmRemoveComponent,
   DashboardPainelTwoComponent,
   AddressUserComponent,
-  DashboardDialogDetailMenuComponent
+  DashboardDialogDetailMenuComponent,
+  ShoppingCarComponent
 } from './components';
 
 import { authInterceptorProviders, PaginatorI18n } from './shared';
@@ -79,7 +80,8 @@ const maskConfig: Partial<IConfig> = {
     DialogConfirmRemoveComponent,
     DashboardPainelTwoComponent,
     AddressUserComponent,
-    DashboardDialogDetailMenuComponent
+    DashboardDialogDetailMenuComponent,
+    ShoppingCarComponent
   ],
   imports: [
     TranslateModule.forRoot({

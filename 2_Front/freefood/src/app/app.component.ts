@@ -97,6 +97,10 @@ export class AppComponent {
         this.router.navigate([e.REDIRECT_USER_EDIT]);
         this.sidenav.close();
         break;
+      case e.REDIRECT_SHOPPING_CAR:
+        this.router.navigate([e.REDIRECT_SHOPPING_CAR]);
+        this.sidenav.close();
+        break;
     }
   }
 
