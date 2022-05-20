@@ -24,17 +24,9 @@ public class Request {
 	private String observation;
 	
 	@ManyToOne
-    @JoinColumn(name="idRestaurant", nullable=false)
-	private Restaurant restaurant;
-	
-	@ManyToOne
     @JoinColumn(name="idMenu", nullable=false)
 	private Menu menu;
 
-	@ManyToOne
-    @JoinColumn(name="idUser", nullable=false)
-	private User user;
-	
 	@ManyToOne
     @JoinColumn(name="idAddress", nullable=false)
 	private Address address;
@@ -63,28 +55,12 @@ public class Request {
 		this.observation = observation;
 	}
 
-	public Restaurant getRestaurant() {
-		return restaurant;
-	}
-
-	public void setRestaurant(Restaurant restaurant) {
-		this.restaurant = restaurant;
-	}
-
 	public Menu getMenu() {
 		return menu;
 	}
 
 	public void setMenu(Menu menu) {
 		this.menu = menu;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public Address getAddress() {

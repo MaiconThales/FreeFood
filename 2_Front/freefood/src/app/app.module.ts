@@ -28,6 +28,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatListModule } from '@angular/material/list';
 
 import {
   DashboardPainelOneComponent,
@@ -43,7 +44,8 @@ import {
   MenuDialogRegisterComponent,
   DialogConfirmRemoveComponent,
   DashboardPainelTwoComponent,
-  AddressUserComponent
+  AddressUserComponent,
+  DashboardDialogDetailMenuComponent
 } from './components';
 
 import { authInterceptorProviders, PaginatorI18n } from './shared';
@@ -76,7 +78,8 @@ const maskConfig: Partial<IConfig> = {
     MenuDialogRegisterComponent,
     DialogConfirmRemoveComponent,
     DashboardPainelTwoComponent,
-    AddressUserComponent
+    AddressUserComponent,
+    DashboardDialogDetailMenuComponent
   ],
   imports: [
     TranslateModule.forRoot({
@@ -115,7 +118,8 @@ const maskConfig: Partial<IConfig> = {
     MatButtonToggleModule,
     MatTooltipModule,
     MatCheckboxModule,
-    MatStepperModule
+    MatStepperModule,
+    MatListModule
   ],
   providers: [
     authInterceptorProviders,

@@ -37,7 +37,9 @@
         "WORD_SAVE": "Salvar",
         "WORD_ADDRESS": "Adicionar endereço",
         "WORD_EDIT_ADDRESS": "Editar endereço",
-        "WORD_REMOVE_ADDRESS": "Remover endereço"
+        "WORD_REMOVE_ADDRESS": "Remover endereço",
+        "MSG_ADD_SHOPPING_CAR": "Adicionado no carrinho de compras",
+        "MSG_ITEM_REPEAT": "Item já existe no carrinho"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Editar perfil",
@@ -108,7 +110,17 @@
         "TITLE_PAGE": "Escolha um restaurant",
         "FILTER": "Por favor insera o nome do restaurante desejado",
         "LABEL_COLUMN_NAME": "Nome do restaurante",
-        "FILTER_NO_DATA": "Nada encontrado para:"
+        "FILTER_NO_DATA": "Nada encontrado para:",
+        "TITLE_PAGE_MENU": "Escolha seus produtos",
+        "NO_DATA": "Não há dados",
+        "FILTER_MENU": "Por favor insira um cardápio que progura aqui",
+        "MENU_FILTER_NO_DATA": "Nada foi encontrado",
+        "ADD_MENU_SHOP": "Adicionar no carrinho de compras",
+        "MORE_DETAIL_MENU": "Ver mais detalhes sobre o item",
+        "TITLE_DIALOG_MENU_DETAIL": "Detalhes do cardápio",
+        "NAME_MENU_DIALOG": "Nome",
+        "DESCRIPTION_MENU_DIALOG" : "Descrição",
+        "NAME_RESTAURANT_MENU_DIALOG": "Nome do restaurante"
     },
     "ADDRESS": {
         "TITLE_ADDRESS": "Adicionar/Editar endereço",

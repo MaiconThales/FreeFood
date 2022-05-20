@@ -2,17 +2,13 @@ package com.freefood.project.dto;
 
 import com.freefood.project.model.Address;
 import com.freefood.project.model.Menu;
-import com.freefood.project.model.Restaurant;
-import com.freefood.project.model.User;
 
 public class RequestDTO {
 
 	private Long idRequest;
 	private Long amount;
 	private String observation;
-	private Restaurant restaurant;
 	private Menu menu;
-	private User user;
 	private Address address;
 	
 	public Long getIdRequest() {
@@ -32,18 +28,6 @@ public class RequestDTO {
 	}
 	public void setObservation(String observation) {
 		this.observation = observation;
-	}
-	public Restaurant getRestaurant() {
-		return restaurant;
-	}
-	public void setRestaurant(Restaurant restaurant) {
-		this.restaurant = restaurant;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 	public Address getAddress() {
 		return address;
