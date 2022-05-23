@@ -62,6 +62,22 @@ export class ShoppingCarService {
     return false;
   }
 
+  removeMenuInShoppingCar(idMenu: number): void {
+    let items = this.getShoppingCar();
+    if(items.length == 1) {
+      window.sessionStorage.removeItem(SHOPPING_KEY);
+    } else {
+      for(let i=0; i<items.length; i++) {
+        if(items[i].idMenu == idMenu) {
+          items.splice(i, 1);
+        }
+      }
+      window.sessionStorage.removeItem(SHOPPING_KEY);
+      window.sessionStorage.setItem(SHOPPING_KEY, JSON.stringify(items));
+    }
+    this.showSnackBar('GLOBAL_WORD.MSG_REMOVE');
+  }
+
   showSnackBar(msg: string): void {
     this.snackBar.open(this.translate.instant(msg), 'Ok', {
       horizontalPosition: 'center',

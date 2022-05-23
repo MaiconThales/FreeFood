@@ -29,6 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatListModule } from '@angular/material/list';
+import { MatRadioModule } from '@angular/material/radio';
 
 import {
   DashboardPainelOneComponent,
@@ -46,7 +47,8 @@ import {
   DashboardPainelTwoComponent,
   AddressUserComponent,
   DashboardDialogDetailMenuComponent,
-  ShoppingCarComponent
+  ShoppingCarComponent,
+  AddressSelectDialogComponent
 } from './components';
 
 import { authInterceptorProviders, PaginatorI18n } from './shared';
@@ -81,7 +83,8 @@ const maskConfig: Partial<IConfig> = {
     DashboardPainelTwoComponent,
     AddressUserComponent,
     DashboardDialogDetailMenuComponent,
-    ShoppingCarComponent
+    ShoppingCarComponent,
+    AddressSelectDialogComponent
   ],
   imports: [
     TranslateModule.forRoot({
@@ -121,7 +124,8 @@ const maskConfig: Partial<IConfig> = {
     MatTooltipModule,
     MatCheckboxModule,
     MatStepperModule,
-    MatListModule
+    MatListModule,
+    MatRadioModule
   ],
   providers: [
     authInterceptorProviders,

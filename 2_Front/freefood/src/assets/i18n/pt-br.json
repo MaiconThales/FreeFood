@@ -39,7 +39,8 @@
         "WORD_EDIT_ADDRESS": "Editar endereço",
         "WORD_REMOVE_ADDRESS": "Remover endereço",
         "MSG_ADD_SHOPPING_CAR": "Adicionado no carrinho de compras",
-        "MSG_ITEM_REPEAT": "Item já existe no carrinho"
+        "MSG_ITEM_REPEAT": "Item já existe no carrinho",
+        "WORD_REMOVE": "Remover"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Editar perfil",
@@ -131,6 +132,14 @@
         "MSG_INPUT_STREET": "Rua é",
         "MSG_INPUT_DISTRICT": "Bairro é",
         "MSG_INPUT_NUMBER": "Número é",
-        "IS_DEFAULT": "Endereço padrão"
+        "IS_DEFAULT": "Endereço padrão",
+        "LABEL_SELECT_ADDRESS": "Por favor selecione o endereço para a entrega"
+    },
+    "SHOPPING_CAR": {
+        "NO_DATA": "Não há itens no carrinho de compras",
+        "LABEL_PRODUCT": "Produto",
+        "LABEL_DESCRIPTION": "Descrição",
+        "LABEL_DELIVERY_ADDRESS": "Endereço de entrega",
+        "LABEL_CHANGE_ADDRESS": "Alterar endereço"
     }
 }

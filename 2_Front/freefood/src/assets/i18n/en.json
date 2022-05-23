@@ -39,7 +39,8 @@
         "WORD_EDIT_ADDRESS": "Edit address",
         "WORD_REMOVE_ADDRESS": "Remove address",
         "MSG_ADD_SHOPPING_CAR": "Added to shopping cart",
-        "MSG_ITEM_REPEAT": "Item already exists in cart"
+        "MSG_ITEM_REPEAT": "Item already exists in cart",
+        "WORD_REMOVE": "Remove"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Edit profile",
@@ -131,6 +132,14 @@
         "MSG_INPUT_STREET": "Street is",
         "MSG_INPUT_DISTRICT": "District is",
         "MSG_INPUT_NUMBER": "Number is",
-        "IS_DEFAULT": "Default address"
+        "IS_DEFAULT": "Default address",
+        "LABEL_SELECT_ADDRESS": "Please select the delivery address"
+    },
+    "SHOPPING_CAR": {
+        "NO_DATA": "There are no items in the shopping cart",
+        "LABEL_PRODUCT": "Product",
+        "LABEL_DESCRIPTION": "Description",
+        "LABEL_DELIVERY_ADDRESS": "Delivery address",
+        "LABEL_CHANGE_ADDRESS": "Change address"
     }
 }

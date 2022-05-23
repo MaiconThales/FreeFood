@@ -1,1 +1,61 @@
-<p>shopping-car works!</p>
+<div class="view">
+    <!--With Data-->
+    <div *ngIf="menusSelect.length > 0 && addressSelect != undefined">
+        <div *ngFor="let m of menusSelect">
+            <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+                <mat-card>
+                    <mat-card-content>
+                        <p>
+                            <span>{{'SHOPPING_CAR.LABEL_PRODUCT' | translate}}</span>: {{m.name}}
+                        </p>
+                        <p>
+                            <span>{{'SHOPPING_CAR.LABEL_DESCRIPTION' | translate}}</span>: {{m.description}}
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions align="end">
+                        <button mat-button (click)="removeItemShoppingCar(m.idMenu)">{{'GLOBAL_WORD.WORD_REMOVE' |
+                            translate}}</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+            <mat-card>
+                <mat-card-title>
+                    {{'SHOPPING_CAR.LABEL_DELIVERY_ADDRESS' | translate}}
+                </mat-card-title>
+                <mat-card-content>
+                    <div>
+                        <p>
+                            <span class="text-general">{{'ADDRESS.LABEL_STREET' | translate}}:</span>
+                            {{addressSelect.street}}
+                        </p>
+                        <p>
+                            <span class="text-general">{{'ADDRESS.LABEL_DISTRICT' | translate}}:</span>
+                            {{addressSelect.district}}
+                        </p>
+                        <p>
+                            <span class="text-general">{{'ADDRESS.LABEL_NUMBER' | translate}}:</span>
+                            {{addressSelect.number}}
+                        </p>
+                        <p>
+                            <span class="text-general">{{'ADDRESS.LABEL_COMPLEMENT' | translate}}:</span>
+                            <span *ngIf="addressSelect.complement != ''"> {{addressSelect.complement}}</span>
+                            <span *ngIf="addressSelect.complement == ''"> {{'PROFILE.NO_DEFINE' | translate}}</span>
+                        </p>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions align="end">
+                    <button mat-button (click)="openDialogSelectAddress()">{{'SHOPPING_CAR.LABEL_CHANGE_ADDRESS' |
+                        translate}}</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+
+    <!--No Data-->
+    <div *ngIf="menusSelect.length == 0">
+        <p>Não há nada na lista de compras</p>
+    </div>
+</div>
