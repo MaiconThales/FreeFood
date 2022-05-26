@@ -48,12 +48,14 @@ export class ShoppingCarComponent implements OnInit {
   getAddressByUser(): void {
     this.addressService.getAddressByUser(this.idUserLogged).subscribe({
       next: data => {
-        data.forEach((d: Address) => {
-          if(d.isDefault) {
-            this.addressSelect = d;
-          }
-        });
-        this.address = data;
+        if(data != null) {
+          data.forEach((d: Address) => {
+            if(d.isDefault) {
+              this.addressSelect = d;
+            }
+          });
+          this.address = data;
+        }
       },
       error: err => {
         this.functionBusService(err);

@@ -1,6 +1,6 @@
 <div class="view">
     <!--With Data-->
-    <div *ngIf="menusSelect.length > 0 && addressSelect != undefined">
+    <div *ngIf="menusSelect.length > 0">
         <div *ngFor="let m of menusSelect">
             <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
                 <mat-card>
@@ -11,6 +11,7 @@
                         <p>
                             <span>{{'SHOPPING_CAR.LABEL_DESCRIPTION' | translate}}</span>: {{m.description}}
                         </p>
+                        
                     </mat-card-content>
                     <mat-card-actions align="end">
                         <button mat-button (click)="removeItemShoppingCar(m.idMenu)">{{'GLOBAL_WORD.WORD_REMOVE' |
@@ -20,38 +21,45 @@
             </div>
         </div>
 
-        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
-            <mat-card>
-                <mat-card-title>
-                    {{'SHOPPING_CAR.LABEL_DELIVERY_ADDRESS' | translate}}
-                </mat-card-title>
-                <mat-card-content>
-                    <div>
-                        <p>
-                            <span class="text-general">{{'ADDRESS.LABEL_STREET' | translate}}:</span>
-                            {{addressSelect.street}}
-                        </p>
-                        <p>
-                            <span class="text-general">{{'ADDRESS.LABEL_DISTRICT' | translate}}:</span>
-                            {{addressSelect.district}}
-                        </p>
-                        <p>
-                            <span class="text-general">{{'ADDRESS.LABEL_NUMBER' | translate}}:</span>
-                            {{addressSelect.number}}
-                        </p>
-                        <p>
-                            <span class="text-general">{{'ADDRESS.LABEL_COMPLEMENT' | translate}}:</span>
-                            <span *ngIf="addressSelect.complement != ''"> {{addressSelect.complement}}</span>
-                            <span *ngIf="addressSelect.complement == ''"> {{'PROFILE.NO_DEFINE' | translate}}</span>
-                        </p>
-                    </div>
-                </mat-card-content>
-                <mat-card-actions align="end">
-                    <button mat-button (click)="openDialogSelectAddress()">{{'SHOPPING_CAR.LABEL_CHANGE_ADDRESS' |
-                        translate}}</button>
-                </mat-card-actions>
-            </mat-card>
+        <div *ngIf="addressSelect != undefined">
+            <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+                <mat-card>
+                    <mat-card-title>
+                        {{'SHOPPING_CAR.LABEL_DELIVERY_ADDRESS' | translate}}
+                    </mat-card-title>
+                    <mat-card-content>
+                        <div>
+                            <p>
+                                <span class="text-general">{{'ADDRESS.LABEL_STREET' | translate}}:</span>
+                                {{addressSelect.street}}
+                            </p>
+                            <p>
+                                <span class="text-general">{{'ADDRESS.LABEL_DISTRICT' | translate}}:</span>
+                                {{addressSelect.district}}
+                            </p>
+                            <p>
+                                <span class="text-general">{{'ADDRESS.LABEL_NUMBER' | translate}}:</span>
+                                {{addressSelect.number}}
+                            </p>
+                            <p>
+                                <span class="text-general">{{'ADDRESS.LABEL_COMPLEMENT' | translate}}:</span>
+                                <span *ngIf="addressSelect.complement != ''"> {{addressSelect.complement}}</span>
+                                <span *ngIf="addressSelect.complement == ''"> {{'PROFILE.NO_DEFINE' | translate}}</span>
+                            </p>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions align="end">
+                        <button mat-button (click)="openDialogSelectAddress()">{{'SHOPPING_CAR.LABEL_CHANGE_ADDRESS' |
+                            translate}}</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
         </div>
+        <!--No Address-->
+        <div *ngIf="addressSelect == undefined">
+            <p>Não há endereço!</p>
+        </div>
+
     </div>
 
     <!--No Data-->
