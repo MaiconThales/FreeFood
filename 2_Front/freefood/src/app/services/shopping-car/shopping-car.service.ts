@@ -28,23 +28,17 @@ export class ShoppingCarService {
   }
 
   addMenuInShoppingCar(menu: Menu): void {
-    if(window.sessionStorage.getItem(SHOPPING_KEY) == null) {
-      window.sessionStorage.setItem(SHOPPING_KEY, JSON.stringify(menu));
+    let tempSession = window.sessionStorage.getItem(SHOPPING_KEY);
+    let infoSession = [];
+    if(tempSession != null) {
+      infoSession = JSON.parse(tempSession);
+    }
+    if(!this.verifyItemExists(menu)) {
+      infoSession.push(menu);
+      window.sessionStorage.setItem(SHOPPING_KEY, JSON.stringify(infoSession));
       this.showSnackBar('GLOBAL_WORD.MSG_ADD_SHOPPING_CAR');
     } else {
-      let value = [];
-      let valueSessionStorage = window.sessionStorage.getItem(SHOPPING_KEY);
-      
-      if(!this.verifyItemExists(menu)) {
-        if(valueSessionStorage != null) {
-          value.push(JSON.parse(valueSessionStorage));
-        }
-        value.push(menu);
-        window.sessionStorage.setItem(SHOPPING_KEY, JSON.stringify(value));
-        this.showSnackBar('GLOBAL_WORD.MSG_ADD_SHOPPING_CAR');
-      } else {
-        this.showSnackBar('GLOBAL_WORD.MSG_ITEM_REPEAT');
-      }
+      this.showSnackBar('GLOBAL_WORD.MSG_ITEM_REPEAT');
     }
   }
 
@@ -64,15 +58,14 @@ export class ShoppingCarService {
 
   removeMenuInShoppingCar(idMenu: number): void {
     let items = this.getShoppingCar();
-    if(items.length == 1) {
-      window.sessionStorage.removeItem(SHOPPING_KEY);
-    } else {
+    window.sessionStorage.removeItem(SHOPPING_KEY);
+    if(items.length > 1) {
       for(let i=0; i<items.length; i++) {
         if(items[i].idMenu == idMenu) {
           items.splice(i, 1);
+          break;
         }
       }
-      window.sessionStorage.removeItem(SHOPPING_KEY);
       window.sessionStorage.setItem(SHOPPING_KEY, JSON.stringify(items));
     }
     this.showSnackBar('GLOBAL_WORD.MSG_REMOVE');
