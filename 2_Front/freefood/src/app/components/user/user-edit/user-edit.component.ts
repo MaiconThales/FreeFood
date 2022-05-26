@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Address, User } from 'src/app/models';
-import { AddressService, TokenStorageService, UserService } from 'src/app/services';
+import { AddressService, TokenStorageService, UserInfoService, UserService } from 'src/app/services';
 import { EventData } from 'src/app/models';
 import { environment as e } from 'src/environments/environment.prod';
 import { EventBusService, MyErrorStateMatcher } from 'src/app/shared';
@@ -25,6 +25,8 @@ export class UserEditComponent implements OnInit {
   address!: Address[];
   language: string[] = e.LANGUAGE_OPTIONS;
   idUser!: number;
+  isLoaderDataUser: boolean = true;
+  isLoaderAddress: boolean = true;
 
   labelSave!: string;
   labelAddress!: string;
@@ -38,7 +40,8 @@ export class UserEditComponent implements OnInit {
     private eventBusService: EventBusService,
     private translate: TranslateService,
     public dialog: MatDialog,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private userInfo: UserInfoService
   ) { }
 
   ngOnInit(): void {
@@ -60,8 +63,11 @@ export class UserEditComponent implements OnInit {
     this.userService.getDataUser(this.idUser).subscribe({
       next: data => {
         this.createFormUser(data, 2);
+        this.isLoaderDataUser = false;
+        this.verifyLoader();
       },
       error: err => {
+        this.isLoaderDataUser = true;
         this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
@@ -159,8 +165,11 @@ export class UserEditComponent implements OnInit {
     this.addressService.getAddressByUser(this.idUser).subscribe({
       next: data => {
         this.address = data;
+        this.isLoaderAddress = false;
+        this.verifyLoader();
       },
       error: err => {
+        this.isLoaderAddress = true;
         this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
@@ -237,6 +246,14 @@ export class UserEditComponent implements OnInit {
   private functionBusService(err: any): void {
     if (err.status === 403) {
       this.eventBusService.emit(new EventData('logout', null));
+    }
+  }
+
+  private verifyLoader(): void {
+    if(!this.isLoaderDataUser && !this.isLoaderAddress) {
+      this.userInfo.loader.emit(false);
+    } else {
+      this.userInfo.loader.emit(true);
     }
   }
 

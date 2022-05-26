@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { EventData, Menu } from 'src/app/models';
-import { MenuService, ShoppingCarService } from 'src/app/services';
+import { MenuService, ShoppingCarService, UserInfoService } from 'src/app/services';
 import { EventBusService } from 'src/app/shared';
 import { DashboardDialogDetailMenuComponent } from 'src/app/components/dashboard';
 
@@ -26,6 +26,7 @@ export class DashboardPainelTwoComponent implements OnInit {
   menus: Menu[] = [];
 
   idRestaurantSelect!: number;
+  isLoaderMenu: boolean = true;
 
   labelMoreDetail!: string;
   labelAddMenu!: string;
@@ -37,7 +38,8 @@ export class DashboardPainelTwoComponent implements OnInit {
     private snackBar: MatSnackBar,
     private translate: TranslateService,
     public dialog: MatDialog,
-    private shoppingCar: ShoppingCarService
+    private shoppingCar: ShoppingCarService,
+    private userInfo: UserInfoService
   ) { }
 
   ngOnInit(): void {
@@ -58,8 +60,12 @@ export class DashboardPainelTwoComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.menus = data;
+        this.isLoaderMenu = false;
+        this.verifyLoader();
       },
       error: err => {
+        this.isLoaderMenu = true;
+        this.verifyLoader();
         this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
@@ -79,7 +85,7 @@ export class DashboardPainelTwoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        
+
       }
     });
   }
@@ -100,6 +106,14 @@ export class DashboardPainelTwoComponent implements OnInit {
   private functionBusService(err: any): void {
     if (err.status === 403) {
       this.eventBusService.emit(new EventData('logout', null));
+    }
+  }
+
+  private verifyLoader(): void {
+    if (!this.isLoaderMenu) {
+      this.userInfo.loader.emit(false);
+    } else {
+      this.userInfo.loader.emit(true);
     }
   }
 

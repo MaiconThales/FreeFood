@@ -18,6 +18,7 @@ export class AppComponent {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   showMenu: boolean = false;
+  loader: boolean = true;
 
   avatarImage!: string;
   infoUser: JwtResponse = {
@@ -47,6 +48,9 @@ export class AppComponent {
     this.userInfoService.user.subscribe(u => {
       this.infoUser = u;
     });
+    this.userInfoService.loader.subscribe(u => {
+      this.loader = u;
+    })
     if (!!this.tokenStorageService.getToken()) {
       const userInfo = this.tokenStorageService.getUser();
       this.avatarImage = "../assets/img/avatar/avatar.jpg";

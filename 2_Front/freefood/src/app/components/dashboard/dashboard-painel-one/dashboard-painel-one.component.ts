@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { EventData, Restaurant } from 'src/app/models';
-import { RestaurantService } from 'src/app/services';
+import { RestaurantService, UserInfoService } from 'src/app/services';
 import { EventBusService } from 'src/app/shared';
 import { environment as e } from 'src/environments/environment.prod';
 
@@ -24,13 +24,15 @@ export class DashboardPainelOneComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   restaurants: Restaurant[] = [];
+  isLoaderRestaurant: boolean = true;
 
   constructor(
     private restaurantService: RestaurantService,
     private eventBusService: EventBusService,
     private snackBar: MatSnackBar,
     private translate: TranslateService,
-    private route: Router
+    private route: Router,
+    private userInfo: UserInfoService
   ) { }
 
   ngOnInit(): void {
@@ -44,8 +46,12 @@ export class DashboardPainelOneComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.restaurants = data;
+        this.isLoaderRestaurant = false;
+        this.verifyLoader();
       },
       error: err => {
+        this.isLoaderRestaurant = true;
+        this.verifyLoader();
         this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
@@ -73,6 +79,15 @@ export class DashboardPainelOneComponent implements OnInit {
     if (err.status === 403) {
       this.eventBusService.emit(new EventData('logout', null));
     }
+  }
+
+  private verifyLoader(): void {
+    if(!this.isLoaderRestaurant) {
+      this.userInfo.loader.emit(false);
+    } else {
+      this.userInfo.loader.emit(true);
+    }
+    
   }
 
 }

@@ -1,4 +1,4 @@
-<div class="view">
+<div class="view" *ngIf="!isLoaderAddress">
     <!--With Data-->
     <div *ngIf="menusSelect.length > 0">
         <form [formGroup]="generalForm" (ngSubmit)="onSubmit()" novalidate>

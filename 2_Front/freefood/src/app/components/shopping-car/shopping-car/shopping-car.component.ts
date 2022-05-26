@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Address, EventData, Menu, Request } from 'src/app/models';
-import { AddressService, ShoppingCarService, TokenStorageService } from 'src/app/services';
+import { AddressService, ShoppingCarService, TokenStorageService, UserInfoService } from 'src/app/services';
 import { EventBusService, MyErrorStateMatcher } from 'src/app/shared';
 import { AddressSelectDialogComponent } from 'src/app/components'
 import { RequestService } from 'src/app/services/request/request.service';
@@ -24,6 +24,7 @@ export class ShoppingCarComponent implements OnInit {
   address!: Address[];
   addressSelect!: Address;
   requestUser!: Request[];
+  isLoaderAddress: boolean = true;
 
   generalForm!: FormGroup;
   matcher = new MyErrorStateMatcher();
@@ -38,7 +39,8 @@ export class ShoppingCarComponent implements OnInit {
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
     private requestService: RequestService,
-    private route: Router
+    private route: Router,
+    private userInfo: UserInfoService
   ) { }
 
   ngOnInit(): void {
@@ -74,8 +76,12 @@ export class ShoppingCarComponent implements OnInit {
           });
           this.address = data;
         }
+        this.isLoaderAddress = false;
+        this.verifyLoader();
       },
       error: err => {
+        this.isLoaderAddress = true;
+        this.verifyLoader();
         this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
@@ -172,6 +178,14 @@ export class ShoppingCarComponent implements OnInit {
       }
     });
     console.log("Dados:: ", this.requestUser);
+  }
+
+  private verifyLoader(): void {
+    if(!this.isLoaderAddress) {
+      this.userInfo.loader.emit(false);
+    } else {
+      this.userInfo.loader.emit(true);
+    }
   }
 
 }

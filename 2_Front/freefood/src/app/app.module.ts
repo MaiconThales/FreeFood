@@ -10,6 +10,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -48,7 +49,8 @@ import {
   AddressUserComponent,
   DashboardDialogDetailMenuComponent,
   ShoppingCarComponent,
-  AddressSelectDialogComponent
+  AddressSelectDialogComponent,
+  SkeletonComponent
 } from './components';
 
 import { authInterceptorProviders, PaginatorI18n } from './shared';
@@ -84,7 +86,8 @@ const maskConfig: Partial<IConfig> = {
     AddressUserComponent,
     DashboardDialogDetailMenuComponent,
     ShoppingCarComponent,
-    AddressSelectDialogComponent
+    AddressSelectDialogComponent,
+    SkeletonComponent
   ],
   imports: [
     TranslateModule.forRoot({
@@ -107,6 +110,7 @@ const maskConfig: Partial<IConfig> = {
     ReactiveFormsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    NgxSkeletonLoaderModule,
     MatCardModule,
     MatInputModule,
     MatButtonModule,
@@ -136,6 +140,8 @@ const maskConfig: Partial<IConfig> = {
       useFactory: (translateService: TranslateService) => new PaginatorI18n(translateService).getPaginatorIntl()
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

@@ -52,6 +52,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <div class="content">
+            <app-skeleton *ngIf="loader"></app-skeleton>
             <router-outlet></router-outlet>
         </div>
     </mat-sidenav-content>

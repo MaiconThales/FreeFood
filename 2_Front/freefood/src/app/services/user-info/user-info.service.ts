@@ -8,6 +8,7 @@ import { JwtResponse } from '../../models';
 export class UserInfoService {
 
   showMenu = new EventEmitter<boolean>();
+  loader = new EventEmitter<boolean>();
   user = new EventEmitter<JwtResponse>();
 
   constructor() { }
@@ -18,6 +19,10 @@ export class UserInfoService {
 
   alterValue(value: boolean): void {
     this.showMenu.emit(value);
+  }
+
+  setValueLoader(value: boolean): void {
+    this.loader.emit(value);
   }
   
 }
