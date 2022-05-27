@@ -14,9 +14,9 @@ Projeto de teste para fazer algo semelhante ao IFood. Utilizando Spring Boot par
 - - Abaixo script para executar no banco: 
 ```MySQL 
 	INSERT INTO role (id, description, name) 
-	VALUES 	(1, 'Admin role', 'ROLE_USER'),
-			(2, 'User role', 'ROLE_MODERATOR'),
-			(3, 'Admin role', 'ROLE_ADMIN');
+	VALUES 	(1, 'User role', 'ROLE_USER'),
+		(2, 'Moderator role', 'ROLE_MODERATOR'),
+		(3, 'Admin role', 'ROLE_ADMIN');
 ```
 
 # Links utilizados para auxilios
@@ -39,7 +39,7 @@ Projeto de teste para fazer algo semelhante ao IFood. Utilizando Spring Boot par
 - Comando: npm install --save @auth0/angular-jwt
 - Comando abaixo é para implementar o GUARD por permissão de user.
 - Comando: npm install --save jwt-decode
-### Sketeton (Aquardando):
+### Sketeton:
 - Link: https://www.npmjs.com/package/ngx-skeleton-loader
 ### ngx-mask
 - Link: https://www.npmjs.com/package/ngx-mask
