@@ -1,1 +1,1 @@
-export * from './request-crud/request-crud.component';
+export * from './request-list/request-list.component';

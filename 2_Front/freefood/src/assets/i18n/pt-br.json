@@ -37,7 +37,10 @@
         "WORD_SAVE": "Salvar",
         "WORD_ADDRESS": "Adicionar endereço",
         "WORD_EDIT_ADDRESS": "Editar endereço",
-        "WORD_REMOVE_ADDRESS": "Remover endereço"
+        "WORD_REMOVE_ADDRESS": "Remover endereço",
+        "MSG_ADD_SHOPPING_CAR": "Adicionado no carrinho de compras",
+        "MSG_ITEM_REPEAT": "Item já existe no carrinho",
+        "WORD_REMOVE": "Remover"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Editar perfil",
@@ -108,7 +111,17 @@
         "TITLE_PAGE": "Escolha um restaurant",
         "FILTER": "Por favor insera o nome do restaurante desejado",
         "LABEL_COLUMN_NAME": "Nome do restaurante",
-        "FILTER_NO_DATA": "Nada encontrado para:"
+        "FILTER_NO_DATA": "Nada encontrado para:",
+        "TITLE_PAGE_MENU": "Escolha seus produtos",
+        "NO_DATA": "Não há dados",
+        "FILTER_MENU": "Por favor insira um cardápio que progura aqui",
+        "MENU_FILTER_NO_DATA": "Nada foi encontrado",
+        "ADD_MENU_SHOP": "Adicionar no carrinho de compras",
+        "MORE_DETAIL_MENU": "Ver mais detalhes sobre o item",
+        "TITLE_DIALOG_MENU_DETAIL": "Detalhes do cardápio",
+        "NAME_MENU_DIALOG": "Nome",
+        "DESCRIPTION_MENU_DIALOG" : "Descrição",
+        "NAME_RESTAURANT_MENU_DIALOG": "Nome do restaurante"
     },
     "ADDRESS": {
         "TITLE_ADDRESS": "Adicionar/Editar endereço",
@@ -119,6 +132,23 @@
         "MSG_INPUT_STREET": "Rua é",
         "MSG_INPUT_DISTRICT": "Bairro é",
         "MSG_INPUT_NUMBER": "Número é",
-        "IS_DEFAULT": "Endereço padrão"
+        "IS_DEFAULT": "Endereço padrão",
+        "LABEL_SELECT_ADDRESS": "Por favor selecione o endereço para a entrega"
+    },
+    "SHOPPING_CAR": {
+        "NO_DATA": "Não há itens no carrinho de compras",
+        "LABEL_PRODUCT": "Produto",
+        "LABEL_DESCRIPTION": "Descrição",
+        "LABEL_DELIVERY_ADDRESS": "Endereço de entrega",
+        "LABEL_CHANGE_ADDRESS": "Alterar endereço"
+    },
+    "REQUEST": {
+        "TITLE_PAGE": "Pedidos",
+        "FILTER": "Por favor insira algo para pesquisar",
+        "LABEL_NAME_MENU": "Nome do pedido",
+        "LABEL_AMOUNT": "Quantidade",
+        "LABEL_VIEW_DETAIL": "Ver mais detalhes",
+        "FILTER_NO_DATA": "Nada encontrado para: ",
+        "NO_DATA": "Não há dados"
     }
 }

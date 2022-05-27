@@ -1,38 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
 
-import { EventBusService, MyErrorStateMatcher } from 'src/app/shared';
-import { EventData, Menu, Request, Restaurant, User } from 'src/app/models';
-import { AddressService, MenuService, TokenStorageService } from 'src/app/services';
+import { EventData, Menu } from 'src/app/models';
+import { MenuService, ShoppingCarService, UserInfoService } from 'src/app/services';
+import { EventBusService } from 'src/app/shared';
+import { DashboardDialogDetailMenuComponent } from 'src/app/components/dashboard';
 
 @Component({
   selector: 'app-dashboard-painel-two',
   templateUrl: './dashboard-painel-two.component.html',
-  styleUrls: ['./dashboard-painel-two.component.css'],
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { displayDefaultIndicatorType: false },
-    },
-  ],
+  styleUrls: ['./dashboard-painel-two.component.css']
 })
 export class DashboardPainelTwoComponent implements OnInit {
 
-  idRestaurantSelect!: number;
-  request!: Request;
-
-  requestForm!: FormGroup;
-  matcher = new MyErrorStateMatcher();
-
-  displayedColumns: string[] = ['select', 'idMenu', 'name', 'description'];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  displayedColumns: string[] = ['name', 'options'];
   dataSource!: MatTableDataSource<Menu>;
-  selection = new SelectionModel<Menu>(true, []);
+  menus: Menu[] = [];
+
+  idRestaurantSelect!: number;
+  isLoaderMenu: boolean = true;
+
+  labelMoreDetail!: string;
+  labelAddMenu!: string;
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -40,49 +37,35 @@ export class DashboardPainelTwoComponent implements OnInit {
     private eventBusService: EventBusService,
     private snackBar: MatSnackBar,
     private translate: TranslateService,
-    private token: TokenStorageService,
-    private addressService: AddressService
+    public dialog: MatDialog,
+    private shoppingCar: ShoppingCarService,
+    private userInfo: UserInfoService
   ) { }
 
   ngOnInit(): void {
     this.idRestaurantSelect = this.actRoute.snapshot.params['id'];
-    this.createForm();
+    this.getLabel();
     this.getMenuByRestaurant();
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    let numSelected = 0;
-    let numRows = 0;
-    if (this.dataSource != null) {
-      numSelected = this.selection.selected.length;
-      numRows = this.dataSource.data.length;
-    }
-    return numSelected === numRows;
-  }
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-
-    this.selection.select(...this.dataSource.data);
-  }
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Menu): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.idMenu}`;
+  getLabel(): void {
+    this.labelMoreDetail = this.translate.instant('DASHBOARD.MORE_DETAIL_MENU');
+    this.labelAddMenu = this.translate.instant('DASHBOARD.ADD_MENU_SHOP');
   }
 
   getMenuByRestaurant(): void {
     this.menuService.getMenuByRestaurant(this.idRestaurantSelect).subscribe({
       next: data => {
-        this.dataSource = new MatTableDataSource<Menu>(data);
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.menus = data;
+        this.isLoaderMenu = false;
+        this.verifyLoader();
       },
       error: err => {
+        this.isLoaderMenu = true;
+        this.verifyLoader();
         this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
@@ -93,33 +76,44 @@ export class DashboardPainelTwoComponent implements OnInit {
     });
   }
 
-  createForm(): void {
-    this.requestForm = new FormGroup({
-      amount: new FormControl(1, [Validators.required, Validators.min(1)]),
-      observation: new FormControl('')
-    })
+  openDialogDetailMenu(obj: Menu): void {
+    const dialogRef = this.dialog.open(DashboardDialogDetailMenuComponent, {
+      width: '500px',
+      height: '310px',
+      data: obj
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+
+      }
+    });
   }
 
-  setRequest(): void {
-    let menu: Menu[] = this.selection.selected;
-    if(menu.length > 0) {
-      menu.forEach(function(m) {
+  addShoppingCar(menu: Menu): void {
+    this.shoppingCar.addMenuInShoppingCar(menu);
+  }
 
-      });
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
-
-    let user: User = {
-      id: this.token.getIdUser().toString()
-    };
-    let restaurant: Restaurant = {
-      id: menu[0].restaurant.id,
-      name: menu[0].name
-    };
   }
 
   private functionBusService(err: any): void {
     if (err.status === 403) {
       this.eventBusService.emit(new EventData('logout', null));
+    }
+  }
+
+  private verifyLoader(): void {
+    if (!this.isLoaderMenu) {
+      this.userInfo.loader.emit(false);
+    } else {
+      this.userInfo.loader.emit(true);
     }
   }
 

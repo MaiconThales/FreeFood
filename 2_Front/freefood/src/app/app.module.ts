@@ -10,6 +10,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -28,13 +29,15 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatListModule } from '@angular/material/list';
+import { MatRadioModule } from '@angular/material/radio';
 
 import {
   DashboardPainelOneComponent,
   LoginAuthenticationComponent,
   LoginCreateComponent,
   RestaurantCrudComponent,
-  RequestCrudComponent,
+  RequestListComponent,
   MenuListComponent,
   NotFoundComponent,
   UserEditComponent,
@@ -43,7 +46,11 @@ import {
   MenuDialogRegisterComponent,
   DialogConfirmRemoveComponent,
   DashboardPainelTwoComponent,
-  AddressUserComponent
+  AddressUserComponent,
+  DashboardDialogDetailMenuComponent,
+  ShoppingCarComponent,
+  AddressSelectDialogComponent,
+  SkeletonComponent
 } from './components';
 
 import { authInterceptorProviders, PaginatorI18n } from './shared';
@@ -67,7 +74,7 @@ const maskConfig: Partial<IConfig> = {
     LoginAuthenticationComponent,
     LoginCreateComponent,
     RestaurantCrudComponent,
-    RequestCrudComponent,
+    RequestListComponent,
     MenuListComponent,
     NotFoundComponent,
     UserEditComponent,
@@ -76,7 +83,12 @@ const maskConfig: Partial<IConfig> = {
     MenuDialogRegisterComponent,
     DialogConfirmRemoveComponent,
     DashboardPainelTwoComponent,
-    AddressUserComponent
+    AddressUserComponent,
+    DashboardDialogDetailMenuComponent,
+    ShoppingCarComponent,
+    AddressSelectDialogComponent,
+    SkeletonComponent,
+    RequestListComponent
   ],
   imports: [
     TranslateModule.forRoot({
@@ -99,6 +111,7 @@ const maskConfig: Partial<IConfig> = {
     ReactiveFormsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    NgxSkeletonLoaderModule,
     MatCardModule,
     MatInputModule,
     MatButtonModule,
@@ -115,7 +128,9 @@ const maskConfig: Partial<IConfig> = {
     MatButtonToggleModule,
     MatTooltipModule,
     MatCheckboxModule,
-    MatStepperModule
+    MatStepperModule,
+    MatListModule,
+    MatRadioModule
   ],
   providers: [
     authInterceptorProviders,
@@ -126,6 +141,8 @@ const maskConfig: Partial<IConfig> = {
       useFactory: (translateService: TranslateService) => new PaginatorI18n(translateService).getPaginatorIntl()
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

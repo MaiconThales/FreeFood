@@ -1,4 +1,4 @@
-<div class="views">
+<div class="views" *ngIf="!isLoaderRestaurant && !isLoaderMenu">
     <!--Title-->
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutAlign="center center">
         <h1 class="title-general">{{'MENU.TITLE_PAGE' | translate}}</h1>

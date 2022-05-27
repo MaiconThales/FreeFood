@@ -18,6 +18,7 @@ export class AppComponent {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   showMenu: boolean = false;
+  loader: boolean = true;
 
   avatarImage!: string;
   infoUser: JwtResponse = {
@@ -47,6 +48,9 @@ export class AppComponent {
     this.userInfoService.user.subscribe(u => {
       this.infoUser = u;
     });
+    this.userInfoService.loader.subscribe(u => {
+      this.loader = u;
+    })
     if (!!this.tokenStorageService.getToken()) {
       const userInfo = this.tokenStorageService.getUser();
       this.avatarImage = "../assets/img/avatar/avatar.jpg";
@@ -95,6 +99,10 @@ export class AppComponent {
         break;
       case e.REDIRECT_USER_EDIT:
         this.router.navigate([e.REDIRECT_USER_EDIT]);
+        this.sidenav.close();
+        break;
+      case e.REDIRECT_SHOPPING_CAR:
+        this.router.navigate([e.REDIRECT_SHOPPING_CAR]);
         this.sidenav.close();
         break;
     }

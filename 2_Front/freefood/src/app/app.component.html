@@ -4,6 +4,11 @@
         <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
     </button>
     <span id="titleNavBar" (click)="redirectComponent('/dashboard')">Freefood</span>
+
+    <span class="example-spacer"></span>
+    <button mat-icon-button>
+        <mat-icon (click)="redirectComponent('/shopping-car')">shopping_cart</mat-icon>
+    </button>
 </mat-toolbar>
 
 <mat-sidenav-container>
@@ -47,6 +52,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <div class="content">
+            <app-skeleton *ngIf="loader"></app-skeleton>
             <router-outlet></router-outlet>
         </div>
     </mat-sidenav-content>

@@ -8,10 +8,11 @@ import {
   LoginAuthenticationComponent,
   RestaurantCrudComponent,
   MenuListComponent,
-  RequestCrudComponent,
+  RequestListComponent,
   NotFoundComponent,
   UserEditComponent,
-  DashboardPainelTwoComponent
+  DashboardPainelTwoComponent,
+  ShoppingCarComponent
 } from './components';
 
 const routes: Routes = [
@@ -41,13 +42,19 @@ const routes: Routes = [
   },
   { 
     path: 'request', 
-    component: RequestCrudComponent, 
+    component: RequestListComponent, 
     canLoad: [AuthGuard],
     canActivate: [AuthGuard] 
   },
   { 
     path: 'profile-edit', 
     component: UserEditComponent, 
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard] 
+  },
+  { 
+    path: 'shopping-car', 
+    component: ShoppingCarComponent, 
     canLoad: [AuthGuard],
     canActivate: [AuthGuard] 
   },

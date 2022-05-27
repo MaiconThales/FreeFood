@@ -6,3 +6,4 @@ export * from './restaurant/restaurant.service';
 export * from './user/user.service';
 export * from './menu/menu.service';
 export * from './address/address.service';
+export * from './shopping-car/shopping-car.service';

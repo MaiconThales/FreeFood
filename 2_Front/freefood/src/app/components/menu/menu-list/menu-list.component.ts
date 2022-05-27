@@ -11,7 +11,7 @@ import { FormControl } from '@angular/forms';
 
 import { MenuDialogRegisterComponent } from 'src/app/components/menu';
 import { EventData, Menu, Restaurant } from 'src/app/models';
-import { RestaurantService, TokenStorageService, MenuService } from 'src/app/services';
+import { RestaurantService, TokenStorageService, MenuService, UserInfoService } from 'src/app/services';
 import { DialogConfirmRemoveComponent } from 'src/app/components/shared';
 import { EventBusService } from 'src/app/shared';
 
@@ -34,6 +34,8 @@ export class MenuListComponent implements OnInit {
   options: Restaurant[] = [];
   filteredOptions!: Observable<Restaurant[]>;
   idUser!: number;
+  isLoaderRestaurant: boolean = true;
+  isLoaderMenu: boolean = true;
 
   labelEdit!: String;
   labelDelete!: String;
@@ -47,7 +49,8 @@ export class MenuListComponent implements OnInit {
     private snackBar: MatSnackBar,
     private translate: TranslateService,
     private menuService: MenuService,
-    private eventBusService: EventBusService
+    private eventBusService: EventBusService,
+    private userInfo: UserInfoService
   ) { }
 
   ngOnInit(): void {
@@ -108,8 +111,11 @@ export class MenuListComponent implements OnInit {
       next: data => {
         this.restaurantByUser = data;
         this.configAutoCompleteInput(data);
+        this.isLoaderRestaurant = false;
+        this.verifyLoader();
       },
       error: err => {
+        this.isLoaderRestaurant = true;
         this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
@@ -130,8 +136,11 @@ export class MenuListComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.menus = data;
+        this.isLoaderMenu = false;
+        this.verifyLoader();
       },
       error: err => {
+        this.isLoaderMenu = true;
         this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',
@@ -255,6 +264,14 @@ export class MenuListComponent implements OnInit {
   private functionBusService(err: any): void {
     if (err.status === 403) {
       this.eventBusService.emit(new EventData('logout', null));
+    }
+  }
+
+  private verifyLoader(): void {
+    if(!this.isLoaderRestaurant && !this.isLoaderMenu) {
+      this.userInfo.loader.emit(false);
+    } else {
+      this.userInfo.loader.emit(true);
     }
   }
 
