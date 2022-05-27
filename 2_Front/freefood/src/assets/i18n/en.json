@@ -141,5 +141,14 @@
         "LABEL_DESCRIPTION": "Description",
         "LABEL_DELIVERY_ADDRESS": "Delivery address",
         "LABEL_CHANGE_ADDRESS": "Change address"
+    },
+    "REQUEST": {
+        "TITLE_PAGE": "Requests",
+        "FILTER": "Please enter something to search",
+        "LABEL_NAME_MENU": "Order name",
+        "LABEL_AMOUNT": "The amount",
+        "LABEL_VIEW_DETAIL": "See more details",
+        "FILTER_NO_DATA": "Nothing found for: ",
+        "NO_DATA": "No data"
     }
 }

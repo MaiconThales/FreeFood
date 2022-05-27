@@ -141,5 +141,14 @@
         "LABEL_DESCRIPTION": "Descrição",
         "LABEL_DELIVERY_ADDRESS": "Endereço de entrega",
         "LABEL_CHANGE_ADDRESS": "Alterar endereço"
+    },
+    "REQUEST": {
+        "TITLE_PAGE": "Pedidos",
+        "FILTER": "Por favor insira algo para pesquisar",
+        "LABEL_NAME_MENU": "Nome do pedido",
+        "LABEL_AMOUNT": "Quantidade",
+        "LABEL_VIEW_DETAIL": "Ver mais detalhes",
+        "FILTER_NO_DATA": "Nada encontrado para: ",
+        "NO_DATA": "Não há dados"
     }
 }

@@ -273,7 +273,6 @@ export class MenuListComponent implements OnInit {
     } else {
       this.userInfo.loader.emit(true);
     }
-    
   }
 
 }

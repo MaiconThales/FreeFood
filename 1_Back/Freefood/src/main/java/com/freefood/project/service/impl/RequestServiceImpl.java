@@ -41,5 +41,21 @@ public class RequestServiceImpl implements RequestService {
 			return new ResponseEntity<>(new MessageResponse(SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	@Override
+	public ResponseEntity<List<RequestDTO>> getRequestByUser(Long idUser) {
+		List<RequestDTO> resultUser = null;
+		try {
+			List<Request> resultSearch = this.requestRepository.getRequestByUser(idUser);
+			if(!resultSearch.isEmpty()) {
+				resultUser = resultSearch.stream().map(r -> modelMapper.map(r, RequestDTO.class)).collect(Collectors.toList());
+				return new ResponseEntity<>(resultUser, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(resultUser, HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<>(resultUser, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 }

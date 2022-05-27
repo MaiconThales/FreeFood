@@ -37,7 +37,7 @@ import {
   LoginAuthenticationComponent,
   LoginCreateComponent,
   RestaurantCrudComponent,
-  RequestCrudComponent,
+  RequestListComponent,
   MenuListComponent,
   NotFoundComponent,
   UserEditComponent,
@@ -74,7 +74,7 @@ const maskConfig: Partial<IConfig> = {
     LoginAuthenticationComponent,
     LoginCreateComponent,
     RestaurantCrudComponent,
-    RequestCrudComponent,
+    RequestListComponent,
     MenuListComponent,
     NotFoundComponent,
     UserEditComponent,
@@ -87,7 +87,8 @@ const maskConfig: Partial<IConfig> = {
     DashboardDialogDetailMenuComponent,
     ShoppingCarComponent,
     AddressSelectDialogComponent,
-    SkeletonComponent
+    SkeletonComponent,
+    RequestListComponent
   ],
   imports: [
     TranslateModule.forRoot({

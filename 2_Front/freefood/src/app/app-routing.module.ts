@@ -8,7 +8,7 @@ import {
   LoginAuthenticationComponent,
   RestaurantCrudComponent,
   MenuListComponent,
-  RequestCrudComponent,
+  RequestListComponent,
   NotFoundComponent,
   UserEditComponent,
   DashboardPainelTwoComponent,
@@ -42,7 +42,7 @@ const routes: Routes = [
   },
   { 
     path: 'request', 
-    component: RequestCrudComponent, 
+    component: RequestListComponent, 
     canLoad: [AuthGuard],
     canActivate: [AuthGuard] 
   },

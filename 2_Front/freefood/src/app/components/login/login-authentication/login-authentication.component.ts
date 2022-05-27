@@ -24,6 +24,7 @@ export class LoginAuthenticationComponent implements OnInit {
   loginUser!: LoginRequest;
   errorMessage = '';
   userInfo!: JwtResponse;
+  isLoader: boolean = true;
 
   constructor(
     public dialog: MatDialog,
@@ -36,6 +37,8 @@ export class LoginAuthenticationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isLoader = false;
+    this.verifyLoader()
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -59,10 +62,12 @@ export class LoginAuthenticationComponent implements OnInit {
         this.tokenStorage.saveRefreshToken(data.refreshToken);
         this.tokenStorage.saveUser(data);
 
+        this.isLoader = true;
+        this.verifyLoader();
+        this.router.navigate([e.REDIRECT_DASHBOARD]);
         this.userInfo = data;
         this.userInfoService.alterValue(true);
         this.userInfoService.setValueUser(this.userInfo);
-        this.router.navigate([e.REDIRECT_DASHBOARD]);
 
         this.translate.use(data.language);
       },
@@ -120,6 +125,15 @@ export class LoginAuthenticationComponent implements OnInit {
       this.loginForm.controls[key].clearValidators();
       this.loginForm.controls[key].updateValueAndValidity();
     }
+  }
+
+  private verifyLoader(): void {
+    if(!this.isLoader) {
+      this.userInfoService.loader.emit(false);
+    } else {
+      this.userInfoService.loader.emit(true);
+    }
+    
   }
 
 }

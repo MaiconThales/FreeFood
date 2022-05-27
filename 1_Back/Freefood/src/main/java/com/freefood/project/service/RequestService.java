@@ -16,5 +16,7 @@ public interface RequestService {
 	 * @return Com a ação bem sucedida o spring vai retornar o objeto cadastrado
 	 * */
 	ResponseEntity<MessageResponse> saveRequest(List<RequestDTO> request);
+	
+	ResponseEntity<List<RequestDTO>> getRequestByUser(Long idUser);
 
 }

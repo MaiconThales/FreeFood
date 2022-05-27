@@ -74,6 +74,7 @@ export class RestaurantCrudComponent implements OnInit {
       },
       error: err => {
         this.isLoaderRestaurant = true;
+        this.verifyLoader();
         this.functionBusService(err);
         this.snackBar.open(this.translate.instant('GLOBAL_WORD.WORD_MSG_SERVER_ERROR'), 'Ok', {
           horizontalPosition: 'center',

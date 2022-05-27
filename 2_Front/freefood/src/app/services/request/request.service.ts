@@ -18,4 +18,9 @@ export class RequestService {
     return this.http.post(`${e.AUTH_API}${e.REQUEST_CONTROLLER}/createRequest`, request);
   }
 
+  getRequestByUser(idUser: number): Observable<any> {
+    let param: any = {'idUser': idUser};
+    return this.http.get(`${e.AUTH_API}${e.REQUEST_CONTROLLER}/listRequestByUser`, {params: param} );
+  }
+
 }
