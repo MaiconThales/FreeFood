@@ -41,16 +41,17 @@ import {
   MenuListComponent,
   NotFoundComponent,
   UserEditComponent,
-  RestaurantDialogComponent,
   RestaurantLiberateComponent,
-  MenuDialogRegisterComponent,
-  DialogConfirmRemoveComponent,
   DashboardPainelTwoComponent,
   AddressUserComponent,
-  DashboardDialogDetailMenuComponent,
   ShoppingCarComponent,
+  SkeletonComponent,
+  RestaurantDialogComponent,
+  MenuDialogRegisterComponent,
+  DialogConfirmRemoveComponent,
+  DashboardDialogDetailMenuComponent,
   AddressSelectDialogComponent,
-  SkeletonComponent
+  RequestDialogDetailComponent
 } from './components';
 
 import { authInterceptorProviders, PaginatorI18n } from './shared';
@@ -88,7 +89,8 @@ const maskConfig: Partial<IConfig> = {
     ShoppingCarComponent,
     AddressSelectDialogComponent,
     SkeletonComponent,
-    RequestListComponent
+    RequestListComponent,
+    RequestDialogDetailComponent
   ],
   imports: [
     TranslateModule.forRoot({

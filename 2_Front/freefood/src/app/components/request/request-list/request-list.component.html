@@ -37,7 +37,7 @@
                         {{'GLOBAL_WORD.OPTIONS' | translate}}
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button matTooltip="{{labelViewDetail}}" matTooltipPosition="before">
+                        <button mat-icon-button (click)="openDialogRequestDetail(row)" matTooltip="{{labelViewDetail}}" matTooltipPosition="before">
                             <mat-icon>view_module</mat-icon>
                         </button>
                     </td>

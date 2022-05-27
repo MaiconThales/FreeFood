@@ -1,14 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 
 import { TokenStorageService, UserInfoService } from 'src/app/services';
 import { EventBusService } from 'src/app/shared';
 import { EventData } from 'src/app/models';
 import { RequestService } from 'src/app/services/request/request.service';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { RequestDialogDetailComponent } from 'src/app/components/request';
 
 @Component({
   selector: 'app-request-list',
@@ -33,7 +35,8 @@ export class RequestListComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private requestService: RequestService,
     private translate: TranslateService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -74,6 +77,20 @@ export class RequestListComponent implements OnInit {
           verticalPosition: 'bottom',
           duration: 10000
         });
+      }
+    });
+  }
+
+  openDialogRequestDetail(obj: Request): void {
+    const dialogRef = this.dialog.open(RequestDialogDetailComponent, {
+      width: '500px',
+      height: '310px',
+      data: obj
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+
       }
     });
   }
