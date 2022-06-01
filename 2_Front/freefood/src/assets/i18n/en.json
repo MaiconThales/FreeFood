@@ -149,6 +149,11 @@
         "LABEL_AMOUNT": "The amount",
         "LABEL_VIEW_DETAIL": "See more details",
         "FILTER_NO_DATA": "Nothing found for: ",
-        "NO_DATA": "No data"
+        "NO_DATA": "No data",
+        "TITLE_DIALOG_REQUEST_DETAIL": "Order information",
+        "LABEL_MENU_NAME": "Menu name",
+        "LABEL_MENU_DESCRIPTION": "Observation of the menu",
+        "LABEL_RESTAURANT_NAME": "Restaurant name",
+        "LABEL_OBSERVATION": "Order observation"
     }
 }

@@ -82,16 +82,10 @@ export class RequestListComponent implements OnInit {
   }
 
   openDialogRequestDetail(obj: Request): void {
-    const dialogRef = this.dialog.open(RequestDialogDetailComponent, {
+    this.dialog.open(RequestDialogDetailComponent, {
       width: '500px',
-      height: '310px',
+      height: '350px',
       data: obj
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != null) {
-
-      }
     });
   }
 
