@@ -7,7 +7,7 @@
                     <mat-label>
                         {{'LOGIN.LABEL_USERNAME' | translate}}
                     </mat-label>
-                    <input id="username" matInput type="text" formControlName="username" [errorStateMatcher]="matcher">
+                    <input id="username" matInput type="username" formControlName="username" [errorStateMatcher]="matcher">
                     <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
                         {{'LOGIN.MSG_INPUT_USERNAME' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_MASCULINE' | translate}}</strong>
                     </mat-error>
@@ -20,7 +20,7 @@
                     <mat-label>
                         {{'LOGIN.LABEL_PASSWORD' | translate}}
                     </mat-label>
-                    <input id="password" autocomplete="current-password" matInput type="password" formControlName="password"
+                    <input id="password" autocomplete="password" matInput type="password" formControlName="password"
                         [errorStateMatcher]="matcher">
                     <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
                         {{'LOGIN.MSG_INPUT_PASSWORD' | translate}} <strong>{{'GLOBAL_WORD.WORD_REQUERID_FEMALE' | translate}}</strong>

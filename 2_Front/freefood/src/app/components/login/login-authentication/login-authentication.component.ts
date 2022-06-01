@@ -37,17 +37,19 @@ export class LoginAuthenticationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isLoader = false;
-    this.verifyLoader()
-    this.loginForm = new FormGroup({
-      username: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required])
-    });
-    if (this.tokenStorage.getToken()) {
-      this.userInfoService.alterValue(true);
-      this.userInfo = this.tokenStorage.getUser();
-      this.userInfoService.setValueUser(this.userInfo);
-    }
+    setTimeout(() => {
+      this.isLoader = false;
+      this.verifyLoader()
+      this.loginForm = new FormGroup({
+        username: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required])
+      });
+      if (this.tokenStorage.getToken()) {
+        this.userInfoService.alterValue(true);
+        this.userInfo = this.tokenStorage.getUser();
+        this.userInfoService.setValueUser(this.userInfo);
+      }
+    }, 1000);
   }
 
   onSubmit(): void {
@@ -128,12 +130,12 @@ export class LoginAuthenticationComponent implements OnInit {
   }
 
   private verifyLoader(): void {
-    if(!this.isLoader) {
+    if (!this.isLoader) {
       this.userInfoService.loader.emit(false);
     } else {
       this.userInfoService.loader.emit(true);
     }
-    
+
   }
 
 }
