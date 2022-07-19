@@ -56,6 +56,7 @@ import {
 
 import { authInterceptorProviders, PaginatorI18n } from './shared';
 import { AuthGuardService, AuthService } from './services';
+import { DialogImageComponent } from './components/shared/dialog-image/dialog-image.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -90,7 +91,8 @@ const maskConfig: Partial<IConfig> = {
     AddressSelectDialogComponent,
     SkeletonComponent,
     RequestListComponent,
-    RequestDialogDetailComponent
+    RequestDialogDetailComponent,
+    DialogImageComponent
   ],
   imports: [
     TranslateModule.forRoot({

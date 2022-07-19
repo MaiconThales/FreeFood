@@ -2,7 +2,10 @@ package com.freefood.project.controller;
 
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.freefood.project.dto.MenuDTO;
 import com.freefood.project.payload.response.MessageResponse;
@@ -58,6 +63,11 @@ public class MenuController {
 	@GetMapping("/getMenuByRestaurant")
 	public ResponseEntity<List<MenuDTO>> getMenuByRestaurant(@RequestParam("idRestaurant") Long idRestaurant) {
 		return this.menuService.getMenuByRestaurant(idRestaurant);
+	}
+	
+	@PostMapping(value = "/saveImageMenu", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<MessageResponse> saveImageMenu(@RequestParam(name = "imageFile") @Size(min = 1) MultipartFile file, @RequestPart(name = "menu") MenuDTO menu) {
+		return this.menuService.saveImageMenu(file, menu);
 	}
 	
 }

@@ -40,7 +40,10 @@
         "WORD_REMOVE_ADDRESS": "Remover endereço",
         "MSG_ADD_SHOPPING_CAR": "Adicionado no carrinho de compras",
         "MSG_ITEM_REPEAT": "Item já existe no carrinho",
-        "WORD_REMOVE": "Remover"
+        "WORD_REMOVE": "Remover",
+        "IMAGE_SAVE_SUCCESS": "Imagem salva com sucesso",
+        "DESCRIPTION_LABEL_IMAGE": "Adicionar imagem",
+        "FORMAT_INVALID": "Formato inválido"
     },
     "SLIDE_BAR": {
         "EDIT_PROFILE": "Editar perfil",

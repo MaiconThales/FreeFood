@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { environment as e } from '../../../environments/environment.prod';
 import { Menu } from 'src/app/models';
@@ -15,8 +15,15 @@ export class MenuService {
   ) { }
 
   getMenu(idRestaurant: number, idUser: number): Observable<any> {
-    let param: any = {'idRestaurant': idRestaurant, 'idUser': idUser};
+    let param: any = { 'idRestaurant': idRestaurant, 'idUser': idUser };
     return this.http.get(`${e.AUTH_API}${e.MENU_CONTROLLER}/getMenu`, { params: param });
+  }
+
+  saveMenuImage(file: any): Observable<any> {
+    return this.http.post(`${e.AUTH_API}${e.MENU_CONTROLLER}/saveImageMenu`, file).pipe(
+      map((data: any) => {
+        return data;
+      }));
   }
 
   saveMenu(menu: Menu): Observable<any> {
@@ -24,7 +31,7 @@ export class MenuService {
   }
 
   removeMenu(idMenu: any, idUser: number, idRestaurant: any): Observable<any> {
-    let param: any = {'idMenu': idMenu, 'idUser': idUser, 'idRestaurant': idRestaurant};
+    let param: any = { 'idMenu': idMenu, 'idUser': idUser, 'idRestaurant': idRestaurant };
     return this.http.delete(`${e.AUTH_API}${e.MENU_CONTROLLER}/deleteMenu`, { params: param });
   }
 
@@ -37,7 +44,7 @@ export class MenuService {
   }
 
   getMenuByRestaurant(idRestaurant: number): Observable<any> {
-    let param: any = {'idRestaurant': idRestaurant};
+    let param: any = { 'idRestaurant': idRestaurant };
     return this.http.get(`${e.AUTH_API}${e.MENU_CONTROLLER}/getMenuByRestaurant`, { params: param })
   }
 

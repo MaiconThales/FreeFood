@@ -7,20 +7,20 @@ public class MenuDTO {
 	private Long idMenu;
 	private Restaurant restaurant;
 	private String name;
-	private String linkImage;
 	private String description;
+	private byte[] picByte;
 	
 	public MenuDTO() {
 		
 	}
 	
-	public MenuDTO(Long idMenu, Restaurant restaurant, String name, String linkImage, String description) {
+	public MenuDTO(Long idMenu, Restaurant restaurant, String name, String description, byte[] picByte) {
 		super();
 		this.idMenu = idMenu;
 		this.restaurant = restaurant;
 		this.name = name;
-		this.linkImage = linkImage;
 		this.description = description;
+		this.picByte = picByte;
 	}
 	
 	public Long getIdMenu() {
@@ -41,19 +41,17 @@ public class MenuDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getLinkImage() {
-		return linkImage;
-	}
-	public void setLinkImage(String linkImage) {
-		this.linkImage = linkImage;
-	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public byte[] getPicByte() {
+		return picByte;
+	}
+	public void setPicByte(byte[] picByte) {
+		this.picByte = picByte;
 	}
 
 }

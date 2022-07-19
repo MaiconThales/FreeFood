@@ -3,6 +3,7 @@ package com.freefood.project.service;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.freefood.project.dto.MenuDTO;
 import com.freefood.project.payload.response.MessageResponse;
@@ -37,5 +38,7 @@ public interface MenuService {
 	ResponseEntity<List<MenuDTO>> getAllMenu();
 	
 	ResponseEntity<List<MenuDTO>> getMenuByRestaurant(Long idRestaurant);
+	
+	ResponseEntity<MessageResponse> saveImageMenu(MultipartFile file, MenuDTO menu);
 	
 }

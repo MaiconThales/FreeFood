@@ -80,7 +80,10 @@
                         {{'GLOBAL_WORD.OPTIONS' | translate}}
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button (click)="openDialogRegister(2, row)" matTooltip="{{labelEdit}}" matTooltipPosition="left">
+                        <button mat-icon-button (click)="openDialogImage(row)"  matTooltip="{{'GLOBAL_WORD.DESCRIPTION_LABEL_IMAGE' | translate}}" matTooltipPosition="left">
+                            <mat-icon>add_photo_alternate</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="openDialogRegister(2, row)" matTooltip="{{labelEdit}}" matTooltipPosition="above">
                             <mat-icon>edit</mat-icon>
                         </button>
                         <button mat-icon-button (click)="openDialogRemove(row)"  matTooltip="{{labelDelete}}" matTooltipPosition="right">

@@ -12,7 +12,7 @@ import { FormControl } from '@angular/forms';
 import { MenuDialogRegisterComponent } from 'src/app/components/menu';
 import { EventData, Menu, Restaurant } from 'src/app/models';
 import { RestaurantService, TokenStorageService, MenuService, UserInfoService } from 'src/app/services';
-import { DialogConfirmRemoveComponent } from 'src/app/components/shared';
+import { DialogConfirmRemoveComponent, DialogImageComponent } from 'src/app/components/shared';
 import { EventBusService } from 'src/app/shared';
 
 
@@ -189,6 +189,27 @@ export class MenuListComponent implements OnInit {
     });
   }
 
+  openDialogImage(menu: Menu): void {
+    const dialogImage = this.dialog.open(DialogImageComponent, {
+      width: '500px',
+      height: '400px',
+      data: {
+        'image': menu.picByte,
+      }
+    });
+
+    dialogImage.afterClosed().subscribe(result => {
+      if(result != null) {
+        result.append('menu', new Blob([
+          JSON.stringify(menu)
+        ], {
+          type: 'application/json'
+        }));
+        this.saveImageMenu(result);
+      }
+    });
+  }
+
   saveMenu(menu: Menu): void {
     this.menuService.saveMenu(menu).subscribe({
       next: data => {
@@ -212,6 +233,27 @@ export class MenuListComponent implements OnInit {
 
   updateMenu(menu: Menu): void {
     this.menuService.updateMenu(menu).subscribe({
+      next: data => {
+        this.verifySearchScreen();
+        this.snackBar.open(this.translate.instant(data.message), 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 10000
+        });
+      },
+      error: err => {
+        this.functionBusService(err);
+        this.snackBar.open(this.translate.instant(err.message), 'Ok', {
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          duration: 10000
+        });
+      }
+    });
+  }
+
+  saveImageMenu(image: any): void {
+    this.menuService.saveMenuImage(image).subscribe({
       next: data => {
         this.verifySearchScreen();
         this.snackBar.open(this.translate.instant(data.message), 'Ok', {

@@ -4,6 +4,6 @@ export interface Menu {
     idMenu?: number;
     restaurant: Restaurant;
     name: string;
-    linkImage?: string;
     description?: string;
+    picByte?: any;
 }
